@@ -1,0 +1,146 @@
+html,
+body {
+  height: 100vh;
+  margin: 0px;
+}
+
+a {
+  color: black;
+}
+
+.hrMain {
+  border: 5px solid rgba(0, 0, 0, 0.192);
+}
+
+.navStyle {
+  justify-content: space-between;
+  height: 50px;
+}
+
+.styleMainNav {
+  background-color: #dbd9d4;
+}
+
+.styleCard {
+  background-color: #a68fad;
+}
+
+.dropDownUser {
+  position: absolute;
+  display: none;
+  /* left: 0; */
+  top: 70%;
+  z-index: 3000;
+  float: left;
+  font-size: 1rem;
+  min-width: 10rem;
+  list-style: none;
+  /* border: 1px solid rgba(0, 0, 0, 0.15); */
+  border-radius: 0.25rem;
+  background-clip: padding-box;
+  padding: 0.5rem 0;
+}
+
+#styleIcon:hover + .dropDownUser,
+.dropDownUser:hover {
+  display: block;
+}
+
+#styleIcon {
+  width: 55px;
+  height: 30px;
+}
+
+#btnForm {
+  background-color: #a18ba8;
+  border: none;
+  width: 110px;
+}
+
+#bkgdStyle {
+  background-image: url("../imgs/bkgd1.png");
+  background-size: cover;
+  height: 500px;
+}
+#bkgdStyle2 {
+  background-color: rgba(255, 255, 255, 0.336);
+  background-size: cover;
+  height: 470px;
+}
+
+#introduction {
+  background-color: #a18ba8;
+}
+
+#listStyle {
+  padding-left: 0px;
+}
+
+#slogen {
+  font-family: Snell Roundhand, cursive;
+  -webkit-text-stroke: 1px rgba(0, 0, 0, 0.322);
+  color: #dbd9d4;
+  font-weight: 900;
+}
+
+#listStyle li {
+  list-style: none;
+  display: inline-block;
+  padding-right: 10px;
+  border-left: 1px solid rgba(25, 26, 25, 0.514);
+}
+
+#loginCard {
+  margin: 30px auto;
+  padding: 10px;
+  width: 400px;
+  background-color: #897291;
+  color: white;
+}
+
+.footer {
+  margin-bottom: 0rem;
+  padding: 1rem;
+  background-color: black;
+  /* position: fixed; */
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+
+.styleBorder {
+  border-left-style: dotted;
+}
+
+.styleRow {
+  border-bottom-style: dotted;
+}
+
+/* checkbox style */
+/* The checkItems */
+.checkItems {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.checkItems input {
+  opacity: 1;
+  cursor: pointer;
+  height: 30px;
+  width: 30px;
+  background-color: #eee;
+  margin-right: 15px;
+}
+
+.checkItems label {
+  margin-left: 25px;
+}
