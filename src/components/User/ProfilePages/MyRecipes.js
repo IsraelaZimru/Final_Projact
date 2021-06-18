@@ -2,7 +2,7 @@ import { Card, Container, Row, Col } from "react-bootstrap";
 import { useEffect } from "react";
 import { useHistory } from "react-router";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSmileWink, faTrashAlt, faEdit } from "@fortawesome/free-solid-svg-icons";
+import { faSmileWink, faEdit } from "@fortawesome/free-solid-svg-icons";
 import ModalDelete from '../ProfilePages/ModalDelete'
 
 const MyRecipes = ({ connected, hasPageAaccess, Recipes, onSelected }) => {
@@ -10,10 +10,10 @@ const MyRecipes = ({ connected, hasPageAaccess, Recipes, onSelected }) => {
     // const myFav = [] // chheckig default msg...
     const myFav = Recipes.slice(0, 2)
 
-
     useEffect(() => {
         hasPageAaccess(connected, history)
-    }, [connected])
+        // eslint-disable-next-line
+    }, [connected]);
 
 
 

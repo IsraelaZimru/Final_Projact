@@ -6,6 +6,7 @@ const NewRecipe = ({ connected, hasPageAaccess }) => {
 
     useEffect(() => {
         hasPageAaccess(connected, history)
+        //eslint-disable-next-line
     }, [connected])
 
 

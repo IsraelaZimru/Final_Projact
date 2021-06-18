@@ -3,7 +3,7 @@ import './CSS/style.css'
 import './components/User/CSS/userPages.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
-import { BrowserRouter as Router, Switch, useHistory, Route, Link } from "react-router-dom";
+import { HashRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { Nav, Navbar, ListGroup, Container } from 'react-bootstrap';
 import Recipes from './components/Recipes';
 import SearchForm from './components/SearchForm';
@@ -23,12 +23,10 @@ function App() {
   const [showLogin, setShowLogin] = useState(false)
   const [connected, setConnected] = useState(false)
   const [selectedRecipe, setSelectedRecipe] = useState({})
-  let history = useHistory()
 
 
   const displayLogin = () => {
     const temp = showLogin === false ? true : false;
-    // history.push("/");
     setShowLogin(temp)
   }
   const switchUser = () => {
@@ -51,9 +49,9 @@ function App() {
             className="px-2"
             style={{ display: connected ? 'none' : 'block' }}>
             <Link className="px-2 mx-3" to="/Sign_in">Sign in</Link>
-              {/* <a href="#login" className="text-white pl-2"> */}
+            {/* <a href="#login" className="text-white pl-2"> */}
             <Link className="px-2 mx-3" style={{ ariaExpanded: { showLogin } }} onClick={displayLogin}>
-                Log in
+              Log in
             </Link>
             {/* </a> */}
           </Nav.Link>

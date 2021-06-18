@@ -13,7 +13,8 @@ const MyFavorites = ({ connected, hasPageAaccess, Recipes, onSelected }) => {
 
     useEffect(() => {
         hasPageAaccess(connected, history)
-    }, [connected])
+        // eslint-disable-next-line
+    }, [connected]);
 
 
 
