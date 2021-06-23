@@ -35,7 +35,7 @@ function App() {
   }
 
   return <Container fluid className="px-0" id="login">
-    <Router>
+    <Router basename="Final_Projact">
       <Navbar sticky="top" className="py-0 styleMainNav" >
         <Navbar.Brand className="">
           <img src={logo3} style={{ height: '50px', width: '100px' }} alt="logo"></img>
