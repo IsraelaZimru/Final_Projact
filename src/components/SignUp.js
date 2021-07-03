@@ -2,7 +2,7 @@ import { Button, Card, Form } from "react-bootstrap";
 import { useEffect } from "react";
 import { useHistory } from "react-router";
 
-function SignIn({ hasPageAaccess, connected }) {
+function SignUp({ hasPageAaccess, connected }) {
     let history = useHistory();
 
     useEffect(() => {
@@ -11,7 +11,7 @@ function SignIn({ hasPageAaccess, connected }) {
 
     return <Card className="m-5 w-75 p-3">
         <Form>
-            <h1 className="display-3">Sign in</h1>
+            <h1 className="display-3">Sign Up</h1>
             <Form.Group controlId="formBasicEmail">
                 <Form.Label>Email address</Form.Label>
                 <Form.Control type="email" placeholder="Enter email" />
@@ -34,4 +34,4 @@ function SignIn({ hasPageAaccess, connected }) {
     </Card>
 }
 
-export default SignIn;
+export default SignUp;

@@ -1,7 +1,16 @@
+html {
+  scroll-behavior: smooth;
+}
+
 html,
 body {
   height: 100vh;
   margin: 0px;
+}
+
+#root {
+  position: relative;
+  min-height: 100%;
 }
 
 a {
@@ -55,16 +64,27 @@ a {
   background-color: #a18ba8;
   border: none;
   width: 110px;
+  margin-right: 15px;
+}
+
+#btnAdvenced {
+  background-color: #a18ba8;
+  border: none;
 }
 
 #bkgdStyle {
-  background-image: url("../imgs/bkgd1.png");
+  /* background-image: url("../imgs/bkgd1.png"), rgba(255, 255, 255, 0.2); */
+  background-image: linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.7) 10%,
+      rgba(255, 255, 255, 0.2) 100%
+    ),
+    url("../imgs/bkgd1.png");
   background-size: cover;
   height: 500px;
 }
+
 #bkgdStyle2 {
-  background-color: rgba(255, 255, 255, 0.336);
-  background-size: cover;
   height: 470px;
 }
 
@@ -102,7 +122,7 @@ a {
   margin-bottom: 0rem;
   padding: 1rem;
   background-color: black;
-  /* position: fixed; */
+  position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;

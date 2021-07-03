@@ -23,14 +23,51 @@
   font-family: Papyrus;
 }
 
-.aboutmeBkgd {
+/* .aboutmeBkgd {
   height: 100%;
   background-image: url("/src/imgs/bkgd2.jpg");
   opacity: 0.8;
   background-size: cover;
+} */
+
+.aboutmeBkgd {
+  background-image: linear-gradient(
+      to left,
+      rgba(255, 255, 255, 0.1) 0%,
+      rgba(255, 255, 255, 0.8) 100%
+    ),
+    url("/src/imgs/bkgd2.jpg");
+  background-size: cover;
+  height: 100%;
 }
 
-.styleForm ,.bolder{
+.styleForm,
+.bolder {
   font-weight: 700;
+}
 
+.userNav {
+  background-color: #cca9d6a6;
+}
+
+.error {
+  color: red;
+}
+.phase-top {
+  justify-content: space-evenly;
+  padding-bottom: 25px;
+}
+
+.phase-top > div {
+  flex-grow: 0;
+  background-color: white;
+  color: black;
+  padding: 5px 15px;
+  margin-left: 5px;
+  border-radius: 50%;
+  border: 2px solid black;
+}
+div.active {
+  color: white;
+  background-color: #b33ea9da;
 }

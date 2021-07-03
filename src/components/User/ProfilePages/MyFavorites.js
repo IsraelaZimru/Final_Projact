@@ -2,8 +2,10 @@ import { Card, Container, Row, Col } from "react-bootstrap";
 import { useEffect } from "react";
 import { useHistory } from "react-router";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faThumbtack } from "@fortawesome/free-solid-svg-icons";
+import { faThumbtack, faEdit } from "@fortawesome/free-solid-svg-icons";
+import ModalDelete from '../ProfilePages/ModalDelete'
 
+// faHeart
 
 const MyFavorites = ({ connected, hasPageAaccess, Recipes, onSelected }) => {
     let history = useHistory();
@@ -30,16 +32,37 @@ const MyFavorites = ({ connected, hasPageAaccess, Recipes, onSelected }) => {
             {myFav.map((item, i) => <Card
                 key={i}
                 text={'white'}
-                style={{ width: '18rem', cursor: "pointer" }}
+                style={{ width: '18rem' }}
                 className="m-3 styleCard"
-                onClick={e => chooseRepice(item)}
             >
-                <Card.Header>{item.name}</Card.Header>
-                <Card.Img variant="top" src={item.pic} height="160px" weidth="286px" />
+                <div
+                    onClick={e => chooseRepice(item)}
+                    style={{ cursor: "pointer" }}
+                >
+                    <Card.Header>{item.name}</Card.Header>
+                    <Card.Img variant="top" src={item.pic} height="160px" weidth="240px" />
 
-                <p className="text-center my-2">
-                    {item.SuitableFor.map((type, i) => <span key={i}>|{type} </span>)}
-                </p>
+                    <p className="text-center my-2">
+                        {item.SuitableFor.map((type, i) => <span key={i}>|{type} </span>)}
+                    </p>
+
+                </div>
+                <Card.Footer className="text-black">
+
+
+                    <Row className="justify-content-center">
+                        <hr></hr>
+                        <Col className="text-center" >
+                            <FontAwesomeIcon onClick={e => chooseRepice(item)} icon={faEdit} style={{ cursor: "pointer" }}
+                            />
+                        </Col>
+                        <Col className="text-center" >
+                            {/* <FontAwesomeIcon onClick={() => alert("Hello")} icon={faTrashAlt} style={{ cursor: "pointer" }} */}
+                            {/* /> */}
+                            <ModalDelete />
+                        </Col>
+                    </Row>
+                </Card.Footer>
             </Card>)}
         </Row>
         <Row className="justify-content-center my-2">

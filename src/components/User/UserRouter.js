@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import { useHistory } from "react-router";
 import { hasPageAaccess } from "../../DAL/api";
 import AboutMe from '../User/ProfilePages/AboutMe'
-
+import UserSecondNavber from "./UserSecondNavber";
 
 const UserRouter = ({ connected, hasPageAaccess }) => {
   let history = useHistory();
@@ -16,29 +16,17 @@ const UserRouter = ({ connected, hasPageAaccess }) => {
   }, [connected])
 
   return <Router >
-    {/* <Navbar bg="dark" variant="dark" className="justify-content-center" activeKey="/home">
-      <Nav className="">
-
-        <Nav.Link
-          style={{ display: connected ? 'block' : 'none' }}
-          className="px-2">
-          <Link className="px-2 mx-4" to="/My_profile">About Me</Link>
-          <Link className="px-2 mx-4" to="/My_NoteBook">My NoteBook</Link>
-          <Link className="px-2 mx-4" to="/My_Recipes">My Recipes</Link>
-        </Nav.Link>
-
-      </Nav>
-    </Navbar> */}
-
 
     <Switch>
       <Route exact path="/My_profile">
         <AboutMe connected={connected} hasPageAaccess={hasPageAaccess} />
       </Route>
+      <UserSecondNavber connected={connected} />
       <Route exact path="/My_NoteBook">
         <NoteBook connected={connected} hasPageAaccess={hasPageAaccess} />
       </Route>
       <Route exact path="/My_Recipes">
+        <UserSecondNavber connected={connected} />
         <MyRecipes connected={connected} hasPageAaccess={hasPageAaccess} />
       </Route>
     </Switch>

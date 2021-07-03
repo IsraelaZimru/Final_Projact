@@ -15,7 +15,7 @@ const AboutMe = ({ connected, hasPageAaccess, onConnect }) => {
         onConnect()
     }
 
-    return <Container fluid className="text-white aboutmeBkgd p-3">
+    return <Container fluid className="aboutmeBkgd p-3">
         <h1 className="display-2 mb-5 bolder"> About me </h1>
         <Col>
             <Form onSubmit={toConnect} className="w-25 styleForm">
@@ -42,8 +42,8 @@ const AboutMe = ({ connected, hasPageAaccess, onConnect }) => {
                         defaultValue="12345" />
                 </Form.Group>
                 <p>Recipes I want to see: (add checkbox...)</p>
-                <Button variant="light" type="submit" className="mr-2"> update </Button>
-                <Button variant="light" type="submit"> Home Page </Button>
+                <Button variant="outline-dark" type="submit" className="mr-2"> update </Button>
+                <Button variant="outline-dark" type="submit"> Home Page </Button>
 
             </Form>
         </Col>
