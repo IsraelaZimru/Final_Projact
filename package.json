@@ -2,7 +2,6 @@
   "name": "final_project",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://israelazimru.github.io/Final_Projact/",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.35",
     "@fortawesome/free-solid-svg-icons": "^5.15.3",

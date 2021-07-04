@@ -1,18 +1,51 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
-// import { useEffect } from "react";
-import { useHistory } from "react-router";
+import { useEffect, useState } from "react";
+import { useHistory, useParams } from "react-router";
 import { Container, Row, Col, Button, Form } from "react-bootstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUtensils } from "@fortawesome/free-solid-svg-icons";
 
 
 
-const RecipeInfo = ({ connected, hasPageAaccess, selectRecipe, onselect }) => {
+const RecipeInfo = ({ connected, hasPageAaccess, onselect }) => {
+    let { id } = useParams()
     let history = useHistory();
+    const [selectRecipe, setSelectRecipe] = useState({
+        name: "",
+        pic: "",
+        addedDate: "",
+        views: 0,
+        likes: 0,
+        userID: "",
+        SuitableFor: [],
+        info: {
+            ingredients: [],
+            instructions: [],
+            preparationTime: 0,
+            CookingTime: 0,
+            discription: ""
+        }
+    })
 
-    // useEffect(() => {
-    //     hasPageAaccess(connected, history)
-    // }, [connected])
+    useEffect(() => {
+        window.scrollTo(0, 0);
+        getRecipe(id)
+    }, [])
+
+    const updateStateRecipe = (data) => {
+        if (data) {
+            setSelectRecipe(prev => data)
+        }
+    }
+    const getRecipe = async (id) => {
+        try {
+            const chosenRecipe = await onselect(id);
+            const getdata = await updateStateRecipe(chosenRecipe)
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
 
     const exit = () => {
         onselect({})

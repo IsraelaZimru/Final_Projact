@@ -1,21 +1,21 @@
-import { Card, Container, Row, Col, Pagination } from "react-bootstrap";
+import { Card, Container, Row, Col, Pagination, ButtonGroup, Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThumbsUp, faEdit, faHeart, faEye } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 
 
-export default function Recipes({ recipeslst, onSelected, isConnected }) {
-
-
+export default function Recipes({ recipeslst, isConnected }) {
     const history = useHistory()
-    const [like, setLike] = useState(true);
+    const [like, setLike] = useState(false); //להכניס לכל יוזר מערך מתכונים אהובים ומתכון ששם או נכנס יוחלף צבעו
 
+
+    const sort = (sortby) => {
+        //
+    }
 
     const chooseRepice = (food) => {
-        // console.log("coose random food");
-        onSelected(food)
-        history.push("/recipe_details")
+        history.push(`/recipe_details/${food.id}`)
     }
 
     let active = 1;
@@ -35,21 +35,28 @@ export default function Recipes({ recipeslst, onSelected, isConnected }) {
     );
 
     return <Container fluid className="py-2">
-        <Row className="justify-content-md-center">
+        <div>
+            <p className="sortRacipes">Sort by :
+                <span onClick={() => sort("likes")}>Most popular</span>|
+                <span onClick={() => sort("date")}>The newest</span></p>
+        </div>
+        <Row className="justify-content-center">
             {recipeslst.map((item, i) => <Card
                 id="myFav"
                 key={i}
+                sm={6}
+                md={4}
                 text={'white'}
                 style={{ width: '22rem', }}
                 className="m-3 styleCard"
             >
                 <Card.Header >
                     <Row>
-                        <Col className="px-1" md={{ span: 4, offset: 0 }}>
+                        <Col className="px-1" md={{ span: 4 }} sx={{ span: 4 }}>
                             {isConnected && <div>
                                 <FontAwesomeIcon icon={faThumbsUp}
                                     style={{ cursor: "pointer" }}
-                                    className="mr-2 ml-2" />
+                                    className={like ? "text-danger mr-2 ml-2" : "mr-2 ml-2"} />
                                 <FontAwesomeIcon icon={faEdit}
                                     style={{ cursor: "pointer" }}
                                     onClick={e => chooseRepice(item)}
@@ -57,14 +64,14 @@ export default function Recipes({ recipeslst, onSelected, isConnected }) {
                             </div>
                             }
                         </Col>
-                        <Col className="px-0" md={{ span: 5, offset: 3 }}>
+                        <Col className="px-0" sx={{ span: 4, offset: 4 }} md={{ span: 4, offset: 4 }} >
                             <FontAwesomeIcon icon={faEye}
                                 className="ml-2 mr-0" />
                             <span className="pl-2">
                                 {item.views}
                             </span>
                             <FontAwesomeIcon icon={faHeart}
-                                style={{ cursor: "pointer" }}
+                                // style={{ cursor: "pointer" }}
                                 className="ml-2 mr-0" />
                             <span className="pl-2">
                                 {item.likes}

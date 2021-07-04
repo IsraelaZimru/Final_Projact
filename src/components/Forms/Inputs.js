@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import { Form, } from 'react-bootstrap';
 
 
-export const MyTextInput = ({ label, ...props }) => {
+export const MyInput = ({ label, ...props }) => {
     // useField() returns [formik.getFieldProps(), formik.getFieldMeta()]
     // which we can spread on <input>. We can use field meta to show an error
     // message if the field is invalid and it has been touched (i.e. visited)
@@ -16,6 +16,7 @@ export const MyTextInput = ({ label, ...props }) => {
         ) : null}
     </Form.Group>
 };
+
 
 export const MyRadios = ({ options, label, ...props }) => {
     // React treats radios and checkbox inputs differently other input types, select, and textarea.

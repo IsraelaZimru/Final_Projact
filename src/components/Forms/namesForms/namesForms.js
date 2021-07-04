@@ -1,32 +1,31 @@
 import { useState } from 'react';
 import ListSection from './listSection';
-import Form from './onlyForm';
+import InstructionsForm from './InstructionsForm';
 
 
 
-function NamesForm(props) {
-    const [names, setNames] = useState(props.names)
+function NamesForm() {
+    const [instructions, setInstructions] = useState([])
     const [newInput, setnewInput] = useState("")
 
     function removeName(myName) {
-        const newLst = names.filter(person => person !== myName);
-        setNames(newLst)
+        // const newLst = names.filter(person => person !== myName);
+        // setNames(newLst)
     }
 
     function catchInput(input) {
         setnewInput(input.value)
     }
 
-    function addName(obj) {
-        setNames([...names, newInput]);
-        props.lastName(newInput)
+    function onAddInstruction(obj) {
+        setInstructions(prev => [...prev, newInput]);
     }
 
 
     return <>
         <div className="col mb-3">
-            <ListSection names={names} removeName={removeName} />
-            <Form onCatchInput={catchInput} onaddName={addName} />
+            <ListSection instructions={instructions} removeName={removeName} />
+            <InstructionsForm onCatchInput={catchInput} onAddInstruction={onAddInstruction} />
         </div>
     </>
 }

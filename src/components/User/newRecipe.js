@@ -3,7 +3,7 @@ import { useHistory } from "react-router";
 import { Button, ListGroup, Container, Col, Row, Form } from 'react-bootstrap';
 import { Formik, Field, ErrorMessage, useField } from 'formik';
 import * as Yup from 'yup'
-import { MyTextInput, MyRadios, MySelect, MyFile } from '../Forms/Inputs'
+import { MyInput, MyRadios, MySelect, MyFile } from '../Forms/Inputs'
 import LstInput from '../Forms/namesForms/parentApp'
 
 
@@ -59,20 +59,20 @@ const NewRecipe = ({ connected, hasPageAaccess }) => {
             }}
         >
             <Form hasValidation>
-                <MyTextInput
+                <MyInput
                     label="Recipe Name:"
                     name="name"
                     type="text"
                     placeholder="Enter a name..."
                 />
 
-                {/* <MyTextInput
+                {/* <MyInput
                     label="Source Name:"
                     name="SourceName"
                     type="text"
                     placeholder="Doe"
                 /> */}
-                <MyTextInput
+                <MyInput
                     label="Source Website:"
                     name="sourceLink"
                     type="url"
@@ -99,7 +99,7 @@ const NewRecipe = ({ connected, hasPageAaccess }) => {
                     label="File">
                 </MyFile>
 
-                <MyTextInput
+                <MyInput
                     label="Description - Will be displayed below the title:"
                     name="description"
                     as="textarea"

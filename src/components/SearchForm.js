@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button, Container, Form, Row, Col, Collapse } from "react-bootstrap";
 
 
-function SearchForm({ connected }) {
+function SearchForm({ connected, userName }) {
     const [open, setOpen] = useState(false);
 
     return <Container fluid id="bkgdStyle">
@@ -12,13 +12,16 @@ function SearchForm({ connected }) {
                     <hr className="hrMain"></hr>
                 </Col>
             </Row>
-            <Row className="justify-content-md-center text-center pt-4" >
-                <Form className=" w-50 pt-2 ">
+            <Row className="justify-content-center text-center pt-4" >
+                <Form className="pt-2 " id="formMedia">
                     {!connected && <h1 className="display-4 mb-3"> Recipes:</h1>}
-                    {connected && <h1 className="display-4 mb-3"> Hi User! find a recipe:</h1>}
+                    {connected && <>
+                        <h1 className="display-4 mb-3 "><span className="optional mx-1"> Hi {userName}!</span>
+                            find a recipe:</h1>
+                    </>}
                     <Collapse in={open}>
                         <div id="example-collapse-text">
-                            {connected && <div ><Form.Label >The recipes are filtered according to the user's choice:</Form.Label>
+                            {connected && <div ><Form.Label >The recipes are filtered according to the user's choices:</Form.Label>
                                 <Form.Group controlId="formBasicCheckbox">
                                     <Form.Check inline type="checkbox" label="XYZ" />
                                     <Form.Check inline type="checkbox" label="XYZ" />
@@ -27,11 +30,7 @@ function SearchForm({ connected }) {
                                 </Form.Group></div>}
                             <div>
                                 {/* <Form.Label > Show me the recipes:</Form.Label> */}
-                                <Form.Group inline controlId="formBasicCheckbox" >
-                                    <Form.Label > Find:</Form.Label>
-                                    <Form.Check className="ml-2" inline type="checkbox" label="Most popular" />
-                                    <Form.Check inline type="checkbox" label="The newest" />
-                                </Form.Group>
+
                                 <Form.Group controlId="formBasicPassword">
                                     <Form.Control type="text" name="ingredients" placeholder="Search by ingredients..." />
                                 </Form.Group>
@@ -39,21 +38,23 @@ function SearchForm({ connected }) {
                         </div>
                     </Collapse>
 
-                    <Form.Group>
+                    <Form.Group >
                         <Form.Control type="text" name="name" placeholder="Search for a recipe..." />
                     </Form.Group>
-                    <Button variant="outline-light" type="submit" id="btnForm">
-                        Search
-                    </Button>
-                    <Button
-                        onClick={() => setOpen(!open)}
-                        aria-controls="example-Collapse-text"
-                        aria-expanded={open}
-                        variant="outline-light"
-                        id="btnAdvenced"
-                    >
-                        Advanced Search
-                    </Button>
+                    <div id="groupBtn">
+                        <Button variant="outline-light" type="submit" id="btnForm">
+                            Search
+                        </Button>
+                        <Button
+                            onClick={() => setOpen(!open)}
+                            aria-controls="example-Collapse-text"
+                            aria-expanded={open}
+                            variant="outline-light"
+                            id="btnAdvenced"
+                        >
+                            Advanced Search
+                        </Button>
+                    </div>
 
                 </Form>
             </Row>

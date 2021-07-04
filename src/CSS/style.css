@@ -21,10 +21,20 @@ a {
   border: 5px solid rgba(0, 0, 0, 0.192);
 }
 
-.navStyle {
+.sortRacipes span {
+  margin-right: 5px;
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+.sortRacipes span:hover {
+  font-weight: bold;
+}
+
+/* .navStyle {
   justify-content: space-between;
   height: 50px;
-}
+} */
 
 .styleMainNav {
   background-color: #dbd9d4;
@@ -118,6 +128,10 @@ a {
   color: white;
 }
 
+#formMedia {
+  width: 50%;
+}
+
 .footer {
   margin-bottom: 0rem;
   padding: 1rem;
@@ -126,6 +140,11 @@ a {
   bottom: 0;
   left: 0;
   width: 100%;
+}
+
+.feedback {
+  font-weight: bold;
+  color: black;
 }
 
 .styleBorder {
@@ -163,4 +182,13 @@ a {
 
 .checkItems label {
   margin-left: 25px;
+}
+
+@media screen and (max-width: 600px) {
+  .optional {
+    display: none;
+  }
+  #formMedia {
+    width: 90vw;
+  }
 }

@@ -36,7 +36,7 @@
       rgba(255, 255, 255, 0.1) 0%,
       rgba(255, 255, 255, 0.8) 100%
     ),
-    url("/src/imgs/bkgd2.jpg");
+    url("/src/imgs/aboutme1.jpg");
   background-size: cover;
   height: 100%;
 }

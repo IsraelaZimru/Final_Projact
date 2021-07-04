@@ -1,6 +1,22 @@
 const fetch = require('node-fetch');
 
-export const recipes = [{
+const fakeUsers = [{
+    email: "wawa@wawa.com",
+    password: "123456",
+    name: "wawa"
+}, {
+    email: "lala@lala.com",
+    password: "2021",
+    name: "lala"
+}, {
+    email: "slzimro@gmail.com",
+    password: "2021",
+    name: "Israela"
+}]
+
+
+const recipes = [{
+    id: 1,
     name: "Meat",
     pic: "https://media-cdn.tripadvisor.com/media/photo-s/18/7b/03/e2/ribsteak.jpg",
     addedDate: "",
@@ -18,6 +34,7 @@ export const recipes = [{
 },
 {
     name: "Garlic and lemon broccoli",
+    id: 2,
     pic: "https://www.10dakot.co.il/wp-content/uploads/2020/12/%E2%80%8F%E2%80%8F20201204_131703-%D7%A2%D7%95%D7%AA%D7%A7.jpg",
     addedDate: "10/10/10",
     views: 7,
@@ -35,6 +52,7 @@ export const recipes = [{
 },
 {
     name: "Cake",
+    id: 3,
     pic: "https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fimg1.cookinglight.timeinc.net%2Fsites%2Fdefault%2Ffiles%2Fstyles%2F4_3_horizontal_-_1200x900%2Fpublic%2F1542062283%2Fchocolate-and-cream-layer-cake-1812-cover.jpg%3Fitok%3DR_xDiShk",
     addedDate: "20/1/12",
     views: 23,
@@ -51,6 +69,7 @@ export const recipes = [{
     }
 }, {
     name: "Meat",
+    id: 4,
     pic: "https://media-cdn.tripadvisor.com/media/photo-s/18/7b/03/e2/ribsteak.jpg",
     addedDate: "",
     views: 7,
@@ -68,6 +87,7 @@ export const recipes = [{
 },
 {
     name: "Garlic and lemon broccoli",
+    id: 5,
     pic: "https://www.10dakot.co.il/wp-content/uploads/2020/12/%E2%80%8F%E2%80%8F20201204_131703-%D7%A2%D7%95%D7%AA%D7%A7.jpg",
     addedDate: "10/10/10",
     views: 71,
@@ -84,6 +104,7 @@ export const recipes = [{
 },
 {
     name: "Cake",
+    id: 6,
     pic: "https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fimg1.cookinglight.timeinc.net%2Fsites%2Fdefault%2Ffiles%2Fstyles%2F4_3_horizontal_-_1200x900%2Fpublic%2F1542062283%2Fchocolate-and-cream-layer-cake-1812-cover.jpg%3Fitok%3DR_xDiShk",
     addedDate: "20/1/12",
     views: 12,
@@ -102,33 +123,34 @@ export const recipes = [{
 
 export function hasPageAaccess(connected, history) {
     if (!connected) {
+        console.log(connected, "connected");
         history.push("/")
     }
 }
 
-
-
 export async function getRecipe() {
-    //get data from server
     return Promise.resolve(recipes)
-    // const data = await fetch('http://localhost:3000/recipes')
-    //     .then(recipes => recipes.json())
-    // .then(rawRecipes => rawRecipes)
-    // .catch(err => [])
-    // return data
 }
 
 
-// const fakeUser = {
-//     email: "wawa@wawa.com",
-//     passward: "12345"
-// }
+export async function checkLoginAccess({ email, password }) {
+    console.log("enter the fun'");
+    try {
+        const data = await fetch(`http://localhost:3100/users/${email}/${password}`)
+            .then(res => res.json())
+            .then(lala => {
+                console.log(lala);
+                return lala[0]
+            })
+            .catch(err => console.log(err))
+        const prase = await data;
+        return prase;
+    } catch (err) {
+        console.log(err);
+    }
+}
 
-// let initialUser = {};
-// (function () {
-//     if (localStorage.getItem("User")) {
-//         const initialUser = JSON.parse(localStorage.getItem("User"));
-//     }
-
-// })()
-
+export function selectedItem(id) {
+    const result = recipes.find(recipe => recipe.id === +id);
+    return Promise.resolve(result);
+}
