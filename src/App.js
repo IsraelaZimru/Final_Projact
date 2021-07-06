@@ -8,6 +8,7 @@ import { Nav, Navbar, ListGroup, Container, NavDropdown } from 'react-bootstrap'
 import Recipes from './components/Recipes';
 import SearchForm from './components/SearchForm';
 import { hasPageAaccess, getRecipe, allUsers } from './DAL/api';
+import { checkingSignUp } from './DAL/utilFun'
 import Login from './components/Login';
 import SignUp from './components/SignUp';
 import MyFavorites from './components/User/ProfilePages/MyFavorites';
@@ -15,7 +16,7 @@ import MyRecipes from './components/User/ProfilePages/MyRecipes';
 import AboutMe from './components/User/ProfilePages/AboutMe';
 import { useState, useEffect } from 'react';
 import NewRecipe from './components/User/newRecipe';
-import { checkLoginAccess, selectedItem } from './DAL/api'
+import { checkLoginAccess, addNewUser, selectedItem } from './DAL/api'
 import logo3 from '../src/imgs/logo3.png'
 import RecipeInfo from '../src/components/RecipeInfo'
 import UserSecondNavber from "./components/User/UserSecondNavber";
@@ -25,7 +26,7 @@ function App() {
   const [showLogin, setShowLogin] = useState(false)
   const [connected, setConnected] = useState(false)
   const [selectedRecipe, setSelectedRecipe] = useState({})
-  const [apiRecipes, setapiRecipes] = useState([]);
+  const [apiRecipes, setApiRecipes] = useState([]);
   const [checkUser, setCheckUser] = useState({
     email: "",
     password: ""
@@ -34,6 +35,9 @@ function App() {
     name: ""
   })
 
+  const [newUser, setNewUser] = useState({});
+
+
   useEffect(() => {
     const checkConnected = JSON.parse(localStorage.getItem("user"))
     if (checkConnected) {
@@ -41,7 +45,7 @@ function App() {
       setUser(prev => checkConnected)
     }
 
-    getRecipe().then(data => setapiRecipes(prev => data))
+    getRecipe().then(data => setApiRecipes(prev => data))
       .catch(err => alert("error", err))
   }, [])
 
@@ -49,6 +53,21 @@ function App() {
     fetchingUser();
     return logOut
   }, [checkUser])
+
+  // useEffect(() => {
+  //   isNewUser()
+  // }, [newUser])
+
+
+  // const isNewUser = async () => {
+  //   try {
+  //     const answerFromDb = await addNewUser(user);
+  //     const importUser = await checkingMatch(answerFromDb);
+  //     await updatingLoginStatus(importUser)
+  //   } catch (err) {
+  //     console.log(err)
+  //   }
+  // }
 
   const fetchingUser = async () => {
     try {
@@ -81,6 +100,11 @@ function App() {
     }
   }
 
+
+  const onSort = (type) => { //notWorking
+    const sortedArr = apiRecipes.sort((a, b) => a[type] > b[type]);
+    setApiRecipes(prev => sortedArr)
+  }
 
   const logOut = () => {
     localStorage.removeItem("user");
@@ -173,13 +197,13 @@ function App() {
       <Switch>
         <Route exact path="/" >
           <SearchForm connected={connected} userName={user.name} />
-          <Recipes recipeslst={apiRecipes} isConnected={connected} />
+          <Recipes recipeslst={apiRecipes} isConnected={connected} onSort={onSort} />
         </Route>
         <Route exact path="/Aaa">
           <Aaa />
         </Route>
         <Route exact path="/Sign_Up">
-          <SignUp connected={connected} hasPageAaccess={hasPageAaccess} />
+          <SignUp connected={connected} hasPageAaccess={hasPageAaccess} checkingSignUp={checkingSignUp} />
         </Route>
         <Route exact path="/newRecipe">
           {/* <UserSecondNavber connected={connected} /> */}

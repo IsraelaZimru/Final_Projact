@@ -39,6 +39,7 @@ function Login({ showLogin, onClose, connected, userLoginHandler }) {
         const info = { email: details.email.value, password: details.password.value }
         userLoginHandler(prev => info)
 
+
         if (connected) {
             onClose()
         } else {
@@ -67,7 +68,7 @@ function Login({ showLogin, onClose, connected, userLoginHandler }) {
         <Card
             id="loginCard">
             <Alert show={show} variant="secondary" onClose={() => setShow(false)}>
-                worng email or password !
+                worng email or password ! try again.
             </Alert>
             <Form noValidate validated={validated} onSubmit={handleSubmit}>
                 <h1 className="display-4 text-center">Login</h1>
@@ -80,7 +81,7 @@ function Login({ showLogin, onClose, connected, userLoginHandler }) {
                             onBlur={e => validation(e.target)}
                             onChange={(e) => validation(e.target)}
                             value={details.email.value}
-                            placeholder="Enter email"
+                            placeholder="Enter email..."
                             isInvalid={details.email.isInVaild}
                             required
                         />
@@ -99,7 +100,7 @@ function Login({ showLogin, onClose, connected, userLoginHandler }) {
                             onBlur={e => validation(e.target)}
                             onChange={(e) => validation(e.target)}
                             value={details.password.value}
-                            placeholder="Password"
+                            placeholder="Enter password..."
                             isInvalid={details.password.isInVaild}
                             required
                         />

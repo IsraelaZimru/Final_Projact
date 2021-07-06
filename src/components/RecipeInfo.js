@@ -7,7 +7,7 @@ import { faUtensils } from "@fortawesome/free-solid-svg-icons";
 
 
 
-const RecipeInfo = ({ connected, hasPageAaccess, onselect }) => {
+const RecipeInfo = ({ hasPageAaccess, onselect }) => {
     let { id } = useParams()
     let history = useHistory();
     const [selectRecipe, setSelectRecipe] = useState({

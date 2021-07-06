@@ -5,7 +5,7 @@ import { faThumbsUp, faEdit, faHeart, faEye } from "@fortawesome/free-solid-svg-
 import { useState } from "react";
 
 
-export default function Recipes({ recipeslst, isConnected }) {
+export default function Recipes({ recipeslst, isConnected, onSort }) {
     const history = useHistory()
     const [like, setLike] = useState(false); //להכניס לכל יוזר מערך מתכונים אהובים ומתכון ששם או נכנס יוחלף צבעו
 
@@ -37,7 +37,7 @@ export default function Recipes({ recipeslst, isConnected }) {
     return <Container fluid className="py-2">
         <div>
             <p className="sortRacipes">Sort by :
-                <span onClick={() => sort("likes")}>Most popular</span>|
+                <span onClick={() => { onSort("likes"); console.log("clicked") }}>Most popular</span>|
                 <span onClick={() => sort("date")}>The newest</span></p>
         </div>
         <Row className="justify-content-center">
@@ -87,8 +87,7 @@ export default function Recipes({ recipeslst, isConnected }) {
                     <Card.Body>
                         <Card.Title>{item.name}</Card.Title>
                         <Card.Text>
-                            Some quick example text to build on the card title and make up the bulk
-                            of the card's content.
+                            {item.description}
                         </Card.Text>
                     </Card.Body>
                 </div>
@@ -97,5 +96,5 @@ export default function Recipes({ recipeslst, isConnected }) {
         <Row className="justify-content-md-center">
             {paginationBasic}
         </Row>
-    </Container>
+    </Container >
 }
