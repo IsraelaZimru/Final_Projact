@@ -1,9 +1,91 @@
 import { useState } from "react";
-import { Button, Container, Form, Row, Col, Collapse } from "react-bootstrap";
+import { Button, Container, Form, Row, Col, Collapse, ListGroup } from "react-bootstrap";
 
 
-function SearchForm({ connected, userName }) {
+function SearchForm({ connected, userName, getRecipeNames, getingredientsNames, setSelectedIng }) {
     const [open, setOpen] = useState(false);
+
+    const [details, setDetails] = useState({
+        recipeName: { value: "" },
+        ingredient: { value: "" },
+        recipeNamelst: [],
+        ingredientlst: []
+    })
+
+    const findName = (lst, value) => lst.map(item => item.name).filter((item, i) => {
+        return item.toLowerCase().startsWith(value.toLowerCase())
+    });
+
+
+    const updateValue = (name, value) => {
+        if (name === "ingredient") {
+            setSelectedIng(prev => [...prev, value])
+        }
+        setDetails(prev => ({ ...prev, [name]: { ...prev[name], value: "" }, [name + "lst"]: [] }))
+    }
+
+    const updateDropDown = async ({ name, value }) => {
+        try {
+            const apiFun = name === "recipeName" ? getRecipeNames : getingredientsNames;
+            // const newNamesLst = await getRecipeNames()
+            const newNamesLst = await apiFun()
+            // console.log("newNamesLst", newNamesLst);
+            const filerOne = await findName(newNamesLst, value)
+            // console.log("filerOne", filerOne);
+            const filterd = value ? filerOne : [];
+            // console.log(filterd);
+            setDetails(prev => ({ ...prev, [name]: { ...prev[name], value }, [name + "lst"]: filterd }))
+        } catch (err) {
+            alert(err)
+        }
+    }
+    // const handleSubmit = (event) => {
+    //     const checkErrors = [];
+    //     for (const key in details) {
+    //         if (Object.hasOwnProperty.call(details, key)) {
+    //             checkErrors.push(validation({ name: key, value: details[key].value }))
+
+    //         }
+    //     }
+
+    //     for (const error of checkErrors) { //if there is error msg ->submit don't happens!
+    //         if (error) {
+    //             setValidated(false)
+    //             event.preventDefault();
+    //             event.stopPropagation();
+    //             return;
+    //         }
+    //     }
+
+    //     setValidated(true);
+    //     event.preventDefault();
+    //     const info = { email: details.email.value, password: details.password.value }
+    //     userLoginHandler(prev => info)
+
+
+    //     if (connected) {
+    //         onClose()
+    //     } else {
+    //         setValidated(false);
+    //         setShow(true)
+    //     }
+    // };
+
+    // function validation({ name, value }) {
+    //     const errorMsg = [];
+    //     let isMsgShowing = false;
+    //     if (value === "") {
+    //         isMsgShowing = true
+    //         errorMsg.push(`${name} is required.`)
+    //     } else if (details[name].isRequired && (details[name].pattern).test(value)) {
+    //         isMsgShowing = false
+    //     } else {
+    //         errorMsg.push(`${name} is not valid.`)
+    //         isMsgShowing = true
+    //     }
+    //     setDetails(prevDetails => ({ ...prevDetails, [name]: { ...prevDetails[name], value, isInVaild: isMsgShowing, msg: errorMsg } }))
+    //     return errorMsg[0] //importent for sumbit form!!!
+    // }
 
     return <Container fluid id="bkgdStyle">
         <div id="bkgdStyle2">
@@ -31,16 +113,45 @@ function SearchForm({ connected, userName }) {
                             <div>
                                 {/* <Form.Label > Show me the recipes:</Form.Label> */}
 
-                                <Form.Group controlId="formBasicPassword">
-                                    <Form.Control type="text" name="ingredients" placeholder="Search by ingredients..." />
+                                <Form.Group
+                                    controlId="formBasicPassword"
+                                >
+                                    <Form.Control
+                                        type="text"
+                                        name="ingredient"
+                                        value={details.ingredient.value}
+                                        onChange={e => updateDropDown(e.target)}
+                                        onblur={e => updateDropDown(e.target)}
+                                        placeholder="Search by ingredients..." />
+                                    <ListGroup
+                                    >
+                                        {details.ingredientlst.map((name, i) => <ListGroup.Item
+                                            key={i}
+                                            onClick={() => updateValue("ingredient", name)}
+                                        >
+                                            {name}</ListGroup.Item>)}
+                                    </ListGroup>
                                 </Form.Group>
                             </div>
                         </div>
                     </Collapse>
 
                     <Form.Group >
-                        <Form.Control type="text" name="name" placeholder="Search for a recipe..." />
+                        <Form.Control
+                            type="text"
+                            name="recipeName"
+                            onChange={e => updateDropDown(e.target)}
+                            onblur={e => updateDropDown(e.target)}
+                            value={details.recipeName.value}
+                            placeholder="Search for a recipe..." />
+                        <ListGroup>
+                            {details.recipeNamelst.map((name, i) => <ListGroup.Item
+                                onClick={() => updateValue("recipeName", name)}
+                                key={i}
+                            >{name}</ListGroup.Item>)}
+                        </ListGroup>
                     </Form.Group>
+
                     <div id="groupBtn">
                         <Button variant="outline-light" type="submit" id="btnForm">
                             Search

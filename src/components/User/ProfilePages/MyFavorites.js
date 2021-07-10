@@ -43,7 +43,7 @@ const MyFavorites = ({ connected, hasPageAaccess, Recipes, onSelected }) => {
                     <Card.Img variant="top" src={item.pic} height="160px" weidth="240px" />
 
                     <p className="text-center my-2">
-                        {item.SuitableFor && item.SuitableFor.map((type, i) => <span key={i}>|{type} </span>)}
+                        {item.allCategories && item.allCategories.map((type, i) => <span key={i}>| {type} </span>)}
                     </p>
 
                 </div>

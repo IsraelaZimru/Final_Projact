@@ -15,6 +15,7 @@ function SignUp({ hasPageAaccess, connected, checkingSignUp }) {
         firstName: { isRequired: true, pattern: /\w{2,}/, msg: [], value: "", isInVaild: false },
         lastName: { isRequired: true, pattern: /\w{2,}/, msg: [], value: "", isInVaild: false },
         password: { isRequired: true, pattern: /[\s\S]{2,}/, msg: [], value: "", isInVaild: false },
+        // passwordVerification: { isRequired: true, pattern: /[\s\S]{2,}/, msg: [], value: "", isInVaild: false },
     })
 
     const handleSubmit = (event) => {

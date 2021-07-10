@@ -1,4 +1,4 @@
-import { addNewUser } from './api'
+import { addNewUser, getRecipeNames } from './api'
 
 export const checkingSignUp = async (setValidated, setShow, details) => {
     window.scrollTo(0, 0);
@@ -16,7 +16,7 @@ export const checkingSignUp = async (setValidated, setShow, details) => {
 
 
 
-
+// export const get
 // export const checkingSignUp = async (setValidated, setShow, details) => {
 //     window.scrollTo(0, 0);
 //     const result = fakeUsers.find(user => user.email === details.email.value);

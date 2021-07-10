@@ -82,6 +82,14 @@ a {
   border: none;
 }
 
+#msg404 {
+  background-image: url("../imgs/404msg.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 300px;
+  /* width: 600px; */
+}
+
 #bkgdStyle {
   /* background-image: url("../imgs/bkgd1.png"), rgba(255, 255, 255, 0.2); */
   background-image: linear-gradient(

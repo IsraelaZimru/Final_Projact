@@ -8,7 +8,7 @@ import ModalDelete from '../ProfilePages/ModalDelete'
 const MyRecipes = ({ connected, hasPageAaccess, Recipes, onSelected }) => {
     let history = useHistory();
     // const myFav = [] // chheckig default msg...
-    const myFav = Recipes.slice(0, 2) || [];
+    const myFav = Recipes || [];
 
     useEffect(() => {
         hasPageAaccess(connected, history)
@@ -41,7 +41,7 @@ const MyRecipes = ({ connected, hasPageAaccess, Recipes, onSelected }) => {
                     <Card.Img variant="top" src={item.pic} height="160px" weidth="240px" />
 
                     <p className="text-center my-2">
-                        {item.SuitableFor && item.SuitableFor.map((type, i) => <span key={i}>|{type} </span>)}
+                        {item.allCategories && item.allCategories.map((type, i) => <span key={i}>|{type} </span>)}
                     </p>
 
                 </div>

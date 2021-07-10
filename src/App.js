@@ -7,7 +7,7 @@ import { BrowserRouter as Router, Switch, Route, Link, useHistory } from "react-
 import { Nav, Navbar, ListGroup, Container, NavDropdown } from 'react-bootstrap';
 import Recipes from './components/Recipes';
 import SearchForm from './components/SearchForm';
-import { hasPageAaccess, getRecipe, allUsers } from './DAL/api';
+import { hasPageAaccess, getRecipe, allUsers, getRecipeNames, getingredientsNames, updateUserInfo } from './DAL/api';
 import { checkingSignUp } from './DAL/utilFun'
 import Login from './components/Login';
 import SignUp from './components/SignUp';
@@ -16,7 +16,7 @@ import MyRecipes from './components/User/ProfilePages/MyRecipes';
 import AboutMe from './components/User/ProfilePages/AboutMe';
 import { useState, useEffect } from 'react';
 import NewRecipe from './components/User/newRecipe';
-import { checkLoginAccess, addNewUser, selectedItem } from './DAL/api'
+import { checkLoginAccess, addNewUser, selectedItem, getDetaildsFromDb } from './DAL/api'
 import logo3 from '../src/imgs/logo3.png'
 import RecipeInfo from '../src/components/RecipeInfo'
 import UserSecondNavber from "./components/User/UserSecondNavber";
@@ -35,7 +35,7 @@ function App() {
     name: ""
   })
 
-  const [newUser, setNewUser] = useState({});
+  const [selectedIng, setSelectedIng] = useState([]);
 
 
   useEffect(() => {
@@ -90,11 +90,12 @@ function App() {
   const updatingLoginStatus = importUser => {
     console.log("importUser", importUser);
     if (importUser) {
-      console.log(`have a match user -${importUser.name}`, importUser);
+      // console.log(`have a match user -${importUser.name}`, importUser);
       setConnected(true);
       setUser(prev => importUser);
       localStorage.setItem("user", JSON.stringify(importUser))
-      displayLogin()
+      // displayLogin()
+      setShowLogin(false)
     } else {
       console.log('no match');
     }
@@ -196,12 +197,12 @@ function App() {
 
       <Switch>
         <Route exact path="/" >
-          <SearchForm connected={connected} userName={user.name} />
-          <Recipes recipeslst={apiRecipes} isConnected={connected} onSort={onSort} />
+          <SearchForm connected={connected} userName={user.name} getRecipeNames={getRecipeNames} getingredientsNames={getingredientsNames} setSelectedIng={setSelectedIng} />
+          <Recipes recipeslst={apiRecipes} isConnected={connected} onSort={onSort} selectedIng={selectedIng} setSelectedIng={setSelectedIng} />
         </Route>
-        <Route exact path="/Aaa">
+        {/* <Route exact path="/Aaa">
           <Aaa />
-        </Route>
+        </Route> */}
         <Route exact path="/Sign_Up">
           <SignUp connected={connected} hasPageAaccess={hasPageAaccess} checkingSignUp={checkingSignUp} />
         </Route>
@@ -221,12 +222,13 @@ function App() {
         </Route>
         <Route exact path="/About_Me">
           <UserSecondNavber connected={connected} />
-          <AboutMe connected={connected} hasPageAaccess={hasPageAaccess} onConnect={switchUser} />
+          <AboutMe connected={connected} hasPageAaccess={hasPageAaccess} updateUserInfo={updateUserInfo} getDetaildsFromDb={getDetaildsFromDb} userLoginHandler={userLoginHandler} />
         </Route>
         <Route exact path="/My_Recipes">
           <UserSecondNavber connected={connected} />
           <MyRecipes connected={connected} hasPageAaccess={hasPageAaccess} Recipes={apiRecipes} onSelected={setSelectedRecipe} />
         </Route>
+        <Route component={Aaa} />
       </Switch>
       <div style={{ height: "65px" }}>
         <div className="footer text-white text-center mb-0">

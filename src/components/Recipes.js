@@ -1,15 +1,18 @@
-import { Card, Container, Row, Col, Pagination, ButtonGroup, Button } from "react-bootstrap";
+import { Card, Container, Row, Col, Pagination, ButtonGroup, Button, ListGroup } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faThumbsUp, faEdit, faHeart, faEye } from "@fortawesome/free-solid-svg-icons";
+import { faThumbsUp, faEdit, faHeart, faEye, faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 
 
-export default function Recipes({ recipeslst, isConnected, onSort }) {
+export default function Recipes({ recipeslst, isConnected, onSort, selectedIng, setSelectedIng }) {
     const history = useHistory()
     const [like, setLike] = useState(false); //להכניס לכל יוזר מערך מתכונים אהובים ומתכון ששם או נכנס יוחלף צבעו
 
-
+    const closeHandler = (ing) => {
+        const temp = selectedIng.filter(name => name !== ing)
+        setSelectedIng(prev => temp)
+    };
     const sort = (sortby) => {
         //
     }
@@ -40,6 +43,15 @@ export default function Recipes({ recipeslst, isConnected, onSort }) {
                 <span onClick={() => { onSort("likes"); console.log("clicked") }}>Most popular</span>|
                 <span onClick={() => sort("date")}>The newest</span></p>
         </div>
+        <ListGroup horizontal>
+            {!!selectedIng.length && selectedIng.map((ing, i) => (<ListGroup.Item key={i}>
+                <FontAwesomeIcon icon={faTimesCircle}
+                    style={{ cursor: "pointer" }}
+                    onClick={() => closeHandler(ing)}
+                    className={like ? "text-danger mr-2 ml-2" : "mr-2 ml-2"} />
+                {ing}
+            </ListGroup.Item>))}
+        </ListGroup>
         <Row className="justify-content-center">
             {recipeslst.map((item, i) => <Card
                 id="myFav"
@@ -84,12 +96,17 @@ export default function Recipes({ recipeslst, isConnected, onSort }) {
                     style={{ cursor: "pointer" }}
                 >
                     <Card.Img variant="top" src={item.pic} height="160px" weidth="286px" />
-                    <Card.Body>
-                        <Card.Title>{item.name}</Card.Title>
-                        <Card.Text>
-                            {item.description}
-                        </Card.Text>
-                    </Card.Body>
+                    {/* <Card.Body> */}
+                    <Card.Title className="text-center">{item.name}</Card.Title>
+                    <Card.Text className="text-center">
+                        {item.description}
+                    </Card.Text>
+                    {/* </Card.Body> */}
+                    <Card.Footer className="text-black">
+                        <p className="text-center my-2">
+                            {item.allCategories && item.allCategories.map((type, i) => <span key={i}>| {type} </span>)}
+                        </p>
+                    </Card.Footer>
                 </div>
             </Card>)}
         </Row>
