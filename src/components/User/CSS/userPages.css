@@ -7,6 +7,33 @@
   width: 500px;
   height: 250px;
 }
+/* #msgNoIngredient {
+
+  border-radius: 50%;
+  border-style: dashed;
+} */
+
+#formAlignitem {
+  align-items: center;
+  margin: auto auto;
+}
+#noIngredient {
+  background-image: url("../../../imgs/cheff5.png");
+  height: 120px;
+  width: 140px;
+  margin: auto;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#noIngredient2 {
+  background-image: url("../../../imgs/cheff8.jpg");
+  height: 120px;
+  width: 140px;
+  margin: auto;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
 
 #msgDefault {
   padding: 40px 30px;
@@ -17,6 +44,10 @@
   background-color: rgba(0, 0, 0, 0.397);
   width: 400px;
   height: 200px;
+}
+
+#diplayZ {
+  /* z-index: 3000; */
 }
 
 .h1font {
@@ -30,6 +61,16 @@
   background-size: cover;
 } */
 
+.bkgdImg{
+  background-image:url("../../../imgs/hatss.jpg");
+  background-size: cover;
+  /* height: 100%; */
+}
+.categoriesDietsErrMsg {
+  font-weight: bold;
+  /* color: blue; */
+  /* margin-top: 4px; */
+}
 .aboutmeBkgd {
   background-image: linear-gradient(
       to left,

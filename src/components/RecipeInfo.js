@@ -75,8 +75,8 @@ const RecipeInfo = ({ hasPageAaccess, onselect }) => {
                     <Button variant="outline-dark" onClick={exit}>return to Home Page</Button>
                 </div>
             </Col>
-            <Col lg={7} className=" mx-0 px-0">
-                <img alt="food pic" src={selectRecipe.image} style={{ height: 'inherit', width: 'inherit' }}></img>
+            <Col lg={7} className=" mx-0 px-0 siz">
+                <img alt="food pic" src={selectRecipe.image} style={{ height: '100vh', width: 'inherit' }}></img>
             </Col>
         </Row>
         <Row className="styleRow justify-content-md-center text-center p-3">
@@ -143,11 +143,6 @@ const RecipeInfo = ({ hasPageAaccess, onselect }) => {
             </div>
         </Row>
 
-        {/* 
-        <Row>
-            <h1 className="display-3">Comments section</h1>
-
-        </Row> */}
     </Container>
 }
 

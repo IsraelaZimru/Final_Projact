@@ -13,7 +13,7 @@ import Login from './components/Login';
 import SignUp from './components/SignUp';
 import MyFavorites from './components/User/ProfilePages/MyFavorites';
 import MyRecipes from './components/User/ProfilePages/MyRecipes';
-import AboutMe from './components/User/ProfilePages/AboutMe';
+import UserProfile from './components/User/ProfilePages/UserProfile';
 import { useState, useEffect } from 'react';
 import NewRecipe from './components/User/newRecipe';
 import { checkLoginAccess, addNewUser, selectedItem, getDetaildsFromDb } from './DAL/api'
@@ -21,6 +21,9 @@ import logo3 from '../src/imgs/logo3.png'
 import RecipeInfo from '../src/components/RecipeInfo'
 import UserSecondNavber from "./components/User/UserSecondNavber";
 import Aaa from './components/User/ProfilePages/aaa';
+import Phase2 from './components/Forms/Phase2';
+import Phase3 from './components/Forms/Phase3';
+import Phase4 from './components/Forms/Phase4';
 
 function App() {
   const [showLogin, setShowLogin] = useState(false)
@@ -153,7 +156,7 @@ function App() {
             </Nav.Link>
 
             <Nav.Link style={{ display: connected ? 'block' : 'none' }}>
-              <Link to="/newRecipe">Add New Recipe</Link>
+              <Link to="/newRecipe_step1">Add New Recipe</Link>
             </Nav.Link>
             <Nav.Link style={{ display: connected ? 'block' : 'none' }}>
               <Link onClick={logOut}>Logout</Link>
@@ -168,7 +171,7 @@ function App() {
             id="styleIcon" />
           <ListGroup className="dropDownUser">
             <ListGroup.Item>
-              <Link className="px-2 mx-4" to="/About_Me">About Me</Link>
+              <Link className="px-2 mx-4" to="/User_Profile">User Profile</Link>
             </ListGroup.Item>
             <ListGroup.Item>
               <Link className="px-2 mx-4" to="/MyFavorites">My Favorites</Link>
@@ -177,7 +180,7 @@ function App() {
               <Link className="px-2 mx-4" to="/My_Recipes">My Recipes</Link>
             </ListGroup.Item>
             <ListGroup.Item>
-              <Link className="px-2 mx-4" to="/newRecipe">Add New Recipe</Link>
+              <Link className="px-2 mx-4" to="/newRecipe_step1">Add New Recipe</Link>
             </ListGroup.Item>
             <ListGroup.Item>
               <Link className="px-2 mx-3" onClick={switchUser}>Log-out</Link>
@@ -200,19 +203,18 @@ function App() {
           <SearchForm connected={connected} userName={user.name} getRecipeNames={getRecipeNames} getingredientsNames={getingredientsNames} setSelectedIng={setSelectedIng} />
           <Recipes recipeslst={apiRecipes} isConnected={connected} onSort={onSort} selectedIng={selectedIng} setSelectedIng={setSelectedIng} />
         </Route>
-        {/* <Route exact path="/Aaa">
-          <Aaa />
-        </Route> */}
         <Route exact path="/Sign_Up">
           <SignUp connected={connected} hasPageAaccess={hasPageAaccess} checkingSignUp={checkingSignUp} />
         </Route>
-        <Route exact path="/newRecipe">
-          {/* <UserSecondNavber connected={connected} /> */}
+        <Route exact path="/newRecipe_step1">
           <NewRecipe connected={connected} hasPageAaccess={hasPageAaccess} />
         </Route>
-        {/* <Route exact path="/My_profile">
-          <UserRouter connected={connected} hasPageAaccess={hasPageAaccess} />
-        </Route> */}
+        <Route exact path="/newRecipe_step2">
+          <Phase2 />
+        </Route>
+        <Route exact path="/newRecipe_step3">
+          <Phase3 />
+        </Route>
         <Route exact path="/recipe_details/:id">
           <RecipeInfo connected={connected} hasPageAaccess={hasPageAaccess} onselect={selectedItem} />
         </Route>
@@ -220,14 +222,19 @@ function App() {
           <UserSecondNavber connected={connected} />
           <MyFavorites connected={connected} hasPageAaccess={hasPageAaccess} Recipes={apiRecipes} onSelected={setSelectedRecipe} />
         </Route>
-        <Route exact path="/About_Me">
+        <Route exact path="/User_Profile">
           <UserSecondNavber connected={connected} />
-          <AboutMe connected={connected} hasPageAaccess={hasPageAaccess} updateUserInfo={updateUserInfo} getDetaildsFromDb={getDetaildsFromDb} userLoginHandler={userLoginHandler} />
+          <UserProfile connected={connected} hasPageAaccess={hasPageAaccess} updateUserInfo={updateUserInfo} getDetaildsFromDb={getDetaildsFromDb} userLoginHandler={userLoginHandler} />
         </Route>
         <Route exact path="/My_Recipes">
           <UserSecondNavber connected={connected} />
           <MyRecipes connected={connected} hasPageAaccess={hasPageAaccess} Recipes={apiRecipes} onSelected={setSelectedRecipe} />
         </Route>
+
+        <Route exact path="/Phase4/:id">
+          <Phase4 />
+        </Route>
+
         <Route component={Aaa} />
       </Switch>
       <div style={{ height: "65px" }}>

@@ -1,8 +1,15 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button, Container, Form, Row, Col, Collapse, ListGroup } from "react-bootstrap";
 
 
 function SearchForm({ connected, userName, getRecipeNames, getingredientsNames, setSelectedIng }) {
+   
+   
+    useEffect(()=>{
+    window.scrollTo(0, 0)
+    } 
+,[])
+    
     const [open, setOpen] = useState(false);
 
     const [details, setDetails] = useState({
@@ -103,13 +110,13 @@ function SearchForm({ connected, userName, getRecipeNames, getingredientsNames, 
                     </>}
                     <Collapse in={open}>
                         <div id="example-collapse-text">
-                            {connected && <div ><Form.Label >The recipes are filtered according to the user's choices:</Form.Label>
+                            {/* {connected && <div ><Form.Label >The recipes are filtered according to the user's choices:</Form.Label>
                                 <Form.Group controlId="formBasicCheckbox">
                                     <Form.Check inline type="checkbox" label="XYZ" />
                                     <Form.Check inline type="checkbox" label="XYZ" />
                                     <Form.Check inline type="checkbox" label="XYZ" />
                                     <Form.Check inline type="checkbox" label="XYZ" />
-                                </Form.Group></div>}
+                                </Form.Group></div>} */}
                             <div>
                                 {/* <Form.Label > Show me the recipes:</Form.Label> */}
 
@@ -117,14 +124,14 @@ function SearchForm({ connected, userName, getRecipeNames, getingredientsNames, 
                                     controlId="formBasicPassword"
                                 >
                                     <Form.Control
+                                        autocomplete="off"
                                         type="text"
                                         name="ingredient"
                                         value={details.ingredient.value}
                                         onChange={e => updateDropDown(e.target)}
                                         onblur={e => updateDropDown(e.target)}
                                         placeholder="Search by ingredients..." />
-                                    <ListGroup
-                                    >
+                                    <ListGroup >
                                         {details.ingredientlst.map((name, i) => <ListGroup.Item
                                             key={i}
                                             onClick={() => updateValue("ingredient", name)}
@@ -139,6 +146,7 @@ function SearchForm({ connected, userName, getRecipeNames, getingredientsNames, 
                     <Form.Group >
                         <Form.Control
                             type="text"
+                            autocomplete="off"
                             name="recipeName"
                             onChange={e => updateDropDown(e.target)}
                             onblur={e => updateDropDown(e.target)}

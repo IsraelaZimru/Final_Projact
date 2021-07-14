@@ -5,7 +5,7 @@ import MyRecipes from './ProfilePages/MyRecipes';
 import { useEffect } from "react";
 import { useHistory } from "react-router";
 import { hasPageAaccess } from "../../DAL/api";
-import AboutMe from '../User/ProfilePages/AboutMe'
+import UserProfile from '../User/ProfilePages/UserProfile'
 import UserSecondNavber from "./UserSecondNavber";
 
 const UserRouter = ({ connected, hasPageAaccess }) => {
@@ -18,8 +18,8 @@ const UserRouter = ({ connected, hasPageAaccess }) => {
   return <Router >
 
     <Switch>
-      <Route exact path="/My_profile">
-        <AboutMe connected={connected} hasPageAaccess={hasPageAaccess} />
+      <Route exact path="/UserProfile">
+        <UserProfile connected={connected} hasPageAaccess={hasPageAaccess} />
       </Route>
       <UserSecondNavber connected={connected} />
       <Route exact path="/My_NoteBook">

@@ -1,4 +1,11 @@
-const fetch = require('node-fetch');
+import axios from 'axios';
+import fetch from 'node-fetch';
+
+axios.defaults.baseURL = 'http://localhost:3100';
+axios.defaults.withCredentials = true;
+axios.defaults.headers['Access-Control-Allow-Origin'] = "http://localhost:3100";
+// const fetcher = require('./fetcher');
+
 
 export const fakeUsers = [{
     email: "wawa@wawa.com",
@@ -112,6 +119,45 @@ const recipes = [{
 }
 ]
 
+
+export const ings = [
+    {
+        id: 1,
+        name: "salt"
+    },
+    {
+        id: 2,
+        name: "sisi"
+    },
+    {
+        id: 3,
+        name: "sala"
+    },
+    {
+        id: 4,
+        name: "sqqq"
+    },
+]
+
+export const fakeUnits = [
+    {
+        id: 1,
+        name: "cup"
+    },
+    {
+        id: 2,
+        name: "coco"
+    },
+    {
+        id: 3,
+        name: "coqcq"
+    },
+    {
+        id: 4,
+        name: "cucucu"
+    },
+]
+
 export function hasPageAaccess(connected, history) {
     if (!connected) {
         console.log(connected, "connected");
@@ -147,24 +193,16 @@ export async function getingredientsNames() {
 }
 
 
+
+
+
 export async function checkLoginAccess({ email, password }) {
-    // console.log("enter the fun'");
     try {
-        const data = await fetch(`http://localhost:3100/users`, {
-            method: 'POST',
-            headers: { 'Content-Type': "application/json" },
-            body: JSON.stringify({ email, password })
-        })
-            .then(res => res.json())
-            .then(userInfo => {
-                // console.log(userInfo);
-                return userInfo[0]
-            })
-            .catch(err => console.log(err))
-        const prase = await data;
-        return prase;
+        const result = await axios.post('/users/login', { email, password });
+        // console.log('axios result', result);
+        return result.data;
     } catch (err) {
-        console.log(err);
+        console.log('login error', err);
     }
 }
 
@@ -207,7 +245,7 @@ export async function selectedItem(id) {
         const data = await result.json();
         console.log("result", data);
         const recipe = data[0];
-        recipe.image = `http://localhost:3100/${recipe.image}`
+        recipe.image = recipe.image ? `http://localhost:3100/${recipe.image}` : "";
         return recipe;
     } catch (err) {
         console.log("err.cant fetch")
@@ -243,3 +281,39 @@ export async function updateUserInfo({ id, ...rest }) {
         console.log(err);
     }
 }
+
+export async function setNewRecipe(data, image) {
+    try {
+        const response = await axios.post("/addNewRecipe", data);
+        if (response.data) {
+            // image.append("image", response.data)
+            await axios.post(`/recipes/upload/${response.data}`, image);
+            console.log(response.data);
+            return response.data;
+        } else {
+            throw new Error("can't add new recipe or image")
+        }
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+export async function getCatsAndDiets() {
+    const response = await axios.get(`/information`);
+    // const onlyNames = await response.json();
+    return response.data;
+}
+
+export async function isRecipeNameAvailable(name) {
+    const response = await axios.get(`/information/RecipeNameAvailable/${name}`);
+    console.log("RecipeNameAvailable-", response);
+    return response.data;
+}
+
+export async function unitsAndIngs(name) {
+    const response = await axios.get(`/information/unitsAndIngs`);
+    // console.log("RecipeNameAvailable-", response);
+    return response.data;
+}
+
+

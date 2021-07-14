@@ -3,7 +3,7 @@ import { useHistory, useParams } from "react-router";
 import { Container, Row, Alert, Col, Form, Button, InputGroup } from 'react-bootstrap';
 
 
-const AboutMe = ({ connected, hasPageAaccess, updateUserInfo, getDetaildsFromDb, userLoginHandler }) => {
+const UserProfile = ({ connected, hasPageAaccess, updateUserInfo, getDetaildsFromDb, userLoginHandler }) => {
     let history = useHistory();
     const [validated, setValidated] = useState(false);
     const [show, setShow] = useState(false);
@@ -100,7 +100,7 @@ const AboutMe = ({ connected, hasPageAaccess, updateUserInfo, getDetaildsFromDb,
     }
 
     return <Container fluid className="aboutmeBkgd p-3">
-        <h1 className="display-2 mb-5 bolder"> About me </h1>
+        <h1 className="display-2 mb-5 bolder"> My Profile </h1>
         <Alert show={show} variant="secondary" onClose={() => setShow(false)}>
             User email already exist. Please try with another email.
         </Alert>
@@ -194,4 +194,4 @@ const AboutMe = ({ connected, hasPageAaccess, updateUserInfo, getDetaildsFromDb,
     </Container >
 }
 
-export default AboutMe;
+export default UserProfile;

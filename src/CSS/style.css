@@ -163,6 +163,17 @@ a {
   border-bottom-style: dotted;
 }
 
+
+.siz{
+  /* min-height:100vh; */
+}
+
+/* .imgCover{} */
+
+.styleRowUp {
+  border-top-style: dotted;
+}
+
 /* checkbox style */
 /* The checkItems */
 .checkItems {

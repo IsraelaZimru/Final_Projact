@@ -8,7 +8,7 @@ const UserSecondNavber = ({ connected }) => {
             <Nav.Link
                 // style={{ display: connected ? 'block' : 'none' }}
                 className="px-2 ">
-                <Link className="px-2 mx-4" to="/About_Me">About Me</Link>
+                <Link className="px-2 mx-4" to="/User_Profile">User Profile</Link>
                 <Link className="px-2 mx-4" to="/MyFavorites">My Favorites</Link>
                 <Link className="px-2 mx-4" to="/My_Recipes">My Recipes</Link>
             </Nav.Link>
