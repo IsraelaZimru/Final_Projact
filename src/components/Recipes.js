@@ -2,12 +2,27 @@ import { Card, Container, Row, Col, Pagination, ButtonGroup, Button, ListGroup }
 import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThumbsUp, faEdit, faHeart, faEye, faTimesCircle } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { getRecipe } from "../DAL/api";
 
 
-export default function Recipes({ recipeslst, isConnected, onSort, selectedIng, setSelectedIng }) {
+export default function Recipes({ isConnected, onSort, selectedIng, setSelectedIng }) {
     const history = useHistory()
     const [like, setLike] = useState(false); //להכניס לכל יוזר מערך מתכונים אהובים ומתכון ששם או נכנס יוחלף צבעו
+    const [apiRecipes, setApiRecipes] = useState([]);
+
+
+    useEffect(() => {
+        const fetchRecipes = async () => {
+            try {
+                const recipes = await getRecipe()
+                setApiRecipes(prev => recipes)
+            } catch (err) {
+                alert("Error, please refresh the site", err)
+            }
+        }
+        fetchRecipes()
+    }, [apiRecipes])
 
     const closeHandler = (ing) => {
         const temp = selectedIng.filter(name => name !== ing)
@@ -53,7 +68,7 @@ export default function Recipes({ recipeslst, isConnected, onSort, selectedIng, 
             </ListGroup.Item>))}
         </ListGroup>
         <Row className="justify-content-center">
-            {recipeslst.map((item, i) => <Card
+            {apiRecipes.map((item, i) => <Card
                 id="myFav"
                 key={i}
                 sm={6}
@@ -83,7 +98,6 @@ export default function Recipes({ recipeslst, isConnected, onSort, selectedIng, 
                                 {item.views}
                             </span>
                             <FontAwesomeIcon icon={faHeart}
-                                // style={{ cursor: "pointer" }}
                                 className="ml-2 mr-0" />
                             <span className="pl-2">
                                 {item.likes}
@@ -96,12 +110,10 @@ export default function Recipes({ recipeslst, isConnected, onSort, selectedIng, 
                     style={{ cursor: "pointer" }}
                 >
                     <Card.Img variant="top" src={item.pic} height="160px" weidth="286px" />
-                    {/* <Card.Body> */}
                     <Card.Title className="text-center">{item.name}</Card.Title>
                     <Card.Text className="text-center">
                         {item.description}
                     </Card.Text>
-                    {/* </Card.Body> */}
                     <Card.Footer className="text-black">
                         <p className="text-center my-2">
                             {item.allCategories && item.allCategories.map((type, i) => <span key={i}>| {type} </span>)}
