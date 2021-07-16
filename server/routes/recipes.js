@@ -2,22 +2,22 @@ const express = require('express');
 const api = require('../DAL/api'); //fun that actully sending HTTP reqs.
 const router = express.Router();
 const path = require('path')
-
+const upload = require('../utils/multer')
 // const {isExists} = require('../uti')
 
-const multer = require('multer')
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, 'public/images')
-    },
-    filename: (req, file, cb) => {
-        cb(null, Date.now() + path.extname(file.originalname))
-    }
-})
+// const multer = require('multer')
+// const storage = multer.diskStorage({
+//     destination: (req, file, cb) => {
+//         cb(null, 'public/images')
+//     },
+//     filename: (req, file, cb) => {
+//         cb(null, Date.now() + path.extname(file.originalname))
+//     }
+// })
 
-const upload = multer({
-    storage: storage
-});
+// const upload = multer({
+//     storage: storage
+// });
 
 router.post('/upload/:id', upload.single("image"), async function (req, res) {
     try {
@@ -40,15 +40,78 @@ router.delete('/:id', async function (req, res) {  //router ==app.get but with m
 });
 
 
-
-/* GET users listing. */
-router.get('/', async function (req, res) {  
+router.get('/', async function (req, res) {
     const recipes = await api.recipes();
     res.json(recipes);
 });
 
+router.get('/myRecipes/:id', async function (req, res) {
+    try {
+        const { id } = req.params;
+        const recipes = await api.myRecipes(id);
+        res.status(200).json(recipes);
+    } catch (err) {
+        res.status(500).json({ error: "Error getting user recipes" })
+    }
+});
 
 
+
+router.get('/MyFavorites/:id', async function (req, res) {
+    try {
+        const { id } = req.params;
+        const recipes = await api.MyFavorites(id);
+        res.status(200).json(recipes);
+    } catch (err) {
+        res.status(500).json({ error: "Error getting user recipes" })
+    }
+});
+
+router.get('/MyFavorites/ids/:id', async function (req, res) {
+    try {
+        const { id } = req.params;
+        const recipes = await api.MyFavoritesId(id);
+        console.log("recipes", recipes);
+        res.status(200).json(recipes);
+    } catch (err) {
+        res.status(500).json({ error: "Error getting user recipes" })
+    }
+});
+
+
+router.delete('/MyFavorites/ids/:id/:recipeId', async function (req, res) {
+    try {
+        const { id, recipeId } = req.params;
+        const recipes = await api.removeFromMyFavoritesIds(id, recipeId);
+        // console.log("recipesRouer", recipes);
+        res.status(200).json(recipes);
+    } catch (err) {
+        res.status(500).json({ error: "Error getting user recipes" })
+    }
+});
+
+
+router.delete('/MyFavorites/:id/:recipeId', async function (req, res) {
+    try {
+        const { id, recipeId } = req.params;
+        const recipes = await api.removeFromMyFavorites(id, recipeId);
+        res.status(200).json(recipes);
+    } catch (err) {
+        res.status(500).json({ error: "Error getting user recipes" })
+    }
+});
+
+
+router.put('/MyFavorites/:id/:recipeId', async function (req, res) {
+    try {
+        const { id, recipeId } = req.params;
+        const recipes = await api.AddToMyFavorites(id, recipeId);
+        res.status(200).json(recipes);
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ error: "Error getting user recipes" })
+    }
+});
 
 
 module.exports = router;

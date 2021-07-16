@@ -338,3 +338,43 @@ export async function updateRecipe(id, data, image) {
         console.log(err)
     }
 }
+
+export async function getMyRecipes(id) {
+    const response = await axios.get(`/recipes/myRecipes/${id}`);
+    response.data.forEach(recipe => recipe.pic = `http://localhost:3100/${recipe.image}`);
+    return response.data;
+}
+
+export async function getMyFavorites(id) {
+    const response = await axios.get(`/recipes/MyFavorites/${id}`);
+    response.data.forEach(recipe => recipe.pic = `http://localhost:3100/${recipe.image}`);
+    return response.data;
+}
+
+export async function RemoveAndReturnFavoritesRecipes(userId, recipeId) {
+    const response = await axios.delete(`/recipes/MyFavorites/${userId}/${recipeId}`);
+    response.data.forEach(recipe => recipe.pic = `http://localhost:3100/${recipe.image}`);
+    return response.data;
+}
+
+export async function addToMyFavorites(userId, recipeId) {
+    const response = await axios.put(`/recipes/MyFavorites/${userId}/${recipeId}`);
+    const onlyId = await response.data.map(recipe => recipe.recipeID);
+    return onlyId;
+}
+
+export async function getMyFavoritesId(userId) {
+    const response = await axios.get(`/recipes/MyFavorites/ids/${userId}`);
+    const onlyId = await response.data.map(recipe => recipe.recipeID);
+    return onlyId;
+}
+
+
+
+export async function RemoveFromMyFavorites(userId, recipeId) {
+    const response = await axios.delete(`/recipes/MyFavorites/ids/${userId}/${recipeId}`);
+    // console.log("response", response, "response.data", response.data);
+    const onlyId = await response.data.map(recipe => recipe.recipeID);
+    console.log("onlyId", onlyId);
+    return onlyId;
+}

@@ -1,15 +1,32 @@
 import { Card, Container, Row, Col, Pagination, ListGroup } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faThumbsUp, faEdit, faHeart, faEye, faTimesCircle } from "@fortawesome/free-solid-svg-icons";
+import { faThumbsUp, faEdit, faHeart, faEye, faTimesCircle, faBookmark } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
-import { getRecipe } from "../DAL/api";
+import { getRecipe, addToMyFavorites, getMyFavoritesId, RemoveFromMyFavorites } from "../DAL/api";
 
 
-export default function Recipes({ isConnected, onSort, selectedIng, setSelectedIng }) {
+export default function Recipes({ isConnected, UserId, onSort, selectedIng, setSelectedIng }) {
     const history = useHistory()
-    const [like, setLike] = useState(false); //להכניס לכל יוזר מערך מתכונים אהובים ומתכון ששם או נכנס יוחלף צבעו
+    const [likes, setLikes] = useState([]); //להכניס לכל יוזר מערך מתכונים אהובים ומתכון ששם או נכנס יוחלף צבעו
     const [apiRecipes, setApiRecipes] = useState([]);
+
+
+    useEffect(() => {
+
+    }, [likes])
+
+
+
+    useEffect(() => {
+        (async () => {
+            if (isConnected) {
+                const favorites = await getMyFavoritesId(UserId);
+                console.log("favorites", favorites);
+                setLikes(prev => favorites)
+            }
+        })()
+    }, [isConnected])
 
 
     useEffect(() => {
@@ -36,6 +53,25 @@ export default function Recipes({ isConnected, onSort, selectedIng, setSelectedI
         history.push(`/recipe_details/${food.id}`)
     }
 
+
+
+    const updateMyFavorites = async (recipeId) => {
+        try {
+            if (likes.includes(recipeId)) {
+                const newRecipesId = await RemoveFromMyFavorites(UserId, recipeId);
+                console.log("new ids-remove:", newRecipesId);
+                setLikes(prev => newRecipesId)
+            } else {
+                const newRecipesId = await addToMyFavorites(UserId, recipeId);
+                console.log("new ids-add:", newRecipesId);
+                setLikes(prev => newRecipesId)
+            }
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
+    //---------------------------
     let active = 1;
     let items = [];
     for (let number = 1; number <= 3; number++) {
@@ -63,7 +99,7 @@ export default function Recipes({ isConnected, onSort, selectedIng, setSelectedI
                 <FontAwesomeIcon icon={faTimesCircle}
                     style={{ cursor: "pointer" }}
                     onClick={() => closeHandler(ing)}
-                    className={like ? "text-danger mr-2 ml-2" : "mr-2 ml-2"} />
+                    className={likes ? "text-danger mr-2 ml-2" : "mr-2 ml-2"} />
                 {ing}
             </ListGroup.Item>))}
         </ListGroup>
@@ -80,28 +116,33 @@ export default function Recipes({ isConnected, onSort, selectedIng, setSelectedI
                 <Card.Header >
                     <Row>
                         <Col className="px-1" md={{ span: 4 }} sx={{ span: 4 }}>
-                            {isConnected && <div>
-                                <FontAwesomeIcon icon={faThumbsUp}
-                                    style={{ cursor: "pointer" }}
-                                    className={like ? "text-danger mr-2 ml-2" : "mr-2 ml-2"} />
-                                <FontAwesomeIcon icon={faEdit}
+                            <div>{isConnected && <FontAwesomeIcon icon={faBookmark}
+                                style={{ cursor: "pointer" }}
+                                onClick={() => updateMyFavorites(item.id)}
+                                className={likes.includes(item.id) ? "text-primary mr-2 ml-2" : "mr-2 ml-2"} />
+                            }
+                                {/* <FontAwesomeIcon icon={faEdit}
                                     style={{ cursor: "pointer" }}
                                     onClick={e => chooseRepice(item)}
-                                    className="mr-2 ml-2" />
+                                    className="mr-2 ml-2" /> */}
+                                <FontAwesomeIcon icon={faEye}
+                                    className="ml-2 mr-0" />
+                                <span className="pl-2">
+                                    {item.views}
+                                </span>
                             </div>
-                            }
                         </Col>
                         <Col className="px-0" sx={{ span: 4, offset: 4 }} md={{ span: 4, offset: 4 }} >
-                            <FontAwesomeIcon icon={faEye}
+                            {/* <FontAwesomeIcon icon={faEye}
                                 className="ml-2 mr-0" />
                             <span className="pl-2">
                                 {item.views}
-                            </span>
-                            <FontAwesomeIcon icon={faHeart}
+                            </span> */}
+                            {/* <FontAwesomeIcon icon={faHeart}
                                 className="ml-2 mr-0" />
                             <span className="pl-2">
                                 {item.likes}
-                            </span>
+                            </span> */}
                         </Col>
                     </Row>
                 </Card.Header>

@@ -18,33 +18,6 @@ const recipes = async () => {
     }
 }
 
-// const recipeInfo = async (recipeId) => {
-//     try {
-//         const recipe = await db.query(`select * from users; select * from recipes`);
-//         console.log(recipe);
-// const [categories, fieldsC] = await db.execute(', [recipeId]);
-// const [instructions, fieldsI] = await db.execute('select recipeId,instruction "name" from instructions where recipeId = ?', [recipeId]);
-// const [ingredients, fieldsRI] = await db.execute(`select quantity,mi.name "unit", i.name "ingredientName"   
-//     from recipeingredients as ri join ingredients as i on ri.IngredientID = i.id join measuringunits as mi
-//     on mi.id = ri.MeasuringUnitID  where recipeId = ?`, [recipeId]);
-// const [diets, fieldsRD] = await db.execute(`select name, recipeId from recipediet join diets 
-// on diets.id = recipediet.DietId where recipeid= ?`, [recipeId]);
-
-// const newPropertyTitles = ["categories", "diets", "instructions"]
-// const newProperties = [categories, diets, instructions]
-
-// for (let i = 0; i < newPropertyTitles.length; i++) {
-//     mergeTwoSQLTable([recipe, newProperties[i]], newPropertyTitles[i])
-// }
-// addingredientsToRecipe([recipe, ingredients])
-//         return recipe;
-//     } catch (err) {
-//         console.log(err);;
-//     }
-// }
-
-
-
 const recipeInfoRow = async (recipeId) => {
     try {
         const [recipe, fields] = await db.query(`select id,userId,name as "recipeName", description,level,Servings,prepTimeMins,CookingTime from recipes where id = ?; select categories.id as "id" from recipecategory join categories on recipecategory.CategoryTypeId = categories.id
@@ -260,6 +233,76 @@ const updateRecipe = async (id, recipe, ingredients, instructions) => {
     }
 }
 
+const myRecipes = async (id) => {
+    try {
+        const [recipes, fields] = await db.execute('Select * from recipes where userID = ?', [id]);
+        // console.log(recipes);
+        // return recipes;
+        const [categories, catFields] = await db.execute('select name, recipeId from recipecategory join categories on recipecategory.CategoryTypeId = categories.id; ');
+        mergeTwoSQLTable([recipes, categories], "allCategories");
+        return recipes;
+    } catch (err) {
+        throw new Error('Problem connecting with SQL')
+    }
+}
+
+const MyFavorites = async (id) => {
+    try {
+        const [recipes, fields] = await db.execute('Select * from recipes where id in (select recipeID from favorites where userID = ?)', [id]);
+        const [categories, catFields] = await db.execute('select name, recipeId from recipecategory join categories on recipecategory.CategoryTypeId = categories.id; ');
+        mergeTwoSQLTable([recipes, categories], "allCategories");
+        return recipes;
+    } catch (err) {
+        throw new Error('Problem connecting with SQL')
+    }
+}
+
+const MyFavoritesId = async (id) => {
+    try {
+        const [recipes, fields] = await db.execute('select recipeID FROM favorites WHERE userID = ?', [id]);
+        // console.log("recipes", recipes);
+        return recipes;
+    } catch (err) {
+        throw new Error('Problem connecting with SQL')
+    }
+}
+
+
+const removeFromMyFavorites = async (userId, recipeId) => {
+    try {
+        const [recipes, fields] = await db.execute('DELETE FROM favorites WHERE userID= ? and recipeID= ?;', [userId, recipeId]);
+        const newLst = await MyFavorites(userId)
+        return newLst;
+    } catch (err) {
+        throw new Error('Problem connecting with SQL')
+    }
+}
+
+
+const removeFromMyFavoritesIds = async (userId, recipeId) => {
+    try {
+        const [recipes, fields] = await db.execute('DELETE FROM favorites WHERE userID= ? and recipeID= ?;', [userId, recipeId]);
+        const newLst = await MyFavoritesId(userId)
+        // console.log("newLst", newLst);
+        return newLst;
+    } catch (err) {
+        throw new Error('Problem connecting with SQL')
+    }
+}
+
+
+const AddToMyFavorites = async (userId, recipeId) => {
+    try {
+        const [recipes, fields] = await db.query('INSERT INTO favorites (userID, recipeID ) VALUES (?,?); SELECT recipeID FROM favorites WHERE userID = ?', [userId, recipeId, userId]);
+        console.log("recipesID", recipes[1]);
+        const newLst = await recipes[1]
+        return newLst;
+    } catch (err) {
+        throw new Error('Problem connecting with SQL')
+    }
+}
+
+
 
 
 module.exports = {
@@ -277,5 +320,11 @@ module.exports = {
     addImage,
     deleteRecipe,
     recipeInfoRow,
-    updateRecipe
+    updateRecipe,
+    myRecipes,
+    MyFavorites,
+    removeFromMyFavorites,
+    AddToMyFavorites,
+    MyFavoritesId,
+    removeFromMyFavoritesIds
 }

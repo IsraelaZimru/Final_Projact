@@ -39,7 +39,8 @@ function App() {
     password: ""
   })
   const [user, setUser] = useState({
-    name: ""
+    name: "",
+    id: NaN
   })
 
   const [selectedIng, setSelectedIng] = useState([]);
@@ -178,10 +179,10 @@ function App() {
               <Link className="px-2 mx-4" to="/User_Profile">User Profile</Link>
             </ListGroup.Item>
             <ListGroup.Item>
-              <Link className="px-2 mx-4" to="/MyFavorites">My Favorites</Link>
+              <Link className="px-2 mx-4" to={"/MyFavorites/" + user.id}>My Favorites</Link>
             </ListGroup.Item>
             <ListGroup.Item>
-              <Link className="px-2 mx-4" to="/My_Recipes">My Recipes</Link>
+              <Link className="px-2 mx-4" to={"/My_Recipes/" + user.id}>My Recipes</Link>
             </ListGroup.Item>
             <ListGroup.Item>
               <Link className="px-2 mx-4" to="/newRecipe_step1">Add A New Recipe</Link>
@@ -205,7 +206,7 @@ function App() {
       <Switch>
         <Route exact path="/" >
           <SearchForm connected={connected} userName={user.name} setSelectedIng={setSelectedIng} />
-          <Recipes isConnected={connected} onSort={onSort} selectedIng={selectedIng} setSelectedIng={setSelectedIng} />
+          <Recipes isConnected={connected} UserId={user.id} onSort={onSort} selectedIng={selectedIng} setSelectedIng={setSelectedIng} />
         </Route>
         <Route exact path="/Sign_Up">
           <SignUp connected={connected} hasPageAaccess={hasPageAaccess} checkingSignUp={checkingSignUp} />
@@ -231,7 +232,7 @@ function App() {
         <Route exact path="/recipe_details/:id">
           <RecipeInfo connected={connected} hasPageAaccess={hasPageAaccess} onselect={selectedItem} />
         </Route>
-        <Route exact path="/MyFavorites">
+        <Route exact path="/MyFavorites/:id">
           <UserSecondNavber connected={connected} />
           <MyFavorites connected={connected} hasPageAaccess={hasPageAaccess} Recipes={apiRecipes} onSelected={setSelectedRecipe} />
         </Route>
@@ -239,7 +240,7 @@ function App() {
           <UserSecondNavber connected={connected} />
           <UserProfile connected={connected} hasPageAaccess={hasPageAaccess} updateUserInfo={updateUserInfo} getDetaildsFromDb={getDetaildsFromDb} userLoginHandler={userLoginHandler} />
         </Route>
-        <Route exact path="/My_Recipes">
+        <Route exact path="/My_Recipes/:id">
           <UserSecondNavber connected={connected} />
           <MyRecipes connected={connected} hasPageAaccess={hasPageAaccess} Recipes={apiRecipes} onSelected={setSelectedRecipe} />
         </Route>

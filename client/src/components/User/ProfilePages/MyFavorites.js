@@ -1,16 +1,18 @@
 import { Card, Container, Row, Col } from "react-bootstrap";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThumbtack, faEdit, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import ModalDelete from '../ProfilePages/ModalDelete'
+import { getMyFavorites, RemoveAndReturnFavoritesRecipes } from "../../../DAL/api";
+import { useParams } from "react-router-dom";
 
 // faHeart
 
-const MyFavorites = ({ connected, hasPageAaccess, Recipes, onSelected }) => {
+const MyFavorites = ({ connected, hasPageAaccess, onSelected }) => {
     let history = useHistory();
-    // const myFav = [] // chheckig default msg...
-    const myFav = Recipes || [];
+    const { id } = useParams();
+    const [recipes, setRecipes] = useState([])
 
 
     useEffect(() => {
@@ -19,8 +21,22 @@ const MyFavorites = ({ connected, hasPageAaccess, Recipes, onSelected }) => {
     }, [connected]);
 
 
-    const remove = (food) => {
-        //
+    useEffect(() => {
+        (async () => {
+            const myRecipes = await getMyFavorites(id)
+            console.log(myRecipes);
+            if (myRecipes.error) {
+                alert("A connection problem ... Please refresh the site.")
+            } else {
+                setRecipes(prev => myRecipes)
+            }
+        })()
+    }, [])
+
+
+    const remove = async (recipeId) => {
+        const newRecipes = await RemoveAndReturnFavoritesRecipes(id, recipeId);
+        setRecipes(prev => newRecipes)
     }
 
     const chooseRepice = (food) => {
@@ -32,7 +48,7 @@ const MyFavorites = ({ connected, hasPageAaccess, Recipes, onSelected }) => {
     return <Container>
         <h1 className="display-2 mb-5 text-center"> Favorite Recipes:</h1>
         <Row className="justify-content-md-center">
-            {myFav.map((item, i) => <Card
+            {recipes.map((item, i) => <Card
                 key={i}
                 text={'white'}
                 style={{ width: '18rem' }}
@@ -56,19 +72,16 @@ const MyFavorites = ({ connected, hasPageAaccess, Recipes, onSelected }) => {
                     <Row className="justify-content-center">
                         <hr></hr>
                         <Col className="text-center" >
-                            <FontAwesomeIcon onClick={e => remove(item)} icon={faTrashAlt} style={{ cursor: "pointer" }}
+                            <FontAwesomeIcon onClick={e => remove(item.id)} icon={faTrashAlt} style={{ cursor: "pointer" }}
                             />
                         </Col>
-                        {/* <Col className="text-center" >
-                            <ModalDelete />
-                        </Col> */}
                     </Row>
                 </Card.Footer>
             </Card>)}
         </Row>
         <Row className="justify-content-center my-2">
             <Col></Col>
-            {!myFav.length && <Col id="msgDefaultFAV" className="my-4 text-center h1font">
+            {!recipes.length && <Col id="msgDefaultFAV" className="my-4 text-center h1font">
                 <p className="pt-5">
                     This recipes collection is empty :(
                     <br></br>
