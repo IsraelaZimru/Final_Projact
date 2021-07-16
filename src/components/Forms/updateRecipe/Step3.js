@@ -12,7 +12,7 @@ import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 function Step3() {
     const { id } = useParams()
     const history = useHistory()
-    const [file, setFile] = useState();
+    const [file, setFile] = useState(null);
     const [errMsg, setErrMsg] = useState("");
     const [show, setShow] = useState(false);
     const [validated, setValidated] = useState(false);
@@ -23,42 +23,47 @@ function Step3() {
 
 
     useEffect(() => {
-        // if (localStorage.getItem("step3")) {
-        //     const inputsPage3ocal = JSON.parse(localStorage.getItem("step3"))
-        //     setCombineData(prev => inputsPage3ocal)
-        // }
-
+        if (localStorage.getItem("step3")) {
+            const inputsPage3ocal = JSON.parse(localStorage.getItem("step3"))
+            setCombineData(prev => inputsPage3ocal)
+        }
     }, [])
 
 
     const finshRecipe = async () => {
+        console.log("try");
         let isOK = false;
         let msg = "";
         if (combineData.length < 2) {
             isOK = true;
             msg = "Please enter at least 2 instructions";
-        } else if (file === undefined) {
-            isOK = true;
-            msg = "Please upload an image";
         }
         setShow(isOK);
         setErrMsg(msg)
         window.scrollTo(0, 0);
 
         if (!isOK) {
+            console.log("sending http request");
             const data = {
                 recipe: JSON.parse(localStorage.getItem("step1")),
                 ingredients: JSON.parse(localStorage.getItem("step2")),
                 instructions: combineData
             }
-            const image = new FormData()
-            image.append("image", file)
 
-            const respone = await updateRecipe(data, image)
+            let newImage;
+            if (file !== null) {
+                newImage = new FormData()
+                newImage.append("image", file)
+            }
+
+            console.log("image", newImage, "file", file);
+
+            const respone = await updateRecipe(id, data, newImage)
             if (respone) {
                 console.log(respone, "respone")
-                history.push(`/Step4/${respone}`)
+                history.push(`/Step4/${id}`)
             } else {
+                console.log("problem with image!");
                 setShow(true);
                 setErrMsg("oops...There was a problem with the recipe, please try again")
                 window.scrollTo(0, 0);
@@ -198,33 +203,26 @@ function Step3() {
         <Row className="styleRowUp justify-content-md-center text-center p-3">
             <Card
                 text='dark'
-                style={{ width: '18rem' }}
-                className="mb-2 text-center"
+                style={{ width: '28rem' }}
+                className="mb-2 text-center p-auto justify-content-md-center"
             >
                 <Card.Header>
                     <h4>
-                        Upload your Recipe Image here:
+                        If you want to swap your recipe image, upload it here.
                     </h4>
                 </Card.Header>
-                <Card.Body>
-                    <Form>
+                <Card.Body >
+                    <Form className="p-auto m-auto">
                         <Form.Group>
                             <InputGroup hasValidation>
                                 <Form.File
-                                    label="Image: "
-                                    // value={details.image.value}
+                                    className="p-auto m-auto"
                                     name="image"
                                     onBlur={e => fileValidation(e.target)}
                                     onChange={(e) => fileValidation(e.target)}
-                                    required
-                                // isInvalid={details.image.isInVaild}
                                 />
-                                {/* <Form.Control.Feedback type="invalid" className="feedback">
-                            {details.image.msg}
-                        </Form.Control.Feedback> */}
                             </InputGroup>
                         </Form.Group>
-                        {/* <Button variant="outline-dark" onClick={send}>only file</Button> */}
                     </Form>
 
                 </Card.Body>

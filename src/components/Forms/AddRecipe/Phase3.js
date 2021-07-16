@@ -50,10 +50,10 @@ function Phase3() {
                 ingredients: JSON.parse(localStorage.getItem("step2")),
                 instructions: combineData
             }
-            const image = new FormData()
-            image.append("image", file)
+            const newImage = new FormData()
+            newImage.append("image", file)
 
-            const respone = await setNewRecipe(data, image)
+            const respone = await setNewRecipe(data, newImage)
             if (respone) {
                 console.log(respone, "respone")
                 history.push(`/Phase4/${respone}`)

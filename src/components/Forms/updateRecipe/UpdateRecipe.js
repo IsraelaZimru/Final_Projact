@@ -128,10 +128,10 @@ const UpdateRecipe = ({ connected, hasPageAaccess }) => {
     function validation({ name, value }) {
         const errorMsg = [];
         let isMsgShowing = false;
-        if (name === "categories" && value.length < 1) {
+        if (name === "categories" && value.length <= 1) {
             isMsgShowing = true
             errorMsg.push(`${name} is required.`)
-        } else if (name === "diets" && value.length < 1) {
+        } else if (name === "diets" && value.length <= 1) {
             isMsgShowing = true
             errorMsg.push(`${name} is required.`)
         } else if (value === "") {

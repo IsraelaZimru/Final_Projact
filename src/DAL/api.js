@@ -286,7 +286,6 @@ export async function setNewRecipe(data, image) {
     try {
         const response = await axios.post("/addNewRecipe", data);
         if (response.data) {
-            // image.append("image", response.data)
             await axios.post(`/recipes/upload/${response.data}`, image);
             console.log(response.data);
             return response.data;
@@ -323,10 +322,19 @@ export async function getUpdateDetails(id) {
 }
 
 
-export async function updateRecipe(id) {
-    // const response = await axios.put(`http://localhost:3100/recipeInfo/${id}`);
+export async function updateRecipe(id, data, image) {
+    try {
+        const response = await axios.put(`http://localhost:3100/recipeInfo/${id}`, data);
 
+        if (!response.data) {
+            throw new Error("can't add new recipe or image")
+        }
 
-    // console.log("RecipeNameAvailable-", response);
-    return response.data;
+        if (image) {
+            await axios.post(`/recipes/upload/${id}`, image);
+        }
+        return response.data;
+    } catch (err) {
+        console.log(err)
+    }
 }

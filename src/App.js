@@ -52,8 +52,8 @@ function App() {
       setUser(prev => checkConnected)
     }
 
-    getRecipe().then(data => setApiRecipes(prev => data))
-      .catch(err => alert("error", err))
+    // getRecipe().then(data => setApiRecipes(prev => data))
+    //   .catch(err => alert("error", err))
   }, [])
 
   useEffect(() => {
@@ -204,7 +204,7 @@ function App() {
 
       <Switch>
         <Route exact path="/" >
-          <SearchForm connected={connected} userName={user.name} getRecipeNames={getRecipeNames} getingredientsNames={getingredientsNames} setSelectedIng={setSelectedIng} />
+          <SearchForm connected={connected} userName={user.name} setSelectedIng={setSelectedIng} />
           <Recipes isConnected={connected} onSort={onSort} selectedIng={selectedIng} setSelectedIng={setSelectedIng} />
         </Route>
         <Route exact path="/Sign_Up">

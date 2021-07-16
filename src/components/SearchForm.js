@@ -1,26 +1,26 @@
 import { useState, useEffect } from "react";
 import { Button, Container, Form, Row, Col, Collapse, ListGroup } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
+import { getRecipeNames, getingredientsNames } from '../DAL/api'
 
-
-function SearchForm({ connected, userName, getRecipeNames, getingredientsNames, setSelectedIng }) {
-
+function SearchForm({ connected, userName, setSelectedIng }) {
+    const history = useHistory();
 
     useEffect(() => {
         window.scrollTo(0, 0)
-    }
-        , [])
+    }, [])
 
     const [open, setOpen] = useState(false);
 
     const [details, setDetails] = useState({
-        recipeName: { value: "" },
-        ingredient: { value: "" },
+        recipeName: { value: "", id: NaN },
+        ingredient: { value: "", id: NaN },
         recipeNamelst: [],
         ingredientlst: []
     })
 
-    const findName = (lst, value) => lst.map(item => item.name).filter((item, i) => {
-        return item.toLowerCase().startsWith(value.toLowerCase())
+    const findName = (lst, value) => lst.filter((item, i) => {
+        return item.name.toLowerCase().startsWith(value.toLowerCase())
     });
 
 
@@ -153,10 +153,11 @@ function SearchForm({ connected, userName, getRecipeNames, getingredientsNames, 
                             value={details.recipeName.value}
                             placeholder="Search for a recipe..." />
                         <ListGroup>
-                            {details.recipeNamelst.map((name, i) => <ListGroup.Item
-                                onClick={() => updateValue("recipeName", name)}
+                            {details.recipeNamelst.map((food, i) => <ListGroup.Item
+                                onClick={() => history.push(`/recipe_details/${food.id}`)}
+                                // onClick={() => updateValue("recipeName", name)}
                                 key={i}
-                            >{name}</ListGroup.Item>)}
+                            >{food.name}</ListGroup.Item>)}
                         </ListGroup>
                     </Form.Group>
 

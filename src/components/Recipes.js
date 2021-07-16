@@ -22,7 +22,7 @@ export default function Recipes({ isConnected, onSort, selectedIng, setSelectedI
             }
         }
         fetchRecipes()
-    }, [apiRecipes])
+    }, [])
 
     const closeHandler = (ing) => {
         const temp = selectedIng.filter(name => name !== ing)
