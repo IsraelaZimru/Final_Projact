@@ -3,13 +3,13 @@ import { Button, Container, Form, Row, Col, Collapse, ListGroup } from "react-bo
 
 
 function SearchForm({ connected, userName, getRecipeNames, getingredientsNames, setSelectedIng }) {
-   
-   
-    useEffect(()=>{
-    window.scrollTo(0, 0)
-    } 
-,[])
-    
+
+
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }
+        , [])
+
     const [open, setOpen] = useState(false);
 
     const [details, setDetails] = useState({
@@ -106,7 +106,7 @@ function SearchForm({ connected, userName, getRecipeNames, getingredientsNames, 
                     {!connected && <h1 className="display-4 mb-3"> Recipes:</h1>}
                     {connected && <>
                         <h1 className="display-4 mb-3 "><span className="optional mx-1"> Hi {userName}!</span>
-                            find a recipe:</h1>
+                            Search for a Recipe:</h1>
                     </>}
                     <Collapse in={open}>
                         <div id="example-collapse-text">

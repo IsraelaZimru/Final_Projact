@@ -5,14 +5,14 @@ import { useParams } from "react-router";
 import { Container, Row, Col, Button, Form, Card, InputGroup, ListGroup, Alert, FormControl } from "react-bootstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
-import { unitsAndIngs } from '../../DAL/api'
+import { unitsAndIngs } from '../../../DAL/api'
 
 
 
-function Phase2() {
+function Step2() {
     const history = useHistory();
     const [show, setShow] = useState(false);
-    const [ingsUnits, serIngsUnits] = useState([]);
+    const [ingsUnits, setIngsUnits] = useState([]);
     const [validated, setValidated] = useState(false);
     const [combineData, setCombineData] = useState([]);
     const [details, setDetails] = useState({
@@ -22,23 +22,20 @@ function Phase2() {
         unitlst: [],
         ingredientlst: [],
     })
-
+    const { id } = useParams()
     useEffect(() => {
         (async () => {
             const dataFromDb = await unitsAndIngs()
-            serIngsUnits(pev => [dataFromDb[0], dataFromDb[1]])
+            setIngsUnits(pev => [dataFromDb[0], dataFromDb[1]])
+
+            if (localStorage.getItem("step2")) {
+                const inputsPage2ocal = JSON.parse(localStorage.getItem("step2"))
+                setCombineData(prev => inputsPage2ocal)
+            }
+
         })()
 
     }, [])
-
-    // const getUnitsNames = () => {
-    //     return Units;
-    // }
-
-    // const getingredientsNames = () => {
-    //     return ings;
-    // }
-
 
     const checkIngredients = () => {
         if (combineData.length < 2) {
@@ -47,7 +44,7 @@ function Phase2() {
             return;
         }
         localStorage.setItem("step2", JSON.stringify(combineData));
-        history.push("/newRecipe_step3")
+        history.push(`/updateRecipe_step3/${id}`)
     }
 
     const removeName = (data) => {
@@ -61,6 +58,7 @@ function Phase2() {
     });
 
     const handleSubmit = (event) => {
+        event.preventDefault();
         let status = false;
         const checkErrors = [];
         for (const key in details) {
@@ -80,7 +78,7 @@ function Phase2() {
             }
         }
         setValidated(!status);
-        event.preventDefault();
+        // event.preventDefault();
         const data = {
             ingredient: {
                 id: details.ingredient.id,
@@ -97,14 +95,15 @@ function Phase2() {
             alert("You cannot select the same ingredient twice.")
             return;
         }
-        console.log(combineData);
+        // console.log(combineData);
         setCombineData(prev => [...prev, data]);
-        setDetails(prev => ({
-            ...prev,
-            "ingredient": { ...prev["ingredient"], value: "", id: "", isInVaild: false },
-            "unit": { ...prev["unit"], value: "", id: "", isInVaild: false },
-            "quantity": { ...prev["quantity"], value: "", isInVaild: false }
-        }))
+        const temp = {
+            ...details,
+            ingredient: { ...details["ingredient"], value: "", id: "", isInVaild: false },
+            unit: { ...details["unit"], value: "", id: "", isInVaild: false },
+            quantity: { ...details["quantity"], value: "", isInVaild: false }
+        }
+        setDetails(temp)
     }
 
 
@@ -157,23 +156,25 @@ function Phase2() {
     }
 
 
-    return <Container>
-        <h1 className="display-2 text-center"> Add A New Recipe</h1>
+    return <Container className="mb-5">
+        <h1 className="display-2 text-center"> Update your Recipe</h1>
         <Row className="phase-top">
-            <Col > <Link to="/newRecipe_step1"> 1  </Link>  </Col>
+            <Col onClick={() => history.push(`updateRecipe_step1/${id}`)}> 1  </Col>
             <Col className="active">2</Col>
-            <Col > <Link to="/newRecipe_step3"> 3  </Link>  </Col>
+            <Col onClick={() => history.push(`updateRecipe_step3/${id}`)}> 3  </Col>
         </Row>
+
         <Alert show={show} variant="secondary" onClose={() => setShow(false)}>
-            Please add at least 2 Ingredients
+            Please add at least 2 Ingredients.
         </Alert>
 
 
         <h1 className="display-4 pb-2">Ingredients:</h1>
-        <Row className="align-items-center">
+        <p>Enter at least two ingredients.</p>
+        <Row className="align-items-center mb-4">
             <Col >
                 <Form noValidate validated={validated} onSubmit={handleSubmit}>
-                    <Row>
+                    <Row >
                         <Form.Group as={Col}
                             className="px-1"
                         >
@@ -187,7 +188,6 @@ function Phase2() {
                                     onChange={e => validation(e.target)}
                                     onblur={e => validation(e.target)}
                                     isInvalid={details.quantity.isInVaild}
-                                    required
                                 />
                                 <Form.Control.Feedback type="invalid" className="feedback">
                                     {details.quantity.msg}
@@ -203,10 +203,9 @@ function Phase2() {
                                 value={details.unit.value}
                                 onChange={e => updateDropDown(e.target)}
                                 onblur={e => updateDropDown(e.target)}
-                                placeholder="Enetr measuring unit..."
+                                placeholder="Enter measuring unit..."
                                 // className="mr-sm-1"
                                 isInvalid={details.unit.isInVaild}
-                                required
                             />
                             <Form.Control.Feedback type="invalid" className="feedback">
                                 {details.unit.msg}
@@ -228,10 +227,10 @@ function Phase2() {
                                 value={details.ingredient.value}
                                 onChange={e => updateDropDown(e.target)}
                                 onblur={e => updateDropDown(e.target)}
-                                placeholder="Enetr ingredient..."
+                                placeholder="Enter ingredient"
                                 // className="mr-sm-1"
                                 isInvalid={details.ingredient.isInVaild}
-                                required
+                            // required
                             />
                             <Form.Control.Feedback type="invalid" className="feedback">
                                 {details.ingredient.msg}
@@ -249,17 +248,17 @@ function Phase2() {
 
 
                         <Col>
-                            <Button type="submit" className="mb-2" variant="warning"> Submit </Button>
+                            <Button type="submit" className="mb-2" variant="warning"> Add </Button>
                         </Col>
                     </Row>
                 </Form>
             </Col>
-            <Col md="5">
+            <Col md="5 mb-4">
                 {!combineData.length && <div className="text-center justify-content-center" id="msgNoIngredient">
                     <div id="noIngredient">
                     </div>
                     <h4>
-                        No ingredient was selected...
+                        No Ingredients were Selected...
                     </h4>
                 </div>}
                 <div>
@@ -278,16 +277,23 @@ function Phase2() {
 
             </Col>
         </Row>
-        <Row className="text-center my-3 justify-content-center">
+        <Row className="text-center my-3 justify-content-between">
             <div >
                 <Button
-                    variant="primary"
+                    variant="warning"
+                    onClick={() => history.push(`/updateRecipe_step1/${id}`)}  >
+                    Previous Step
+                </Button>
+            </div>
+            <div >
+                <Button
+                    variant="warning"
                     onClick={checkIngredients}  >
-                    Click here to proceed to the last step
+                    Next Step
                 </Button>
             </div>
         </Row>
-    </Container>
+    </Container >
 }
 
-export default Phase2;
+export default Step2;

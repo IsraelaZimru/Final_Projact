@@ -15,15 +15,19 @@ import MyFavorites from './components/User/ProfilePages/MyFavorites';
 import MyRecipes from './components/User/ProfilePages/MyRecipes';
 import UserProfile from './components/User/ProfilePages/UserProfile';
 import { useState, useEffect } from 'react';
-import NewRecipe from './components/User/newRecipe';
+import NewRecipe from './components/Forms/AddRecipe/newRecipe';
 import { checkLoginAccess, addNewUser, selectedItem, getDetaildsFromDb } from './DAL/api'
 import logo3 from '../src/imgs/logo3.png'
 import RecipeInfo from '../src/components/RecipeInfo'
 import UserSecondNavber from "./components/User/UserSecondNavber";
 import Aaa from './components/User/ProfilePages/aaa';
-import Phase2 from './components/Forms/Phase2';
-import Phase3 from './components/Forms/Phase3';
-import Phase4 from './components/Forms/Phase4';
+import Phase2 from './components/Forms/AddRecipe/Phase2';
+import Phase3 from './components/Forms/AddRecipe/Phase3';
+import Phase4 from './components/Forms/AddRecipe/Phase4';
+import UpdateRecipe from './components/Forms/updateRecipe/UpdateRecipe';
+import Step2 from './components/Forms/updateRecipe/Step2';
+import Step3 from './components/Forms/updateRecipe/Step3';
+import Step4 from './components/Forms/updateRecipe/Step4';
 
 function App() {
   const [showLogin, setShowLogin] = useState(false)
@@ -151,12 +155,12 @@ function App() {
             </Nav.Link>
             <Nav.Link style={{ display: connected ? 'none' : 'block' }}>
               <Link style={{ ariaExpanded: { showLogin } }} onClick={displayLogin}>
-                Log in
+                Login
               </Link>
             </Nav.Link>
 
             <Nav.Link style={{ display: connected ? 'block' : 'none' }}>
-              <Link to="/newRecipe_step1">Add New Recipe</Link>
+              <Link to="/newRecipe_step1">Add A New Recipe</Link>
             </Nav.Link>
             <Nav.Link style={{ display: connected ? 'block' : 'none' }}>
               <Link onClick={logOut}>Logout</Link>
@@ -180,10 +184,10 @@ function App() {
               <Link className="px-2 mx-4" to="/My_Recipes">My Recipes</Link>
             </ListGroup.Item>
             <ListGroup.Item>
-              <Link className="px-2 mx-4" to="/newRecipe_step1">Add New Recipe</Link>
+              <Link className="px-2 mx-4" to="/newRecipe_step1">Add A New Recipe</Link>
             </ListGroup.Item>
             <ListGroup.Item>
-              <Link className="px-2 mx-3" onClick={switchUser}>Log-out</Link>
+              <Link className="px-2 mx-3" onClick={switchUser}>Logout</Link>
             </ListGroup.Item>
           </ListGroup>
           <div
@@ -215,6 +219,15 @@ function App() {
         <Route exact path="/newRecipe_step3">
           <Phase3 />
         </Route>
+        <Route exact path="/updateRecipe_step1/:id">
+          <UpdateRecipe connected={connected} hasPageAaccess={hasPageAaccess} />
+        </Route>
+        <Route exact path="/updateRecipe_step2/:id">
+          <Step2 />
+        </Route>
+        <Route exact path="/updateRecipe_step3/:id">
+          <Step3 />
+        </Route>
         <Route exact path="/recipe_details/:id">
           <RecipeInfo connected={connected} hasPageAaccess={hasPageAaccess} onselect={selectedItem} />
         </Route>
@@ -233,6 +246,9 @@ function App() {
 
         <Route exact path="/Phase4/:id">
           <Phase4 />
+        </Route>
+        <Route exact path="/Step4/:id">
+          <Step4 />
         </Route>
 
         <Route component={Aaa} />

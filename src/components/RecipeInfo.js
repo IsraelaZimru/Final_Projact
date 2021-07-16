@@ -64,15 +64,15 @@ const RecipeInfo = ({ hasPageAaccess, onselect }) => {
             <Col lg={5} id="introduction">
                 <h1 className="display-3"> {selectRecipe.name}</h1>
                 <ul horizontal id="listStyle">
-                    <li className="px-2">views: {selectRecipe.views}</li>
+                    <li className="px-2">Views: {selectRecipe.views}</li>
                     {/* <li className="px-2">comments: { }</li> */}
-                    <li className="px-2">preparation Time: {selectRecipe.CookingTime}</li>
+                    <li className="px-2">Preparation Time: {selectRecipe.CookingTime}</li>
                     <li className="px-2">Cooking Time: {selectRecipe.prepTimeMins}</li>
-                    <li className="px-2">by: {selectRecipe.username}</li>
+                    <li className="px-2">By: {selectRecipe.username}</li>
                 </ul>
-                <h4 className="mt-5"><u>discription:</u> {selectRecipe.description}</h4>
+                <h4 className="mt-5"><u>Discription:</u> {selectRecipe.description}</h4>
                 <div className="mt-5">
-                    <Button variant="outline-dark" onClick={exit}>return to Home Page</Button>
+                    <Button variant="outline-dark" onClick={exit}>Return to Home Page</Button>
                 </div>
             </Col>
             <Col lg={7} className=" mx-0 px-0 siz">
@@ -136,7 +136,7 @@ const RecipeInfo = ({ hasPageAaccess, onselect }) => {
         </Row>
         <Row className="justify-content-center p-3">
             <div className="text-center">
-                <Button className="mr-2" variant="outline-dark" onClick={exit}>return to Home Page</Button>
+                <Button className="mr-2" variant="outline-dark" onClick={exit}>Go Back to Home Page</Button>
                 <Button variant="outline-dark" onClick={printRecipe}>
                     <FontAwesomeIcon icon={faPrint} className="mx-3" />
                 </Button>

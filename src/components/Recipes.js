@@ -1,4 +1,4 @@
-import { Card, Container, Row, Col, Pagination, ButtonGroup, Button, ListGroup } from "react-bootstrap";
+import { Card, Container, Row, Col, Pagination, ListGroup } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThumbsUp, faEdit, faHeart, faEye, faTimesCircle } from "@fortawesome/free-solid-svg-icons";
@@ -55,8 +55,8 @@ export default function Recipes({ isConnected, onSort, selectedIng, setSelectedI
     return <Container fluid className="py-2">
         <div>
             <p className="sortRacipes">Sort by :
-                <span onClick={() => { onSort("likes"); console.log("clicked") }}>Most popular</span>|
-                <span onClick={() => sort("date")}>The newest</span></p>
+                <span onClick={() => { onSort("likes"); console.log("clicked") }}>the Quickest</span>|
+                <span onClick={() => sort("date")}>Most Popular</span></p>
         </div>
         <ListGroup horizontal>
             {!!selectedIng.length && selectedIng.map((ing, i) => (<ListGroup.Item key={i}>

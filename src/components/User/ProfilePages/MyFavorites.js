@@ -2,7 +2,7 @@ import { Card, Container, Row, Col } from "react-bootstrap";
 import { useEffect } from "react";
 import { useHistory } from "react-router";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faThumbtack, faEdit } from "@fortawesome/free-solid-svg-icons";
+import { faThumbtack, faEdit, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import ModalDelete from '../ProfilePages/ModalDelete'
 
 // faHeart
@@ -19,15 +19,18 @@ const MyFavorites = ({ connected, hasPageAaccess, Recipes, onSelected }) => {
     }, [connected]);
 
 
+    const remove = (food) => {
+        //
+    }
 
     const chooseRepice = (food) => {
-        console.log("coose random food");
-        onSelected(food)
-        history.push("/recipe_details")
+        // console.log("choose random food");
+        // onSelected(food)
+        history.push(`/recipe_details/${food.id}`)
     }
 
     return <Container>
-        <h1 className="display-2 mb-5 text-center"> Favorites Recipes:</h1>
+        <h1 className="display-2 mb-5 text-center"> Favorite Recipes:</h1>
         <Row className="justify-content-md-center">
             {myFav.map((item, i) => <Card
                 key={i}
@@ -53,14 +56,12 @@ const MyFavorites = ({ connected, hasPageAaccess, Recipes, onSelected }) => {
                     <Row className="justify-content-center">
                         <hr></hr>
                         <Col className="text-center" >
-                            <FontAwesomeIcon onClick={e => chooseRepice(item)} icon={faEdit} style={{ cursor: "pointer" }}
+                            <FontAwesomeIcon onClick={e => remove(item)} icon={faTrashAlt} style={{ cursor: "pointer" }}
                             />
                         </Col>
-                        <Col className="text-center" >
-                            {/* <FontAwesomeIcon onClick={() => alert("Hello")} icon={faTrashAlt} style={{ cursor: "pointer" }} */}
-                            {/* /> */}
+                        {/* <Col className="text-center" >
                             <ModalDelete />
-                        </Col>
+                        </Col> */}
                     </Row>
                 </Card.Footer>
             </Card>)}

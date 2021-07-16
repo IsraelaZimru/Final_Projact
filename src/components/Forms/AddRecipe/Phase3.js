@@ -1,12 +1,11 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
 import axios from "axios";
-import { setNewRecipe } from '../../DAL/api'
+import { setNewRecipe } from '../../../DAL/api'
 import { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { Container, Row, Col, Button, Form, Card, InputGroup, ListGroup, Alert, FormControl } from "react-bootstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
-import { fakeUnits, ings } from '../../DAL/api'
 
 
 
@@ -20,6 +19,15 @@ function Phase3() {
     const [details, setDetails] = useState({
         instruction: { isRequired: true, msg: [], pattern: /[\s\S]{5,}/, value: "", isInVaild: false },
     })
+
+
+    useEffect(() => {
+        // if (localStorage.getItem("step3")) {
+        //     const inputsPage3ocal = JSON.parse(localStorage.getItem("step3"))
+        //     setCombineData(prev => inputsPage3ocal)
+        // }
+
+    }, [])
 
 
     const finshRecipe = async () => {
@@ -37,7 +45,6 @@ function Phase3() {
         window.scrollTo(0, 0);
 
         if (!isOK) {
-            // alert(JSON.stringify([combineData, file]))
             const data = {
                 recipe: JSON.parse(localStorage.getItem("step1")),
                 ingredients: JSON.parse(localStorage.getItem("step2")),
@@ -45,7 +52,6 @@ function Phase3() {
             }
             const image = new FormData()
             image.append("image", file)
-            // console.log(data)
 
             const respone = await setNewRecipe(data, image)
             if (respone) {
@@ -56,7 +62,6 @@ function Phase3() {
                 setErrMsg("oops...There was a problem with the recipe, please try again")
                 window.scrollTo(0, 0);
             }
-
         }
     }
 
@@ -64,12 +69,7 @@ function Phase3() {
     const fileValidation = (target) => {
         const File = target.files[0]
         setFile(File)
-        // console.log(file);
     }
-    // const send = event => {
-    //     //submit of file
-    // }
-
 
     const findInstruction = (data) => {
         setCombineData(prev => prev.filter(item => item !== data))
@@ -142,7 +142,7 @@ function Phase3() {
                             <InputGroup
                                 hasValidation>
                                 <FormControl
-                                    placeholder="Enter instruction..."
+                                    placeholder="Enter Instructions..."
                                     as="textarea"
                                     rows={3}
                                     type="textarea"
@@ -161,7 +161,7 @@ function Phase3() {
                         </Form.Group>
 
                         <Col>
-                            <Button type="submit" className="my-2" variant="warning"> Add instruction </Button>
+                            <Button type="submit" className="my-2" variant="warning"> Add Instructions </Button>
                         </Col>
                     </Row>
                 </Form>
@@ -171,7 +171,7 @@ function Phase3() {
                     <div id="noIngredient2">
                     </div>
                     <h4>
-                        No instruction has been written yet...
+                        No Instructions Were Written yet...
                     </h4>
                 </div>}
                 <div>
@@ -198,7 +198,7 @@ function Phase3() {
             >
                 <Card.Header>
                     <h4>
-                        Upload your image here:
+                        Upload your Recipe Image here:
                     </h4>
                 </Card.Header>
                 <Card.Body>
@@ -227,9 +227,16 @@ function Phase3() {
         </Row>
         <hr style={{ borderStyle: "solid", borderWidth: "5px" }}></hr>
         <Row className="my-5">
-            <Button variant="warning" size="lg" onClick={finshRecipe} block>
-                Upload your recipe!
-            </Button>
+            <Col>
+                <Button variant="warning" size="lg" onClick={() => history.push("/newRecipe_step2")} block>
+                    Previous Step
+                </Button>
+            </Col>
+            <Col>
+                <Button variant="warning" size="lg" onClick={finshRecipe} block>
+                    Upload your Recipe!
+                </Button>
+            </Col>
         </Row>
 
     </Container>

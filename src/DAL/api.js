@@ -316,4 +316,17 @@ export async function unitsAndIngs(name) {
     return response.data;
 }
 
+export async function getUpdateDetails(id) {
+    const response = await axios.get(`http://localhost:3100/recipeInfo/${id}`);
+    // console.log("RecipeNameAvailable-", response);
+    return response.data;
+}
 
+
+export async function updateRecipe(id) {
+    // const response = await axios.put(`http://localhost:3100/recipeInfo/${id}`);
+
+
+    // console.log("RecipeNameAvailable-", response);
+    return response.data;
+}

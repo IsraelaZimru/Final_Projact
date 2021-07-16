@@ -53,11 +53,11 @@ function Login({ showLogin, onClose, connected, userLoginHandler }) {
         let isMsgShowing = false;
         if (value === "") {
             isMsgShowing = true
-            errorMsg.push(`${name} is required.`)
+            errorMsg.push(`This Field is Required`)
         } else if (details[name].isRequired && (details[name].pattern).test(value)) {
             isMsgShowing = false
         } else {
-            errorMsg.push(`${name} is not valid.`)
+            errorMsg.push(`Not Valid.`)
             isMsgShowing = true
         }
         setDetails(prevDetails => ({ ...prevDetails, [name]: { ...prevDetails[name], value, isInVaild: isMsgShowing, msg: errorMsg } }))

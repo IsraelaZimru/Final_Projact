@@ -2,7 +2,7 @@ import 'C:/Users/ישראלה/Google Drive/Experis/final project/client/src/comp
 import { Link, useHistory } from "react-router-dom";
 import { Button, Form, InputGroup, Alert, Container, Col, Row } from 'react-bootstrap';
 import { useEffect, useState } from "react";
-import { getCatsAndDiets, isRecipeNameAvailable } from '../../DAL/api'
+import { getCatsAndDiets, isRecipeNameAvailable } from '../../../DAL/api'
 
 
 const NewRecipe = ({ connected, hasPageAaccess }) => {
@@ -17,14 +17,54 @@ const NewRecipe = ({ connected, hasPageAaccess }) => {
     useEffect(() => {
         (async () => {
             const data = await getCatsAndDiets();
-            data[0].forEach(ele => ele.selected = false)
-            data[1].forEach(ele => ele.selected = false)
+            console.log(data, "data");
+
+            let inputsPage1Local;
+            if (localStorage.getItem("step1")) {
+                inputsPage1Local = JSON.parse(localStorage.getItem("step1"));
+                console.log("inputsPage1Local", inputsPage1Local);
+            }
+
+            if (inputsPage1Local && inputsPage1Local.id) {
+                data[0].forEach(el => el.selected = false);
+                data[1].forEach(el => el.selected = false);
+
+                localStorage.removeItem("step1")
+                localStorage.removeItem("step2")
+                localStorage.removeItem("step3")
+            } else {
+                for (const key in inputsPage1Local) {
+                    if (key in details) {
+                        details[key].value = inputsPage1Local[key];
+                    }
+                    if (key === "diets") {
+                        data[0].forEach(el => {
+                            if (inputsPage1Local[key].includes(+el.id)) {
+                                el.selected = true;
+                            } else {
+                                el.selected = false;
+                            }
+                        })
+                    }
+                    if (key === "categories") {
+                        data[1].forEach(el => {
+                            if (inputsPage1Local[key].includes(+el.id)) {
+                                el.selected = true;
+                            } else {
+                                el.selected = false;
+                            }
+                        })
+                    }
+
+                }
+            }
+
+            setDetails({
+                ...details,
+            });
             const checkboxsInfo = { diets: data[0], categories: data[1] }
             setCheckboxs(prev => checkboxsInfo)
-            // console.log(checkboxsInfo);
-
         })()
-        //eslint-disable-next-line
     }, [])
 
 
@@ -40,10 +80,10 @@ const NewRecipe = ({ connected, hasPageAaccess }) => {
         diets: { isRequired: true, pattern: /[\s\S]{1,}/, msg: [], value: [], isInVaild: false },
         recipeName: { isRequired: true, pattern: /\w{3,}/, msg: [], value: "", isInVaild: false },
         description: { isRequired: true, pattern: /[\s\S]{5,110}/, msg: [], value: "", isInVaild: false },
-        servings: { isRequired: true, pattern: /\d/, msg: [], value: "", isInVaild: false },
-        cookingTime: { isRequired: true, pattern: /\d/, msg: [], value: "", isInVaild: false },
+        Servings: { isRequired: true, pattern: /\d/, msg: [], value: "", isInVaild: false },
+        CookingTime: { isRequired: true, pattern: /\d/, msg: [], value: "", isInVaild: false },
         prepTimeMins: { isRequired: true, pattern: /\d/, msg: [], value: "", isInVaild: false },
-        level: { isRequired: true, pattern: /\d/, msg: [], value: "", isInVaild: false },
+        level: { isRequired: true, pattern: /[\s\S]{2,}/, msg: [], value: "", isInVaild: false },
     })
 
 
@@ -70,7 +110,7 @@ const NewRecipe = ({ connected, hasPageAaccess }) => {
             }
         }
         const statusRecipeName = await isRecipeNameAvailable(details.recipeName.value);
-        console.log("statusRecipeName", statusRecipeName)
+        // console.log("statusRecipeName", statusRecipeName)
         if (!statusRecipeName) {
             setValidated(false)
             event.stopPropagation();
@@ -88,16 +128,14 @@ const NewRecipe = ({ connected, hasPageAaccess }) => {
             userId: JSON.parse(localStorage.getItem("user")).id,
             recipeName: details.recipeName.value,
             description: details.description.value,
-            Servings: details.servings.value,
-            CookingTime: details.cookingTime.value,
+            Servings: details.Servings.value,
+            CookingTime: details.CookingTime.value,
             prepTimeMins: details.prepTimeMins.value,
             level: details.level.value,
             categories: details.categories.value,
             diets: details.diets.value,
         }
 
-        // alert(JSON.stringify(allRelevantData))
-        // alert(JSON.stringify(statusRecipeName))
         updateStep1(allRelevantData)
         history.push("/newRecipe_step2")
     }
@@ -107,17 +145,17 @@ const NewRecipe = ({ connected, hasPageAaccess }) => {
         let isMsgShowing = false;
         if (name === "categories" && value.length < 1) {
             isMsgShowing = true
-            errorMsg.push(`${name} is required.`)
+            errorMsg.push(`This Field is Required.`)
         } else if (name === "diets" && value.length < 1) {
             isMsgShowing = true
-            errorMsg.push(`${name} is required.`)
+            errorMsg.push(`This Field is Required.`)
         } else if (value === "") {
             isMsgShowing = true
-            errorMsg.push(`${name} is required.`)
+            errorMsg.push(`This Field is Required.`)
         } else if (details[name].isRequired && (details[name].pattern).test(value)) {
             isMsgShowing = false
         } else {
-            errorMsg.push(`${name} is not valid.`)
+            errorMsg.push(`Not Valid.`)
             isMsgShowing = true
         }
         setDetails(prevDetails => ({ ...prevDetails, [name]: { ...prevDetails[name], value, isInVaild: isMsgShowing, msg: errorMsg } }))
@@ -175,7 +213,7 @@ const NewRecipe = ({ connected, hasPageAaccess }) => {
             <Form noValidate validated={validated} onSubmit={handleSubmit} className="w-75 text-center">
 
                 <Form.Group >
-                    <Form.Label>Recipe name:</Form.Label>
+                    <Form.Label>Recipe Name:</Form.Label>
                     <InputGroup hasValidation>
                         <Form.Control
                             type="text"
@@ -198,40 +236,40 @@ const NewRecipe = ({ connected, hasPageAaccess }) => {
                         <InputGroup hasValidation>
                             <Form.Control
                                 type="number"
-                                name="servings"
+                                name="Servings"
                                 onBlur={e => validation(e.target)}
                                 onChange={(e) => validation(e.target)}
-                                value={details.servings.value}
-                                isInvalid={details.servings.isInVaild}
+                                value={details.Servings.value}
+                                isInvalid={details.Servings.isInVaild}
                                 required
                             />
                             <Form.Control.Feedback type="invalid" className="feedback">
-                                {details.servings.msg}
+                                {details.Servings.msg}
                             </Form.Control.Feedback>
                         </InputGroup>
                     </Form.Group>
 
                     <Form.Group as={Col} className="text-center">
-                        <Form.Label>Cooking time in minutes:</Form.Label>
+                        <Form.Label>Cooking Time in Minutes:</Form.Label>
                         <InputGroup hasValidation>
                             <Form.Control
                                 type="number"
-                                name="cookingTime"
+                                name="CookingTime"
                                 onBlur={e => validation(e.target)}
                                 onChange={(e) => validation(e.target)}
-                                value={details.cookingTime.value}
-                                isInvalid={details.cookingTime.isInVaild}
+                                value={details.CookingTime.value}
+                                isInvalid={details.CookingTime.isInVaild}
                                 required
                             />
                             <Form.Control.Feedback type="invalid" className="feedback">
-                                {details.cookingTime.msg}
+                                {details.CookingTime.msg}
                             </Form.Control.Feedback>
                         </InputGroup>
                     </Form.Group>
 
 
                     <Form.Group as={Col} className="text-center">
-                        <Form.Label>Prep time in minutes:</Form.Label>
+                        <Form.Label>Prep Time in Minutes:</Form.Label>
                         <InputGroup hasValidation>
                             <Form.Control
                                 type="number"
@@ -261,9 +299,9 @@ const NewRecipe = ({ connected, hasPageAaccess }) => {
                                 isInvalid={details.level.isInVaild}
                                 required>
                                 <option value={""}>Select level...</option>
-                                <option value={1}>easy</option>
-                                <option value={2}>medium</option>
-                                <option value={3}>Hard</option>
+                                <option value={"easy"}>Easy</option>
+                                <option value={"medium"}>intermediate</option>
+                                <option value={"hard"}>Hard</option>
                             </Form.Control>
                             <Form.Control.Feedback type="invalid" className="feedback">
                                 {details.level.msg}
@@ -338,22 +376,10 @@ const NewRecipe = ({ connected, hasPageAaccess }) => {
 
                 <hr></hr>
                 <Row className="text-center my-3 justify-content-center">
-                    <Button variant="outline-dark" type="submit">Submit step 1</Button>
-                    {/* <div >
-                <Link to="/newRecipe_step2">
-                    <Button
-                        ref={btn}
-                        // disabled={btnDisable}
-                        variant="primary"
-                        type="submit" >
-                        Click here to proceed to the next step
-                    </Button>
-                </Link>
-            </div> */}
+                    <Button variant="outline-dark" type="submit">Continue to the Next Step</Button>
                 </Row>
             </Form>
         </Row>
-
     </Container >
 }
 

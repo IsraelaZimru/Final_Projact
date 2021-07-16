@@ -17,11 +17,8 @@ const MyRecipes = ({ connected, hasPageAaccess, Recipes, onSelected }) => {
 
 
 
-
     const chooseRepice = (food) => {
-        console.log("coose random food");
-        onSelected(food)
-        history.push("/recipe_details")
+        history.push(`/updateRecipe_step1/${food.id}`)
     }
 
     return <Container>
@@ -34,7 +31,7 @@ const MyRecipes = ({ connected, hasPageAaccess, Recipes, onSelected }) => {
                 className="m-3 styleCard"
             >
                 <div
-                    onClick={e => chooseRepice(item)}
+                    onClick={() => history.push(`/recipe_details/${item.id}`)}
                     style={{ cursor: "pointer" }}
                 >
                     <Card.Header>{item.name}</Card.Header>
