@@ -1,4 +1,3 @@
-import 'C:/Users/ישראלה/Google Drive/Experis/final project/client/src/components/User/CSS/userPages.css'
 import { Link, useHistory, useParams } from "react-router-dom";
 import { Button, Form, InputGroup, Alert, Container, Col, Row } from 'react-bootstrap';
 import { useEffect, useState } from "react";

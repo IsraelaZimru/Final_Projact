@@ -73,8 +73,7 @@ const recipeInfoRow = async (recipeId) => {
 
 const recipeInfo = async (recipeId) => {
     try {
-        const [updateViews, fieldViews] = await db.query(`select @_view := (select views from recipes WHERE id = ?) + 1;
-        UPDATE recipes SET views = @_view WHERE id = ?;`, [recipeId, recipeId]);
+        const [updateViews, fieldViews] = await db.query(`SELECT @_view := (SELECT views from recipes WHERE id = ?) + 1; UPDATE recipes SET views = @_view WHERE id = ? ;`, [recipeId, recipeId]);
         const [recipe, fields] = await db.query(`select recipes.*,users.firstname "username" from recipes join users 
         on recipes.userid = users.id where recipes.id = ?`, [recipeId]);
         const [categories, fieldsC] = await db.execute('select name, recipeId from recipecategory join categories on recipecategory.CategoryTypeId = categories.id', [recipeId]);
