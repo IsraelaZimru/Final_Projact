@@ -47,6 +47,18 @@ router.put('/:id', upload.none(), validationsFun(recipeValidations), async funct
     }
 });
 
+router.put('/unSeenRecipe/:recipeId', async function (req, res) {
+    try {
+        const { recipeId } = req.params;
+        const updatedRecipe = await api.unSeenRecipe(recipeId);
+        if (!updatedRecipe) {
+            throw new Error("Recipe not found");
+        }
+        res.json(updatedRecipe);
+    } catch (err) {
+        res.status(404).send("The recipe with the given ID was not found")
+    }
+});
 
 
 module.exports = router;

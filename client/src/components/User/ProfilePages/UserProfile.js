@@ -11,7 +11,7 @@ const UserProfile = ({ connected, hasPageAaccess, updateUserInfo, getDetaildsFro
         email: { isRequired: true, pattern: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, msg: [], value: "", isInVaild: false },
         firstName: { isRequired: true, pattern: /\w{2,}/, msg: [], value: "", isInVaild: false },
         lastName: { isRequired: true, pattern: /\w{2,}/, msg: [], value: "", isInVaild: false },
-        password: { isRequired: true, pattern: /[\s\S]{2,}/, msg: [], value: "", isInVaild: false },
+        // password: { isRequired: true, pattern: /[\s\S]{2,}/, msg: [], value: "", isInVaild: false },
         // passwordVerification: { isRequired: true, pattern: /[\s\S]{2,}/, msg: [], value: "", isInVaild: false },
     })
 
@@ -104,9 +104,9 @@ const UserProfile = ({ connected, hasPageAaccess, updateUserInfo, getDetaildsFro
         <Alert show={show} variant="secondary" onClose={() => setShow(false)}>
             User email already exist. Please try with another email.
         </Alert>
-        <Form noValidate validated={validated} onSubmit={handleSubmit}>
+        <Form noValidate validated={validated} onSubmit={handleSubmit} className="w-50 mb-5">
             <Row>
-                <Col md={3}>
+                <Col md={12}>
                     <Form.Group >
                         <Form.Label>First name:</Form.Label>
                         <InputGroup hasValidation>
@@ -125,7 +125,7 @@ const UserProfile = ({ connected, hasPageAaccess, updateUserInfo, getDetaildsFro
                         </InputGroup>
                     </Form.Group>
                 </Col>
-                <Col md={3}>
+                <Col md={12}>
                     <Form.Group >
                         <Form.Label>Last name:</Form.Label>
                         <InputGroup hasValidation>
@@ -147,7 +147,7 @@ const UserProfile = ({ connected, hasPageAaccess, updateUserInfo, getDetaildsFro
             </Row>
 
             <Row>
-                <Col md={3}>
+                <Col md={12}>
                     <Form.Group>
                         <Form.Label>Email address</Form.Label>
                         <InputGroup hasValidation>
@@ -166,7 +166,7 @@ const UserProfile = ({ connected, hasPageAaccess, updateUserInfo, getDetaildsFro
                         </InputGroup>
                     </Form.Group>
                 </Col>
-                <Col md={3}>
+                {/* <Col md={3}>
                     <Form.Group >
                         <Form.Label>Password</Form.Label>
                         <InputGroup hasValidation>
@@ -184,7 +184,7 @@ const UserProfile = ({ connected, hasPageAaccess, updateUserInfo, getDetaildsFro
                             </Form.Control.Feedback>
                         </InputGroup>
                     </Form.Group>
-                </Col>
+                </Col> */}
             </Row>
 
             <Button variant="outline-dark" type="submit" className="mr-2"> update </Button>

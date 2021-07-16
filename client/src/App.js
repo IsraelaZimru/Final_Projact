@@ -176,7 +176,7 @@ function App() {
             id="styleIcon" />
           <ListGroup className="dropDownUser">
             <ListGroup.Item>
-              <Link className="px-2 mx-4" to="/User_Profile">User Profile</Link>
+              <Link className="px-2 mx-4" to={"/User_Profile/" + user.id}>User Profile</Link>
             </ListGroup.Item>
             <ListGroup.Item>
               <Link className="px-2 mx-4" to={"/MyFavorites/" + user.id}>My Favorites</Link>
@@ -236,7 +236,7 @@ function App() {
           <UserSecondNavber connected={connected} />
           <MyFavorites connected={connected} hasPageAaccess={hasPageAaccess} Recipes={apiRecipes} onSelected={setSelectedRecipe} />
         </Route>
-        <Route exact path="/User_Profile">
+        <Route exact path="/User_Profile/:id">
           <UserSecondNavber connected={connected} />
           <UserProfile connected={connected} hasPageAaccess={hasPageAaccess} updateUserInfo={updateUserInfo} getDetaildsFromDb={getDetaildsFromDb} userLoginHandler={userLoginHandler} />
         </Route>

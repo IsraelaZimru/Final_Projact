@@ -3,21 +3,7 @@ const api = require('../DAL/api'); //fun that actully sending HTTP reqs.
 const router = express.Router();
 const path = require('path')
 const upload = require('../utils/multer')
-// const {isExists} = require('../uti')
 
-// const multer = require('multer')
-// const storage = multer.diskStorage({
-//     destination: (req, file, cb) => {
-//         cb(null, 'public/images')
-//     },
-//     filename: (req, file, cb) => {
-//         cb(null, Date.now() + path.extname(file.originalname))
-//     }
-// })
-
-// const upload = multer({
-//     storage: storage
-// });
 
 router.post('/upload/:id', upload.single("image"), async function (req, res) {
     try {

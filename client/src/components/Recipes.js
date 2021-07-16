@@ -152,7 +152,7 @@ export default function Recipes({ isConnected, UserId, onSort, selectedIng, setS
                 >
                     <Card.Img variant="top" src={item.pic} height="160px" weidth="286px" />
                     <Card.Title className="text-center">{item.name}</Card.Title>
-                    <Card.Text className="text-center">
+                    <Card.Text className="text-center" style={{ minHeight: "9vh" }}>
                         {item.description}
                     </Card.Text>
                     <Card.Footer className="text-black">
@@ -163,8 +163,8 @@ export default function Recipes({ isConnected, UserId, onSort, selectedIng, setS
                 </div>
             </Card>)}
         </Row>
-        <Row className="justify-content-md-center">
+        {/* <Row className="justify-content-md-center">
             {paginationBasic}
-        </Row>
+        </Row> */}
     </Container >
 }

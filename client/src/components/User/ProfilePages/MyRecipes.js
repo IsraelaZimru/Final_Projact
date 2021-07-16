@@ -1,19 +1,16 @@
-import { Card, Container, Row, Col } from "react-bootstrap";
+import { Card, Container, Row, Col, Modal, Button } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSmileWink, faEdit } from "@fortawesome/free-solid-svg-icons";
-import ModalDelete from '../ProfilePages/ModalDelete'
-import { getMyRecipes } from "../../../DAL/api";
+import { faSmileWink, faEdit, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import { getMyRecipes, setUnSeenRecipe } from "../../../DAL/api";
 import { useParams } from "react-router-dom";
+
 
 const MyRecipes = ({ connected, hasPageAaccess, onSelected }) => {
     let history = useHistory();
     const { id } = useParams()
-    // const myFav = [] // chheckig default msg...
-
-    // const myFav = Recipes || [];
-
+    const [show, setShow] = useState(false);
     const [recipes, setRecipes] = useState([])
 
     useEffect(() => {
@@ -31,13 +28,26 @@ const MyRecipes = ({ connected, hasPageAaccess, onSelected }) => {
                 setRecipes(prev => myRecipes)
             }
         })()
-    }, [])
-
-
+    }, [show])
 
     const chooseRepice = (food) => {
         history.push(`/updateRecipe_step1/${food.id}`)
     }
+
+
+
+    useEffect(() => {
+    }, [show])
+
+
+
+    const handleShow = () => setShow(true);
+    const handleClose = () => setShow(false);
+
+    const handleDelete = async (recipeId) => {
+        const ChangeVisibility = await setUnSeenRecipe(recipeId);
+        setShow(false);
+    };
 
     return <Container>
         <h1 className="display-2 mb-5 text-center"> I Made It:</h1>
@@ -70,7 +80,28 @@ const MyRecipes = ({ connected, hasPageAaccess, onSelected }) => {
                             />
                         </Col>
                         <Col className="text-center" >
-                            <ModalDelete />
+
+                            <FontAwesomeIcon onClick={handleShow} icon={faTrashAlt} style={{ cursor: "pointer" }} />
+
+                            <Modal show={show} onHide={handleClose}>
+                                <Modal.Header closeButton>
+                                    <Modal.Title>Warning !</Modal.Title>
+                                </Modal.Header>
+                                <Modal.Body>
+                                    <strong>
+                                        This will permanently delete the recipe, are you sure?
+                                    </strong>
+                                </Modal.Body>
+                                <Modal.Footer>
+                                    <Button variant="secondary" onClick={handleClose}>
+                                        return back
+                                    </Button>
+                                    <Button variant="danger" onClick={() => handleDelete(item.id)}>
+                                        Delete
+                                    </Button>
+                                </Modal.Footer>
+                            </Modal>
+
                         </Col>
                     </Row>
                 </Card.Footer>

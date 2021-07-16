@@ -1,15 +1,9 @@
 const db = require('../utils/database') // mysql2.pool.promise()
 const { mergeTwoSQLTable, addingredientsToRecipe, organizedData, organizedIngredients, organizedinstructions } = require('../utils/halpersFun')
 
-// const recipes = async () => {
-//     // const [recipes, fields] = await db.execute('Select * from recipes r inner join images i on r.imageID = i.id ');
-//     const [recipes, fields] = await db.execute('Select * from recipes');
-//     return recipes;
-// }
-
 const recipes = async () => {
     try {
-        const [recipes, fields] = await db.execute('Select * from recipes');
+        const [recipes, fields] = await db.execute('Select * from recipes where isPrivate = 0');
         const [categories, catFields] = await db.execute('select name, recipeId from recipecategory join categories on recipecategory.CategoryTypeId = categories.id; ');
         mergeTwoSQLTable([recipes, categories], "allCategories");
         return recipes;
@@ -80,7 +74,7 @@ const newUser = async (firstName, lastName, password, email) => {
 }
 
 const onlyRecipesName = async () => {
-    const [names, fields] = await db.execute('Select id,name from recipes');
+    const [names, fields] = await db.execute('Select id,name from recipes where isPrivate = 0');
     return names;
 }
 
@@ -235,7 +229,7 @@ const updateRecipe = async (id, recipe, ingredients, instructions) => {
 
 const myRecipes = async (id) => {
     try {
-        const [recipes, fields] = await db.execute('Select * from recipes where userID = ?', [id]);
+        const [recipes, fields] = await db.execute('Select * from recipes where userID = ? and isPrivate = 0', [id]);
         // console.log(recipes);
         // return recipes;
         const [categories, catFields] = await db.execute('select name, recipeId from recipecategory join categories on recipecategory.CategoryTypeId = categories.id; ');
@@ -248,7 +242,7 @@ const myRecipes = async (id) => {
 
 const MyFavorites = async (id) => {
     try {
-        const [recipes, fields] = await db.execute('Select * from recipes where id in (select recipeID from favorites where userID = ?)', [id]);
+        const [recipes, fields] = await db.execute('Select * from recipes where isPrivate = 0 and id in (select recipeID from favorites where userID = ?)', [id]);
         const [categories, catFields] = await db.execute('select name, recipeId from recipecategory join categories on recipecategory.CategoryTypeId = categories.id; ');
         mergeTwoSQLTable([recipes, categories], "allCategories");
         return recipes;
@@ -303,7 +297,16 @@ const AddToMyFavorites = async (userId, recipeId) => {
 }
 
 
-
+const unSeenRecipe = async (recipeId) => {
+    try {
+        const [recipe, fields] = await db.execute('UPDATE recipes SET isPrivate = 1 WHERE id = ?;', [recipeId]);
+        // console.log("recipe-", recipe[1]);
+        // const newLst = await recipe[1]
+        return recipe;
+    } catch (err) {
+        throw new Error('Problem connecting with SQL')
+    }
+}
 
 module.exports = {
     recipes,
@@ -326,5 +329,6 @@ module.exports = {
     removeFromMyFavorites,
     AddToMyFavorites,
     MyFavoritesId,
-    removeFromMyFavoritesIds
+    removeFromMyFavoritesIds,
+    unSeenRecipe
 }

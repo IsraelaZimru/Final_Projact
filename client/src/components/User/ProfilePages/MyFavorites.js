@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThumbtack, faEdit, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
-import ModalDelete from '../ProfilePages/ModalDelete'
 import { getMyFavorites, RemoveAndReturnFavoritesRecipes } from "../../../DAL/api";
 import { useParams } from "react-router-dom";
 
