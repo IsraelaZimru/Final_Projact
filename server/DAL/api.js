@@ -283,7 +283,7 @@ const removeFromMyFavoritesIds = async (userId, recipeId) => {
     try {
         const [recipes, fields] = await db.execute('DELETE FROM favorites WHERE userID= ? and recipeID= ?;', [userId, recipeId]);
         const newLst = await MyFavoritesId(userId)
-        // console.log("newLst", newLst);
+        console.log("newLst", newLst);
         return newLst;
     } catch (err) {
         throw new Error('Problem connecting with SQL')
