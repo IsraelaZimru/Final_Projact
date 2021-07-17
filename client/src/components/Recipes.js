@@ -1,21 +1,19 @@
-import { Card, Container, Row, Col, Pagination, ListGroup } from "react-bootstrap";
+import { Card, Container, Row, Col, Pagination, ListGroup, Navbar, Nav, NavDropdown, Jumbotron, Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faThumbsUp, faEdit, faHeart, faEye, faTimesCircle, faBookmark } from "@fortawesome/free-solid-svg-icons";
+import { faThumbsUp, faEdit, faHeart, faEye, faTimesCircle, faBookmark,faSearch } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
-import { getRecipe, addToMyFavorites, getMyFavoritesId, RemoveFromMyFavorites } from "../DAL/api";
+import { getRecipe, addToMyFavorites, getMyFavoritesId, RemoveFromMyFavorites, getCatsAndDiets, getingredientsNames } from "../DAL/api";
 
 
-export default function Recipes({ isConnected, UserId, selectedIng, setSelectedIng }) {
+export default function Recipes({ isConnected, UserId }) {
     const history = useHistory()
+    const [selectedIng, setSelectedIng] = useState([]);
     const [likes, setLikes] = useState([]); //להכניס לכל יוזר מערך מתכונים אהובים ומתכון ששם או נכנס יוחלף צבעו
     const [apiRecipes, setApiRecipes] = useState([]);
+    const [checkboxs, setCheckboxs] = useState({ diets: [], categories: [], ings: [] });
 
-
-    // useEffect(() => {
-
-    // }, [likes])
-
+    // let originalRecipe;
 
 
     useEffect(() => {
@@ -26,33 +24,90 @@ export default function Recipes({ isConnected, UserId, selectedIng, setSelectedI
                 setLikes(prev => favorites)
             }
         })()
-    }, [isConnected, UserId])
+    }, [isConnected, UserId, selectedIng])
 
 
     useEffect(() => {
         const fetchRecipes = async () => {
             try {
                 const recipes = await getRecipe()
+                console.log("recipes", recipes);
+                // originalRecipe = recipes;
                 setApiRecipes(prev => recipes)
             } catch (err) {
                 alert("Error, please refresh the site", err)
             }
+
+            try {
+                const data = await getCatsAndDiets();
+                const getIngs = await getingredientsNames();
+
+                const checkboxsInfo = { diets: data[0], categories: data[1], ings: getIngs }
+                checkboxsInfo.diets.forEach(item => item.class = "alldiets")
+                checkboxsInfo.categories.forEach(item => item.class = "allCategories")
+                checkboxsInfo.ings.forEach(item => item.class = "ings")
+                // console.log(checkboxsInfo);
+                setCheckboxs(prev => checkboxsInfo)
+            } catch (err) {
+                alert("cant import ings, cats and diets")
+            }
         }
         fetchRecipes()
+        return () => setSelectedIng([]);
     }, [likes])
 
-    const closeHandler = (ing) => {
-        const temp = selectedIng.filter(name => name !== ing)
-        setSelectedIng(prev => temp)
+    const closeHandler = async (ing) => {
+        const newArr = await selectedIng.filter(type => type.name !== ing.name)
+        setSelectedIng(prev => newArr);
+        console.log("selectedIng", newArr);
+
+        let temp = await getRecipe()
+        console.log("temp1", temp);
+
+        if (newArr.length < 1) {
+            // console.log("selectedIng is empty", newArr);
+        } else {
+            // console.log("selectedIng not empty", newArr);
+            for (let i = 0; i < newArr.length; i++) {
+                const type = newArr[i];
+                console.log(type);
+                temp = temp.filter(recipe => recipe[type.class].includes(type.name))
+            }
+        }
+
+        console.log("temp2", temp);
+        setApiRecipes(prev => temp)
     };
-    const sort = (sortby) => {
-        //
+
+    const sortViews = () => {
+        const sorted = apiRecipes.sort((b, a) => a.views - b.views)
+        setApiRecipes(prev => [...sorted])
+    }
+
+    const sortQuick = () => {
+        const sorted = apiRecipes.sort((a, b) => a.CookingTime - b.CookingTime)
+        const temp = apiRecipes.map(a => a.CookingTime)
+        console.log(temp);
+        setApiRecipes(prev => [...sorted])
+    }
+
+
+    const updateValue = (type) => {
+        if (selectedIng.includes(type)) {
+            return;
+        }
+        setSelectedIng(prev => [...prev, type]);
+        const temp = apiRecipes.filter(recipe => {
+            // console.log(type.class, "type.class");
+            return recipe[type.class].includes(type.name)
+        })
+        setApiRecipes(prev => [...temp])
+        console.log("temp-add", temp);
     }
 
     const chooseRepice = (food) => {
         history.push(`/recipe_details/${food.id}`)
     }
-
 
 
     const updateMyFavorites = async (recipeId) => {
@@ -89,22 +144,84 @@ export default function Recipes({ isConnected, UserId, selectedIng, setSelectedI
     );
 
     return <Container fluid className="py-2">
-        <div>
-            <p className="sortRacipes">Sort by :
-                <span onClick={() => { }}>the Quickest</span>|
-                <span onClick={() => { }}>Most Popular</span></p>
-        </div>
+
+        <Navbar collapseOnSelect expand="lg" bg="light" className="text-center font-weight-bold">
+            <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+            <Nav className="m-auto">
+                <Row className="justify-content-center">
+                    <Col>
+                        <Navbar.Collapse id="responsive-navbar-nav">
+                            <NavDropdown title="Categories" id="collasible-nav-dropdown">
+                                {checkboxs.categories.map((type, i) => <NavDropdown.Item
+                                    value={type}
+                                    onClick={() => updateValue(type, "categories")}
+                                    key={i}
+                                >{type.name}</NavDropdown.Item>)}
+                            </NavDropdown>
+                        </Navbar.Collapse>
+                    </Col>
+
+                    <Col>
+                        <Navbar.Collapse id="responsive-navbar-nav">
+                            <NavDropdown title="Diets" id="collasible-nav-dropdown">
+                                {checkboxs.diets.map((type, i) => <NavDropdown.Item
+                                    value={type}
+                                    onClick={() => updateValue(type, "diets")}
+                                    key={i}
+                                >{type.name}</NavDropdown.Item>)}
+                            </NavDropdown>
+                        </Navbar.Collapse>
+                    </Col>
+
+                    <Col>
+                        <Navbar.Collapse id="responsive-navbar-nav">
+                            <NavDropdown title="Sort By" id="collasible-nav-dropdown">
+                                <NavDropdown.Item
+                                    onClick={sortQuick}>
+                                    the Quickest
+                                </NavDropdown.Item>
+                                <NavDropdown.Item
+                                    onClick={sortViews}>
+                                    Views
+                                </NavDropdown.Item>
+
+                            </NavDropdown>
+                        </Navbar.Collapse>
+                    </Col>
+
+
+                    {/* <Col>
+                        <Navbar.Collapse id="responsive-navbar-nav">
+                        <NavDropdown title="Ingredients" id="collasible-nav-dropdown">
+                                {checkboxs.ings.slice(0, 6).map((type, i) => <NavDropdown.Item
+                                    value={type}
+                                    onClick={() => updateValue(type)}
+                                    key={i}
+                                    >{type.name}</NavDropdown.Item>)}
+                                    </NavDropdown>
+                                    </Navbar.Collapse>
+                    </Col> */}
+                </Row>
+            </Nav>
+        </Navbar>
         <ListGroup horizontal>
             {!!selectedIng.length && selectedIng.map((ing, i) => (<ListGroup.Item key={i}>
                 <FontAwesomeIcon icon={faTimesCircle}
                     style={{ cursor: "pointer" }}
                     onClick={() => closeHandler(ing)}
-                    className={likes ? "text-danger mr-2 ml-2" : "mr-2 ml-2"} />
-                {ing}
+                    className={"mr-2 ml-2"} />
+                {ing.name}
             </ListGroup.Item>))}
         </ListGroup>
+        {/* 
+        <div>
+        <p className="sortRacipes">Sort By :
+        <span onClick={sortQuick}>the Quickest</span>|
+        <span onClick={sortViews}>Views</span></p>
+    </div> */}
+
         <Row className="justify-content-center">
-            {apiRecipes.map((item, i) => <Card
+            {!!apiRecipes.length && apiRecipes.map((item, i) => <Card
                 id="myFav"
                 key={i}
                 sm={6}
@@ -150,18 +267,34 @@ export default function Recipes({ isConnected, UserId, selectedIng, setSelectedI
                     onClick={e => chooseRepice(item)}
                     style={{ cursor: "pointer" }}
                 >
-                    <Card.Img variant="top" src={item.pic} height="160px" weidth="286px" />
-                    <Card.Title className="text-center">{item.name}</Card.Title>
-                    <Card.Text className="text-center" style={{ minHeight: "9vh" }}>
+                    <Card.Img variant="top" src={item.pic} height="180px" weidth="286px" />
+                    <Card.Title className="text-center py-1">{item.name}</Card.Title>
+                    <Card.Text className="text-center m-1" style={{ minHeight: "8vh" }}>
                         {item.description}
                     </Card.Text>
-                    <Card.Footer className="text-black">
-                        <p className="text-center my-2">
+                    {/* <Card.Footer className="text-black">
+                        <p className="text-center">
                             {item.allCategories && item.allCategories.map((type, i) => <span key={i}>| {type} </span>)}
                         </p>
-                    </Card.Footer>
+                    </Card.Footer> */}
+                     {/* <Card.Footer className="text-black"> */}
+                     <hr></hr>
+                        <p className="text-center">
+                            {item.allCategories && item.allCategories.map((type, i) => <span key={i}>| {type} </span>)}
+                        </p>
+                    {/* </Card.Footer> */}
                 </div>
             </Card>)}
+
+            {!apiRecipes.length && <Jumbotron fluid className="mt-3">
+                <Container>
+                    {/* <h1>Hello, world!</h1> */}
+                    <p>
+                        No matching recipes were found.
+                    </p>
+                </Container>
+
+            </Jumbotron>}
         </Row>
         {/* <Row className="justify-content-md-center">
             {paginationBasic}

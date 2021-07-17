@@ -12,6 +12,16 @@
   border-radius: 50%;
   border-style: dashed;
 } */
+/* 
+#bkgdImge2 {
+  border-radius: 10%;
+  background-image: url("../../../imgs/hatss.jpg");
+  background-color: #6c686d73;
+  background-repeat: repeat;
+  min-width: 100%;
+  margin: 0 0 0 0;
+  opacity: 90%;
+} */
 
 #formAlignitem {
   align-items: center;
@@ -61,8 +71,8 @@
   background-size: cover;
 } */
 
-.bkgdImg{
-  background-image:url("../../../imgs/hatss.jpg");
+.bkgdImg {
+  background-image: url("../../../imgs/hatss.jpg");
   background-size: cover;
   /* height: 100%; */
 }

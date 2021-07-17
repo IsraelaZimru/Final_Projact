@@ -185,10 +185,10 @@ function App() {
       <Switch>
         <Route exact path="/" >
           <SearchForm connected={connected} userName={user.name} setSelectedIng={setSelectedIng} />
-          <Recipes isConnected={connected} UserId={user.id} selectedIng={selectedIng} setSelectedIng={setSelectedIng} />
+          <Recipes isConnected={connected} UserId={user.id} />
         </Route>
         <Route exact path="/Sign_Up">
-          <SignUp connected={connected} hasPageAaccess={hasPageAaccess}/>
+          <SignUp connected={connected} hasPageAaccess={hasPageAaccess} />
         </Route>
         <Route exact path="/newRecipe_step1">
           <NewRecipe connected={connected} hasPageAaccess={hasPageAaccess} />

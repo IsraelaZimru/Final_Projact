@@ -66,8 +66,8 @@ const RecipeInfo = ({ hasPageAaccess, onselect }) => {
                 <ul horizontal id="listStyle">
                     <li className="px-2">Views: {selectRecipe.views}</li>
                     {/* <li className="px-2">comments: { }</li> */}
-                    <li className="px-2">Preparation Time: {selectRecipe.CookingTime}</li>
-                    <li className="px-2">Cooking Time: {selectRecipe.prepTimeMins}</li>
+                    <li className="px-2">Preparation Time: {selectRecipe.prepTimeMins}</li>
+                    <li className="px-2">Cooking Time: {selectRecipe.CookingTime}</li>
                     <li className="px-2">By: {selectRecipe.username}</li>
                 </ul>
                 <h4 className="mt-5"><u>Discription:</u> {selectRecipe.description}</h4>
@@ -88,7 +88,7 @@ const RecipeInfo = ({ hasPageAaccess, onselect }) => {
                 <Row className="justify-content-md-center text-center p-3">
                     <Col>
                         <h4><u>Date:</u></h4>
-                        <p>{selectRecipe.date.slice(0, selectRecipe.date.indexOf("T"))}</p>
+                        <p>{selectRecipe.date.slice(0, selectRecipe.date.indexOf("T")).split("-").reverse().join("-")}</p>
                     </Col>
                     <Col>
                         <h4><u>Difficulty:</u></h4>
