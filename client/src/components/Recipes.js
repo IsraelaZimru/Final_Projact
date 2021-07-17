@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import { getRecipe, addToMyFavorites, getMyFavoritesId, RemoveFromMyFavorites } from "../DAL/api";
 
 
-export default function Recipes({ isConnected, UserId, onSort, selectedIng, setSelectedIng }) {
+export default function Recipes({ isConnected, UserId, selectedIng, setSelectedIng }) {
     const history = useHistory()
     const [likes, setLikes] = useState([]); //להכניס לכל יוזר מערך מתכונים אהובים ומתכון ששם או נכנס יוחלף צבעו
     const [apiRecipes, setApiRecipes] = useState([]);
@@ -91,8 +91,8 @@ export default function Recipes({ isConnected, UserId, onSort, selectedIng, setS
     return <Container fluid className="py-2">
         <div>
             <p className="sortRacipes">Sort by :
-                <span onClick={() => { onSort("likes"); console.log("clicked") }}>the Quickest</span>|
-                <span onClick={() => sort("date")}>Most Popular</span></p>
+                <span onClick={() => { }}>the Quickest</span>|
+                <span onClick={() => { }}>Most Popular</span></p>
         </div>
         <ListGroup horizontal>
             {!!selectedIng.length && selectedIng.map((ing, i) => (<ListGroup.Item key={i}>

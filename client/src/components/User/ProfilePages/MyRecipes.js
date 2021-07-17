@@ -7,7 +7,7 @@ import { getMyRecipes, setUnSeenRecipe } from "../../../DAL/api";
 import { useParams } from "react-router-dom";
 
 
-const MyRecipes = ({ connected, hasPageAaccess, onSelected }) => {
+const MyRecipes = ({ connected, hasPageAaccess }) => {
     let history = useHistory();
     const { id } = useParams()
     const [show, setShow] = useState(false);

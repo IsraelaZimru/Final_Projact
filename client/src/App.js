@@ -7,7 +7,7 @@ import { BrowserRouter as Router, Switch, Route, Link, useHistory } from "react-
 import { Nav, Navbar, ListGroup, Container, NavDropdown } from 'react-bootstrap';
 import Recipes from './components/Recipes';
 import SearchForm from './components/SearchForm';
-import { hasPageAaccess, getRecipe, allUsers, getRecipeNames, getingredientsNames, updateUserInfo } from './DAL/api';
+import { hasPageAaccess, updateUserInfo } from './DAL/api';
 import { checkingSignUp } from './DAL/utilFun'
 import Login from './components/Login';
 import SignUp from './components/SignUp';
@@ -16,7 +16,7 @@ import MyRecipes from './components/User/ProfilePages/MyRecipes';
 import UserProfile from './components/User/ProfilePages/UserProfile';
 import { useState, useEffect } from 'react';
 import NewRecipe from './components/Forms/AddRecipe/newRecipe';
-import { checkLoginAccess, addNewUser, selectedItem, getDetaildsFromDb } from './DAL/api'
+import { checkLoginAccess, selectedItem, getDetaildsFromDb } from './DAL/api'
 import logo3 from '../src/imgs/logo3.png'
 import RecipeInfo from '../src/components/RecipeInfo'
 import UserSecondNavber from "./components/User/UserSecondNavber";
@@ -31,9 +31,9 @@ import Step4 from './components/Forms/updateRecipe/Step4';
 
 function App() {
   const [showLogin, setShowLogin] = useState(false)
+  const [error, setError] = useState(false);
   const [connected, setConnected] = useState(false)
-  const [selectedRecipe, setSelectedRecipe] = useState({})
-  const [apiRecipes, setApiRecipes] = useState([]);
+  const [selectedIng, setSelectedIng] = useState([]);
   const [checkUser, setCheckUser] = useState({
     email: "",
     password: ""
@@ -43,18 +43,17 @@ function App() {
     id: NaN
   })
 
-  const [selectedIng, setSelectedIng] = useState([]);
 
 
+  const userLoginHandler = (info) => {
+    setCheckUser(info)
+  }
   useEffect(() => {
     const checkConnected = JSON.parse(localStorage.getItem("user"))
     if (checkConnected) {
       setConnected(true);
       setUser(prev => checkConnected)
     }
-
-    // getRecipe().then(data => setApiRecipes(prev => data))
-    //   .catch(err => alert("error", err))
   }, [])
 
   useEffect(() => {
@@ -62,76 +61,55 @@ function App() {
     return logOut
   }, [checkUser])
 
-  // useEffect(() => {
-  //   isNewUser()
-  // }, [newUser])
-
-
-  // const isNewUser = async () => {
-  //   try {
-  //     const answerFromDb = await addNewUser(user);
-  //     const importUser = await checkingMatch(answerFromDb);
-  //     await updatingLoginStatus(importUser)
-  //   } catch (err) {
-  //     console.log(err)
-  //   }
-  // }
 
   const fetchingUser = async () => {
     try {
       const isData = await checkLoginAccess({ email: checkUser.email, password: checkUser.password })
-      const importUser = await checkingMatch(isData);
-      await updatingLoginStatus(importUser)
+      // const importUser = await checkingMatch(isData);
+      // await updatingLoginStatus(importUser)
+      const res = await checkingMatch(isData);
+      return res;
     } catch (err) {
       console.log(err)
     }
   }
 
   const checkingMatch = isData => {
-    if (isData) {
-      return isData;
-    }
-    return false;
-  }
-
-
-  const updatingLoginStatus = importUser => {
-    console.log("importUser", importUser);
-    if (importUser) {
-      // console.log(`have a match user -${importUser.name}`, importUser);
-      setConnected(true);
-      setUser(prev => importUser);
-      localStorage.setItem("user", JSON.stringify(importUser))
-      // displayLogin()
-      setShowLogin(false)
-    } else {
+    if (!isData) {
       console.log('no match');
+      return false;
     }
+    setConnected(true);
+    setUser(prev => isData);
+    localStorage.setItem("user", JSON.stringify(isData))
+    setShowLogin(false)
+    return true;
   }
 
 
-  const onSort = (type) => { //notWorking
-    const sortedArr = apiRecipes.sort((a, b) => a[type] > b[type]);
-    setApiRecipes(prev => sortedArr)
-  }
+  // const updatingLoginStatus = importUser => {
+  //   console.log("importUser", importUser);
+  //   if (importUser) {
+  //     setConnected(true);
+  //     setUser(prev => importUser);
+  //     localStorage.setItem("user", JSON.stringify(importUser))
+  //     setShowLogin(false)
+  //   } else {
+  //     console.log('no match');
+
+  //   }
+  // }
 
   const logOut = () => {
     localStorage.removeItem("user");
     setConnected(false)
   }
 
-  const userLoginHandler = (info) => {
-    setCheckUser(prev => info)
-  }
 
 
   const displayLogin = () => {
     const temp = showLogin === false ? true : false;
     setShowLogin(temp)
-  }
-  const switchUser = () => {
-    const temp = connected === false ? true : false;
-    setConnected(temp)
   }
 
   return <Container fluid className="px-0" >
@@ -188,7 +166,8 @@ function App() {
               <Link className="px-2 mx-4" to="/newRecipe_step1">Add A New Recipe</Link>
             </ListGroup.Item>
             <ListGroup.Item>
-              <Link className="px-2 mx-3" onClick={switchUser}>Logout</Link>
+              {/* <Link className="px-2 mx-3" onClick={switchUser}>Logout</Link> */}
+              <Link className="px-2 mx-3" onClick={logOut}>Logout</Link>
             </ListGroup.Item>
           </ListGroup>
           <div
@@ -200,13 +179,13 @@ function App() {
       </Navbar >
 
       <div >
-        <Login showLogin={showLogin} onClose={displayLogin} connected={connected} userLoginHandler={userLoginHandler} />
+        <Login showLogin={showLogin} onClose={displayLogin} setUser={setUser} setConnected={setConnected} />
       </div>
 
       <Switch>
         <Route exact path="/" >
           <SearchForm connected={connected} userName={user.name} setSelectedIng={setSelectedIng} />
-          <Recipes isConnected={connected} UserId={user.id} onSort={onSort} selectedIng={selectedIng} setSelectedIng={setSelectedIng} />
+          <Recipes isConnected={connected} UserId={user.id} selectedIng={selectedIng} setSelectedIng={setSelectedIng} />
         </Route>
         <Route exact path="/Sign_Up">
           <SignUp connected={connected} hasPageAaccess={hasPageAaccess} checkingSignUp={checkingSignUp} />
@@ -234,7 +213,7 @@ function App() {
         </Route>
         <Route exact path="/MyFavorites/:id">
           <UserSecondNavber connected={connected} />
-          <MyFavorites connected={connected} hasPageAaccess={hasPageAaccess} Recipes={apiRecipes} onSelected={setSelectedRecipe} />
+          <MyFavorites connected={connected} hasPageAaccess={hasPageAaccess} />
         </Route>
         <Route exact path="/User_Profile/:id">
           <UserSecondNavber connected={connected} />
@@ -242,7 +221,7 @@ function App() {
         </Route>
         <Route exact path="/My_Recipes/:id">
           <UserSecondNavber connected={connected} />
-          <MyRecipes connected={connected} hasPageAaccess={hasPageAaccess} Recipes={apiRecipes} onSelected={setSelectedRecipe} />
+          <MyRecipes connected={connected} hasPageAaccess={hasPageAaccess} />
         </Route>
 
         <Route exact path="/Phase4/:id">
