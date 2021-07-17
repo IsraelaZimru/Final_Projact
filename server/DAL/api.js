@@ -5,7 +5,10 @@ const recipes = async () => {
     try {
         const [recipes, fields] = await db.execute('Select * from recipes where isPrivate = 0');
         const [categories, catFields] = await db.execute('select name, recipeId from recipecategory join categories on recipecategory.CategoryTypeId = categories.id; ');
+        const [diets, fieldsRD] = await db.execute(`select name, recipeId from recipediet join diets on diets.id = recipediet.DietId`);
+
         mergeTwoSQLTable([recipes, categories], "allCategories");
+        mergeTwoSQLTable([recipes, diets], "alldiets");
         return recipes;
     } catch (err) {
         console.log(err)

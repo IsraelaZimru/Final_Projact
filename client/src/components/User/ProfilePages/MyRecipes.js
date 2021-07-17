@@ -49,7 +49,7 @@ const MyRecipes = ({ connected, hasPageAaccess }) => {
         setShow(false);
     };
 
-    return <Container>
+    return <Container >
         <h1 className="display-2 mb-5 text-center"> I Made It:</h1>
         <Row className="justify-content-md-center">
             {recipes.map((item, i) => <Card
