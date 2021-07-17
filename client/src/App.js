@@ -121,7 +121,7 @@ function App() {
   }
 
   const userLoginHandler = (info) => {
-    setCheckUser(info)
+    setCheckUser(prev => info)
   }
 
 

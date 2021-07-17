@@ -2,12 +2,6 @@ import { useState, useEffect } from "react";
 import { Button, Card, Form, Collapse, InputGroup, Alert } from "react-bootstrap";
 
 function Login({ showLogin, onClose, connected, userLoginHandler }) {
-    useEffect(() => {
-        window.scrollTo(0, 0);
-        if (!showLogin) {
-            setShow(false)
-        }
-    }, [showLogin])
 
     const [show, setShow] = useState(false);
     const [validated, setValidated] = useState(false);
@@ -16,6 +10,13 @@ function Login({ showLogin, onClose, connected, userLoginHandler }) {
         password: { isRequired: true, pattern: /[\s\S]{2,}/, msg: [], value: "", isInVaild: false },
     })
 
+    useEffect(() => {
+        window.scrollTo(0, 0);
+        if (!showLogin) {
+            setShow(false)
+        }
+    }, [showLogin])
+    
     const handleSubmit = (event) => {
         const checkErrors = [];
         for (const key in details) {
