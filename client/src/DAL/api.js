@@ -41,7 +41,6 @@ export async function getingredientsNames() {
 export async function checkLoginAccess({ email, password }) {
     try {
         const result = await axios.post('/users/login', { email, password });
-        // console.log('axios result', result);
         return result.data;
     } catch (err) {
         console.log('login error', err);

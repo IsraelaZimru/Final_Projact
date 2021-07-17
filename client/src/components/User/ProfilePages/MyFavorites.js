@@ -8,7 +8,7 @@ import { useParams } from "react-router-dom";
 
 // faHeart
 
-const MyFavorites = ({ connected, hasPageAaccess, onSelected }) => {
+const MyFavorites = ({ connected, hasPageAaccess }) => {
     let history = useHistory();
     const { id } = useParams();
     const [recipes, setRecipes] = useState([])

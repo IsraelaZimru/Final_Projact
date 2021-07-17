@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { Button, Card, Form, Collapse, InputGroup, Alert } from "react-bootstrap";
+import { checkLoginAccess } from "../DAL/api";
 
-function Login({ showLogin, onClose, connected, userLoginHandler }) {
+function Login({ showLogin, onClose, setConnected, setUser }) {
+    const [error, setError] = useState(false);
 
-    const [show, setShow] = useState(false);
     const [validated, setValidated] = useState(false);
     const [details, setDetails] = useState({
         email: { isRequired: true, pattern: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, msg: [], value: "", isInVaild: false },
@@ -13,11 +14,11 @@ function Login({ showLogin, onClose, connected, userLoginHandler }) {
     useEffect(() => {
         window.scrollTo(0, 0);
         if (!showLogin) {
-            setShow(false)
+            setError(false)
         }
     }, [showLogin])
-    
-    const handleSubmit = (event) => {
+
+    const handleSubmit = async (event) => {
         const checkErrors = [];
         for (const key in details) {
             if (Object.hasOwnProperty.call(details, key)) {
@@ -38,18 +39,35 @@ function Login({ showLogin, onClose, connected, userLoginHandler }) {
         setValidated(true);
         event.preventDefault();
         const info = { email: details.email.value, password: details.password.value }
-        userLoginHandler(prev => info)
+        const chekingDetails = await checkLoginAccess(info)
+        const res = await checkingMatch(chekingDetails);
 
-
-        if (connected) {
+        if (res) {
+            setConnected(true);
+            setUser(prev => chekingDetails);
+            localStorage.setItem("user", JSON.stringify(chekingDetails))
+            setError(false)
             onClose()
         } else {
             setValidated(false);
-            setShow(true)
+            console.log("error changed to true-", error);
+            setError(true)
         }
     };
 
+    const checkingMatch = isData => {
+        if (!isData) {
+            console.log('no match');
+            return false;
+        }
+        setConnected(true);
+        onClose()
+        return true;
+    }
+
+
     function validation({ name, value }) {
+        console.log(name, value);
         const errorMsg = [];
         let isMsgShowing = false;
         if (value === "") {
@@ -68,7 +86,7 @@ function Login({ showLogin, onClose, connected, userLoginHandler }) {
     return <Collapse in={showLogin}>
         <Card
             id="loginCard">
-            <Alert show={show} variant="secondary" onClose={() => setShow(false)}>
+            <Alert show={error} variant="secondary" onClose={() => setError(false)}>
                 worng email or password ! try again.
             </Alert>
             <Form noValidate validated={validated} onSubmit={handleSubmit}>
