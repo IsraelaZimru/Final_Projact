@@ -12,9 +12,9 @@ export default function Recipes({ isConnected, UserId, selectedIng, setSelectedI
     const [apiRecipes, setApiRecipes] = useState([]);
 
 
-    useEffect(() => {
+    // useEffect(() => {
 
-    }, [likes])
+    // }, [likes])
 
 
 
@@ -26,7 +26,7 @@ export default function Recipes({ isConnected, UserId, selectedIng, setSelectedI
                 setLikes(prev => favorites)
             }
         })()
-    }, [isConnected])
+    }, [isConnected, UserId])
 
 
     useEffect(() => {
@@ -39,7 +39,7 @@ export default function Recipes({ isConnected, UserId, selectedIng, setSelectedI
             }
         }
         fetchRecipes()
-    }, [])
+    }, [likes])
 
     const closeHandler = (ing) => {
         const temp = selectedIng.filter(name => name !== ing)

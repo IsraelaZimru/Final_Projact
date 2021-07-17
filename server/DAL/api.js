@@ -70,7 +70,7 @@ const recipeInfo = async (recipeId) => {
 const newUser = async (firstName, lastName, password, email) => {
     const [user, fields] = await db.execute(`INSERT INTO users (firstName, lastName, password, email) VALUES
         ("${firstName}", "${lastName}", "${password}", "${email}")`)
-    return { id: user.insertId };
+    return user;
 }
 
 const onlyRecipesName = async () => {

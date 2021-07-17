@@ -8,56 +8,48 @@ body {
   margin: 0px;
 }
 
+a {
+  color: black;
+}
+
 #root {
   position: relative;
   min-height: 100%;
 }
 
-a {
-  color: black;
+#bkgdImge {
+  border-radius: 10%;
+  background-image: url("../imgs/hatss.jpg");
+  /* background-color: #b185be73; */
+  background-repeat: repeat;
+  min-width: 100vw;
+  margin: 0 auto;
+  opacity: 90%;
 }
 
-.hrMain {
-  border: 5px solid rgba(0, 0, 0, 0.192);
+#bkgdStyleForm {
+  border: 2px solid black;
+  border-radius: 10%;
+  padding: 27px;
+  box-shadow: 10px 54px 78px 10px rgba(0, 0, 0, 0.63),
+    10px 16px 60px 10px rgba(0, 0, 0, 0.26);
+  background-color: #c7c1c973;
+  background-image: linear-gradient(
+    to bottom left,
+    rgba(255, 255, 255, 0.904) 35%,
+    #fb84a0 100%
+  );
+  /* url("../imgs/bkgd1.png"); */
 }
 
-.sortRacipes span {
-  margin-right: 5px;
-  margin-left: 5px;
-  cursor: pointer;
+#logoImg {
+  min-height: 10vh;
+  min-width: 10vw;
 }
 
-.sortRacipes span:hover {
-  font-weight: bold;
-}
-
-/* .navStyle {
-  justify-content: space-between;
-  height: 50px;
-} */
-
-.styleMainNav {
-  background-color: #dbd9d4;
-}
-
-.styleCard {
-  background-color: #a68fad;
-}
-
-.dropDownUser {
-  position: absolute;
-  display: none;
-  /* left: 0; */
-  top: 70%;
-  z-index: 3000;
-  float: left;
-  font-size: 1rem;
-  min-width: 10rem;
-  list-style: none;
-  /* border: 1px solid rgba(0, 0, 0, 0.15); */
-  border-radius: 0.25rem;
-  background-clip: padding-box;
-  padding: 0.5rem 0;
+#textStyle {
+  width: 80%;
+  margin: auto;
 }
 
 #styleIcon:hover + .dropDownUser,
@@ -140,6 +132,49 @@ a {
   width: 50%;
 }
 
+.hrMain {
+  border: 5px solid rgba(0, 0, 0, 0.192);
+}
+
+.sortRacipes span {
+  margin-right: 5px;
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+.sortRacipes span:hover {
+  font-weight: bold;
+}
+
+/* .navStyle {
+  justify-content: space-between;
+  height: 50px;
+} */
+
+.styleMainNav {
+  background-color: #dbd9d4;
+}
+
+.styleCard {
+  background-color: #a68fad;
+}
+
+.dropDownUser {
+  position: absolute;
+  display: none;
+  /* left: 0; */
+  top: 70%;
+  z-index: 3000;
+  float: left;
+  font-size: 1rem;
+  min-width: 10rem;
+  list-style: none;
+  /* border: 1px solid rgba(0, 0, 0, 0.15); */
+  border-radius: 0.25rem;
+  background-clip: padding-box;
+  padding: 0.5rem 0;
+}
+
 .footer {
   margin-bottom: 0rem;
   padding: 1rem;
@@ -163,8 +198,7 @@ a {
   border-bottom-style: dotted;
 }
 
-
-.siz{
+.siz {
   /* min-height:100vh; */
 }
 

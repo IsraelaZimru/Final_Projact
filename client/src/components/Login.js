@@ -48,6 +48,12 @@ function Login({ showLogin, onClose, setConnected, setUser }) {
             localStorage.setItem("user", JSON.stringify(chekingDetails))
             setError(false)
             onClose()
+            setDetails(prevDetails => ({
+                ...prevDetails,
+                email: { ...prevDetails["email"], value: "" },
+                password: { ...prevDetails["password"], value: "" }
+            }))
+
         } else {
             setValidated(false);
             console.log("error changed to true-", error);
@@ -102,7 +108,6 @@ function Login({ showLogin, onClose, setConnected, setUser }) {
                             value={details.email.value}
                             placeholder="Enter email..."
                             isInvalid={details.email.isInVaild}
-                            required
                         />
                         <Form.Control.Feedback type="invalid" className="feedback">
                             {details.email.msg}
@@ -121,7 +126,6 @@ function Login({ showLogin, onClose, setConnected, setUser }) {
                             value={details.password.value}
                             placeholder="Enter password..."
                             isInvalid={details.password.isInVaild}
-                            required
                         />
                         <Form.Control.Feedback type="invalid" className="feedback">
                             {details.password.msg}

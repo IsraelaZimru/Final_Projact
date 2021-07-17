@@ -8,7 +8,6 @@ import { Nav, Navbar, ListGroup, Container, NavDropdown } from 'react-bootstrap'
 import Recipes from './components/Recipes';
 import SearchForm from './components/SearchForm';
 import { hasPageAaccess, updateUserInfo } from './DAL/api';
-import { checkingSignUp } from './DAL/utilFun'
 import Login from './components/Login';
 import SignUp from './components/SignUp';
 import MyFavorites from './components/User/ProfilePages/MyFavorites';
@@ -101,6 +100,7 @@ function App() {
   // }
 
   const logOut = () => {
+    window.scrollTo(0, 0);
     localStorage.removeItem("user");
     setConnected(false)
   }
@@ -188,7 +188,7 @@ function App() {
           <Recipes isConnected={connected} UserId={user.id} selectedIng={selectedIng} setSelectedIng={setSelectedIng} />
         </Route>
         <Route exact path="/Sign_Up">
-          <SignUp connected={connected} hasPageAaccess={hasPageAaccess} checkingSignUp={checkingSignUp} />
+          <SignUp connected={connected} hasPageAaccess={hasPageAaccess}/>
         </Route>
         <Route exact path="/newRecipe_step1">
           <NewRecipe connected={connected} hasPageAaccess={hasPageAaccess} />

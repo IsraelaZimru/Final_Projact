@@ -4,30 +4,14 @@ const db = require('../utils/database')
 const api = require('../DAL/api'); //fun that actully sending HTTP reqs.
 
 
-router.post('/', async function (req, res) {  //router ==app.get but with more thing...
-    const addNewUser = await api.newUser(req.body.firstName, req.body.lastName, req.body.password, req.body.email);
-    res.json(addNewUser);
+router.post('/', async function (req, res) {
+    try {
+        const { firstName, lastName, password, email } = req.body;
+        const addNewUser = await api.newUser(firstName, lastName, password, email);
+        res.status(200).json(addNewUser);
+    } catch (err) {
+        res.status(401).json({ error: 'User email already exist' });
+    }
 });
-
-
-// router.post('/', async function (req, res, next) {
-//     db.execute(`INSERT INTO users
-//   (firstName,
-//   lastName,
-//   password,
-//   email)
-//   VALUES
-//   ("${req.body.firstName}",
-//   "${req.body.lastName}",
-//   "${req.body.password}",
-//   "${req.body.email}")`)
-//         .then(result => res.send(result))
-//         // .then(user => {
-//         //   console.log(user);
-//         //   res.send(user)
-//         // })
-//         .catch((err) => res.status(404).send(err));
-//     // next()
-// });
 
 module.exports = router;

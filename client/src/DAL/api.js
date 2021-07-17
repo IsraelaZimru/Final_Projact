@@ -49,32 +49,15 @@ export async function checkLoginAccess({ email, password }) {
 
 
 export async function addNewUser(details) {
-    console.log("enter addNewUser fun'");
     try {
-        const data = await fetch(`http://localhost:3100/addUser`, {
-            method: 'POST',
-            headers: { 'Content-Type': "application/json" },
-            body: JSON.stringify(details)
-        })
-            .then(data => {
-                console.log("working");
-                console.log("data", data);
-                return data;
-            })
-            .catch(err => console.log(err))
-        const prase = await data;
-        return prase;
+        console.log("enter addNewUser fun'");
+        const respone = await axios.post(`/addUser`, details)
+        return respone.data;
     } catch (err) {
         console.log(err);
-        return err;
+        // return err;
     }
 }
-
-
-// export function selectedItem(id) {
-//     const result = recipes.find(recipe => recipe.id === +id);
-//     return Promise.resolve(result);
-// }
 
 export async function selectedItem(id) {
     try {

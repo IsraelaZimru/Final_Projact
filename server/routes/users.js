@@ -1,7 +1,7 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 const db = require('../utils/database')
-const api = require('../DAL/api'); //fun that actully sending HTTP reqs.
+const api = require('../DAL/api');
 
 
 router.post('/getUserInfo', function (req, res) {
@@ -38,6 +38,7 @@ router.post('/login', async function (req, res) {
     })
   }
 });
+
 
 //לוודא שהפרמטרים תקינים - לוודא שיש בכלל יוזר עם ת.ז הזו, אחרת לשלוח הודעת שגיאה 
 router.put('/:id', async function (req, res) { //I have to add validation!!!

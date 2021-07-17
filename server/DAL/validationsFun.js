@@ -1,4 +1,3 @@
-// const { recipeValidations } = require('./recipeValidations')
 
 function validation(value, name, recipeValidations) {
     let isMsgShowing = false;
@@ -10,10 +9,7 @@ function validation(value, name, recipeValidations) {
     } else if (recipeValidations[name].isRequired && (recipeValidations[name].pattern).test(value)) {
         isMsgShowing = false
     }
-    // else {
-    //     isMsgShowing = true
-    // }
-    // console.log("isMsgShowing", isMsgShowing, name);
+
     return isMsgShowing;
 }
 
