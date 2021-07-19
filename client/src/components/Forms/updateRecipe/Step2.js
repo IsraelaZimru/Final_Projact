@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { useEffect, useState, useRef } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, Prompt } from "react-router-dom";
 import { useParams } from "react-router";
 import { Container, Row, Col, Button, Form, Card, InputGroup, ListGroup, Alert, FormControl } from "react-bootstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -24,6 +24,9 @@ function Step2() {
     })
     const { id } = useParams()
     useEffect(() => {
+        window.scrollTo(0, 0);
+
+
         (async () => {
             const dataFromDb = await unitsAndIngs()
             setIngsUnits(pev => [dataFromDb[0], dataFromDb[1]])
@@ -51,7 +54,11 @@ function Step2() {
         setCombineData(prev => prev.filter(item => item !== data))
     }
 
+    const formIsHalfFiled = Object.values(details)
+        .filter(item => item.value && item.value !== "")
+        .length > 0;
 
+    console.log("formIsHalfFiled", formIsHalfFiled);
 
     const findName = (lst, value) => lst.filter((item, i) => {
         return item.name.toLowerCase().startsWith(value.toLowerCase())
@@ -158,6 +165,9 @@ function Step2() {
 
     return <Container className="mb-5">
         <h1 className="display-2 text-center"> Update your Recipe</h1>
+
+        <Prompt when={formIsHalfFiled} message="You have unsaved changes. Sure you want to leave?" />
+
         <Row className="phase-top">
             <Col onClick={() => history.push(`updateRecipe_step1/${id}`)}> 1  </Col>
             <Col className="active">2</Col>
@@ -171,7 +181,7 @@ function Step2() {
 
         <h1 className="display-4 pb-2">Ingredients:</h1>
         <p>Enter at least two ingredients.</p>
-        <Row className="align-items-center mb-4">
+        <Row className="mb-4 mediaStyle">
             <Col >
                 <Form noValidate validated={validated} onSubmit={handleSubmit}>
                     <Row >
@@ -211,7 +221,7 @@ function Step2() {
                                 {details.unit.msg}
                             </Form.Control.Feedback>
                             <ListGroup>
-                                {!!details.unitlst.length && details.unitlst.map((unit, i) => <ListGroup.Item
+                                {!!details.unitlst.length && details.unitlst.slice(0, 3).map((unit, i) => <ListGroup.Item
                                     key={i}
                                     onClick={() => updateValue("unit", unit)}
                                 >

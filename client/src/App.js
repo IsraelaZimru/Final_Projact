@@ -19,7 +19,7 @@ import { checkLoginAccess, selectedItem, getDetaildsFromDb } from './DAL/api'
 import logo3 from '../src/imgs/logo3.png'
 import RecipeInfo from '../src/components/RecipeInfo'
 import UserSecondNavber from "./components/User/UserSecondNavber";
-import Aaa from './components/User/ProfilePages/aaa';
+import ErrorMsg from './components/User/ProfilePages/ErrorMsg';
 import Phase2 from './components/Forms/AddRecipe/Phase2';
 import Phase3 from './components/Forms/AddRecipe/Phase3';
 import Phase4 from './components/Forms/AddRecipe/Phase4';
@@ -29,10 +29,10 @@ import Step3 from './components/Forms/updateRecipe/Step3';
 import Step4 from './components/Forms/updateRecipe/Step4';
 
 function App() {
+  // const [error, setError] = useState(false);
+  // const [selectedIng, setSelectedIng] = useState([]);
   const [showLogin, setShowLogin] = useState(false)
-  const [error, setError] = useState(false);
   const [connected, setConnected] = useState(false)
-  const [selectedIng, setSelectedIng] = useState([]);
   const [checkUser, setCheckUser] = useState({
     email: "",
     password: ""
@@ -86,22 +86,12 @@ function App() {
   }
 
 
-  // const updatingLoginStatus = importUser => {
-  //   console.log("importUser", importUser);
-  //   if (importUser) {
-  //     setConnected(true);
-  //     setUser(prev => importUser);
-  //     localStorage.setItem("user", JSON.stringify(importUser))
-  //     setShowLogin(false)
-  //   } else {
-  //     console.log('no match');
-
-  //   }
-  // }
-
   const logOut = () => {
     window.scrollTo(0, 0);
     localStorage.removeItem("user");
+    localStorage.removeItem("step1")
+    localStorage.removeItem("step2")
+    localStorage.removeItem("step3")
     setConnected(false)
   }
 
@@ -116,7 +106,8 @@ function App() {
     <span id="top"></span>
     <Router>
       <Navbar collapseOnSelect expand="lg" sticky="top" className="py-0 styleMainNav" >
-        <Navbar.Brand>
+        <Navbar.Brand
+          onClick={() => window.scrollTo(0, 0)}>
           <Link to="/">
             <img src={logo3} style={{ height: '50px', width: '100px' }} alt="logo"></img>
           </Link>
@@ -184,7 +175,7 @@ function App() {
 
       <Switch>
         <Route exact path="/" >
-          <SearchForm connected={connected} userName={user.name} setSelectedIng={setSelectedIng} />
+          <SearchForm connected={connected} userName={user.name} />
           <Recipes isConnected={connected} UserId={user.id} />
         </Route>
         <Route exact path="/Sign_Up">
@@ -231,7 +222,7 @@ function App() {
           <Step4 />
         </Route>
 
-        <Route component={Aaa} />
+        <Route component={ErrorMsg} />
       </Switch>
       <div style={{ height: "65px" }}>
         <div className="footer text-white text-center mb-0">

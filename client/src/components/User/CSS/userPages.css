@@ -89,7 +89,8 @@
     ),
     url("/src/imgs/aboutme1.jpg");
   background-size: cover;
-  height: 100%;
+  /* height: 100%; */
+  height: 100vh;
 }
 
 .styleForm,
@@ -98,6 +99,7 @@
 }
 
 .userNav {
+  /* display: block; */
   background-color: #cca9d6a6;
 }
 
@@ -121,4 +123,10 @@
 div.active {
   color: white;
   background-color: #b33ea9da;
+}
+
+@media screen and (max-width: 600px) {
+  .userNav {
+    display: none;
+  }
 }

@@ -1,7 +1,7 @@
 import { Card, Container, Row, Col, Pagination, ListGroup, Navbar, Nav, NavDropdown, Jumbotron, Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faThumbsUp, faEdit, faHeart, faEye, faTimesCircle, faBookmark,faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faThumbsUp, faEdit, faHeart, faEye, faTimesCircle, faBookmark, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
 import { getRecipe, addToMyFavorites, getMyFavoritesId, RemoveFromMyFavorites, getCatsAndDiets, getingredientsNames } from "../DAL/api";
 
@@ -24,7 +24,7 @@ export default function Recipes({ isConnected, UserId }) {
                 setLikes(prev => favorites)
             }
         })()
-    }, [isConnected, UserId, selectedIng])
+    }, [isConnected, UserId])
 
 
     useEffect(() => {
@@ -226,7 +226,7 @@ export default function Recipes({ isConnected, UserId }) {
                 key={i}
                 sm={6}
                 md={4}
-                text={'white'}
+                text={'dark'}
                 style={{ width: '22rem', }}
                 className="m-3 styleCard"
             >
@@ -236,7 +236,7 @@ export default function Recipes({ isConnected, UserId }) {
                             <div>{isConnected && <FontAwesomeIcon icon={faBookmark}
                                 style={{ cursor: "pointer" }}
                                 onClick={() => updateMyFavorites(item.id)}
-                                className={likes.includes(item.id) ? "text-primary mr-2 ml-2" : "mr-2 ml-2"} />
+                                className={likes.includes(item.id) ? "text-warning mr-2 ml-2" : "text-white mr-2 ml-2"} />
                             }
                                 {/* <FontAwesomeIcon icon={faEdit}
                                     style={{ cursor: "pointer" }}
@@ -277,11 +277,17 @@ export default function Recipes({ isConnected, UserId }) {
                             {item.allCategories && item.allCategories.map((type, i) => <span key={i}>| {type} </span>)}
                         </p>
                     </Card.Footer> */}
-                     {/* <Card.Footer className="text-black"> */}
-                     <hr></hr>
-                        <p className="text-center">
-                            {item.allCategories && item.allCategories.map((type, i) => <span key={i}>| {type} </span>)}
-                        </p>
+                    {/* <Card.Footer className="text-black"> */}
+                    <hr></hr>
+                    <p className="text-center">
+                        {/* {item.allCategories && item.allCategories.map((type, i) => <span key={i}>| {type} </span>)} */}
+                        {item.allCategories && item.allCategories.map((type, i) => {
+                            if (i === 0) {
+                                return <span className="text-capitalize" key={i}> {type} </span>
+                            }
+                            return <span className="text-capitalize" key={i}>| {type} </span>
+                        })}
+                    </p>
                     {/* </Card.Footer> */}
                 </div>
             </Card>)}

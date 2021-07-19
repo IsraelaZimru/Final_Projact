@@ -2,7 +2,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import axios from "axios";
 import { setNewRecipe } from '../../../DAL/api'
 import { useEffect, useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, Prompt } from "react-router-dom";
 import { Container, Row, Col, Button, Form, Card, InputGroup, ListGroup, Alert, FormControl } from "react-bootstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
@@ -22,6 +22,8 @@ function Phase3() {
 
 
     useEffect(() => {
+        window.scrollTo(0, 0);
+
         // if (localStorage.getItem("step3")) {
         //     const inputsPage3ocal = JSON.parse(localStorage.getItem("step3"))
         //     setCombineData(prev => inputsPage3ocal)
@@ -118,6 +120,12 @@ function Phase3() {
         return errorMsg[0] //importent for sumbit form!!!
     }
 
+    const formIsHalfFiled = Object.values(details)
+        .filter(item => item.value && item.value !== "")
+        .length > 0;
+
+    console.log("formIsHalfFiled", formIsHalfFiled);
+
 
     return <Container>
         <h1 className="display-2 text-center"> Add A New Recipe</h1>
@@ -126,13 +134,18 @@ function Phase3() {
             <Col > <Link to="/newRecipe_step2"> 2  </Link>  </Col>
             <Col className="active"> 3 </Col>
         </Row>
+
+        <Prompt when={formIsHalfFiled} message="You have unsaved changes. Sure you want to leave?" />
+
+
         <Alert show={show} variant="secondary" onClose={() => setShow(false)}>
             {errMsg}
         </Alert>
 
 
         <h1 className="display-4 pb-2">Instructions:</h1>
-        <Row className="align-items-center">
+        <Row >
+            {/* <Row className="align-items-center"> */}
             <Col >
                 <Form noValidate validated={validated} onSubmit={handleSubmit}>
                     <Row>

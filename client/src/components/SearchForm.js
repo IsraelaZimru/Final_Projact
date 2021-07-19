@@ -21,7 +21,8 @@ function SearchForm({ connected, userName }) {
     })
 
     const findName = (lst, value) => lst.filter((item, i) => {
-        return item.name.toLowerCase().startsWith(value.toLowerCase())
+        return item.name.toLowerCase().includes(value.toLowerCase())
+        // return item.name.toLowerCase().startsWith(value.toLowerCase())
     });
 
 
@@ -46,32 +47,35 @@ function SearchForm({ connected, userName }) {
     }
 
     return <Container fluid id="bkgdStyle">
-        <div id="bkgdStyle2">
-            <Row>
+        <div className="row align-items-center py-auto" id="bkgdStyle2">
+            {/* <Row>
                 <Col className="text-center my-0 py-0">
                     <hr className="hrMain"></hr>
                 </Col>
-            </Row>
-            <Row className="justify-content-center text-center pt-2" >
-                <Form className="pt-1" id="formMedia">
+            </Row> */}
+            {/* <Row className="align-items-center text-center pt-2" > */}
+            <Col md={{ span: 8, offset: 2 }} className="text-center">
+                <Form className="pt-1" id="formMedia text-center">
                     {!connected && <><h1 className="display-1 h1style mb-0"> Recipes:</h1>
 
                         {/* <h4 className="display-6">Here all Recipes are - easy, quick and delicious</h4> */}
                         {/* <p className="display-6">Easy and quick meal ideas, healthy recipes</p> */}
                     </>}
-                    {connected && <>
-                        <h1 className="display-4 mb-3 "><span className="optional mx-1"> Hi {userName}!</span>
+                    {connected && <div>
+                        <h1 className="display-4 mb-3 h1styleUser">
+                            <span className="optional mx-1"> Hi {userName}!</span>
+                            <br></br>
                             Search for a Recipe:</h1>
-                    </>}
+                    </div>}
                     {/* <Collapse in={open}>
                         <div id="example-collapse-text">
-
+                        
                             <div>
-
+                            
                                 <Form.Group
-                                    controlId="formBasicPassword"
+                                controlId="formBasicPassword"
                                 >
-                                    <Form.Control
+                                <Form.Control
                                         autocomplete="off"
                                         type="text"
                                         name="ingredient"
@@ -79,64 +83,57 @@ function SearchForm({ connected, userName }) {
                                         onChange={e => updateDropDown(e.target)}
                                         onblur={e => updateDropDown(e.target)}
                                         placeholder="Search by ingredients..." />
-                                    <ListGroup >
+                                        <ListGroup >
                                         {details.ingredientlst.map((name, i) => <ListGroup.Item
                                             key={i}
                                             onClick={() => updateValue("ingredient", name.name)}
-                                        >
+                                            >
                                             {name}</ListGroup.Item>)}
-                                    </ListGroup>
+                                            </ListGroup>
                                 </Form.Group>
-                            </div>
-                        </div>
-                    </Collapse> */}
+                                </div>
+                                </div>
+                            </Collapse> */}
 
-                    <Form.Group
+                    <Form.Group>
 
-                    >
-                        <InputGroup>
-                            <InputGroup.Prepend>
-                                {/* <InputGroup.Text>
-                                    <FontAwesomeIcon icon={faSearch}
-                                        className="ml-2 mr-0" />
-                                </InputGroup.Text> */}
-                            </InputGroup.Prepend>
-                            <Form.Control
-                                size="lg"
-                                type="text"
-                                autocomplete="off"
-                                name="recipeName"
-                                onChange={e => updateDropDown(e.target)}
-                                onblur={e => updateDropDown(e.target)}
-                                value={details.recipeName.value}
-                                placeholder="Search for a recipe..." />
-                            <ListGroup>
-                                {details.recipeNamelst.map((food, i) => <ListGroup.Item
-                                    onClick={() => history.push(`/recipe_details/${food.id}`)}
-                                    // onClick={() => updateValue("recipeName", name)}
-                                    key={i}
-                                >{food.name}</ListGroup.Item>)}
-                            </ListGroup>
-                        </InputGroup>
+                        <Form.Control
+                            // className="w-75"
+                            size="lg"
+                            type="text"
+                            autocomplete="off"
+                            name="recipeName"
+                            onChange={e => updateDropDown(e.target)}
+                            onblur={e => updateDropDown(e.target)}
+                            value={details.recipeName.value}
+                            placeholder="Search for a recipe..." />
+                        <ListGroup id="namelist">
+                            {details.recipeNamelst.slice(0, 4).map((food, i) => <ListGroup.Item
+                                onClick={() => history.push(`/recipe_details/${food.id}`)}
+                                // onClick={() => updateValue("recipeName", name)}
+                                key={i}
+                            >{food.name}</ListGroup.Item>)}
+                        </ListGroup>
                     </Form.Group>
 
                     <div id="groupBtn">
-                        <Button variant="outline-light" type="submit" id="btnForm">
+                        {/* <Button variant="outline-light" type="submit" id="btnForm">
                             Search
-                        </Button>
+                        </Button> */}
                         {/* <Button
                             onClick={() => setOpen(!open)}
                             aria-controls="example-Collapse-text"
                             aria-expanded={open}
                             variant="outline-light"
                             id="btnAdvenced"
-                        >
+                            >
                             Advanced Search
                         </Button> */}
                     </div>
 
                 </Form>
-            </Row>
+            </Col>
+            {/* </Row> */}
             {/* <Row className="p-2 py-3" >
                 <Col className="p-2 pt-3 text-center">
                     <img src={logo2} style={{ height: '250px', width: '300px', borderRadius: "50%" }} alt="logo"></img>

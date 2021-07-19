@@ -20,6 +20,7 @@ const UserProfile = ({ connected, hasPageAaccess, updateUserInfo, getDetaildsFro
     }, [connected])
 
     useEffect(() => {
+        window.scrollTo(0, 0);
         const user = userData()
         console.log("details", details)
     }, [])

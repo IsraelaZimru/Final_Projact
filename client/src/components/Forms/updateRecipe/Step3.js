@@ -2,7 +2,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import axios from "axios";
 import { updateRecipe } from '../../../DAL/api'
 import { useEffect, useState } from "react";
-import { Link, useHistory, useParams } from "react-router-dom";
+import { Link, useHistory, useParams, Prompt } from "react-router-dom";
 import { Container, Row, Col, Button, Form, Card, InputGroup, ListGroup, Alert, FormControl } from "react-bootstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
@@ -23,6 +23,8 @@ function Step3() {
 
 
     useEffect(() => {
+        window.scrollTo(0, 0);
+
         if (localStorage.getItem("step3")) {
             const inputsPage3ocal = JSON.parse(localStorage.getItem("step3"))
             setCombineData(prev => inputsPage3ocal)
@@ -124,6 +126,13 @@ function Step3() {
         return errorMsg[0] //importent for sumbit form!!!
     }
 
+    const formIsHalfFiled = Object.values(details)
+        .filter(item => item.value && item.value !== "")
+        .length > 0;
+
+    console.log("formIsHalfFiled", formIsHalfFiled);
+
+
 
     return <Container>
         <h1 className="display-2 text-center"> Update your Recipe</h1>
@@ -140,9 +149,12 @@ function Step3() {
             {errMsg}
         </Alert>
 
+        <Prompt when={formIsHalfFiled} message="You have unsaved changes. Sure you want to leave?" />
+
 
         <h1 className="display-4 pb-2">Instructions:</h1>
-        <Row className="align-items-center">
+        <Row >
+            {/* <Row className="align-items-center"> */}
             <Col >
                 <Form noValidate validated={validated} onSubmit={handleSubmit}>
                     <Row>

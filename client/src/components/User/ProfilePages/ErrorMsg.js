@@ -1,6 +1,6 @@
 import { Container, Col, Row } from "react-bootstrap"
 
-export default function Aaa() {
+export default function ErrorMsg() {
     return <>
         <Container >
             <Row className="py-4">

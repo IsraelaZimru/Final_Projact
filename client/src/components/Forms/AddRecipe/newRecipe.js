@@ -1,4 +1,4 @@
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, Prompt } from "react-router-dom";
 import { Button, Form, InputGroup, Alert, Container, Col, Row } from 'react-bootstrap';
 import { useEffect, useState } from "react";
 import { getCatsAndDiets, isRecipeNameAvailable } from '../../../DAL/api'
@@ -8,6 +8,8 @@ const NewRecipe = ({ connected, hasPageAaccess }) => {
     let history = useHistory();
 
     useEffect(() => {
+        window.scrollTo(0, 0);
+
         hasPageAaccess(connected, history)
         //eslint-disable-next-line
     }, [connected])
@@ -192,6 +194,14 @@ const NewRecipe = ({ connected, hasPageAaccess }) => {
         setDetails(prevDetails => ({ ...prevDetails, [listName]: { ...prevDetails[listName], value: data.allChecked, isInVaild: isMsgShowing, msg: errmsg } }))
     }
 
+    const formIsHalfFiled = Object.values(details)
+        .filter(item => item.value && (item.value !== "" || item.value.length > 0))
+        .length > 0 && Object.values(details)
+            .filter(item => item.value && (item.value !== "" || item.value.length > 0))
+            .length < 8
+
+    console.log("formIsHalfFiled", formIsHalfFiled);
+
 
     return <Container fluid>
         <h1 className="display-2 text-center"> Add A New Recipe</h1>
@@ -203,6 +213,9 @@ const NewRecipe = ({ connected, hasPageAaccess }) => {
             <Col >
                 <Link to="/newRecipe_step3"> 3</Link>
             </Col>
+
+            <Prompt when={formIsHalfFiled} message="You have unsaved changes. Sure you want to leave?" />
+
 
         </Row>
         <Alert show={show} variant="secondary" onClose={() => setShow(false)}>

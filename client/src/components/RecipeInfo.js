@@ -60,8 +60,8 @@ const RecipeInfo = ({ hasPageAaccess, onselect }) => {
     }
 
     return <Container fluid className="mx-0">
-        <Row>
-            <Col lg={5} id="introduction">
+        <Row id="introduction" className="align-items-center">
+            <Col lg={5} >
                 <h1 className="display-3"> {selectRecipe.name}</h1>
                 <ul horizontal id="listStyle">
                     <li className="px-2">Views: {selectRecipe.views}</li>
@@ -70,7 +70,7 @@ const RecipeInfo = ({ hasPageAaccess, onselect }) => {
                     <li className="px-2">Cooking Time: {selectRecipe.CookingTime}</li>
                     <li className="px-2">By: {selectRecipe.username}</li>
                 </ul>
-                <h4 className="mt-5"><u>Discription:</u> {selectRecipe.description}</h4>
+                <h4 className="mt-5"><u>Description:</u> {selectRecipe.description}</h4>
                 <div className="mt-5">
                     <Button variant="outline-dark" onClick={exit}>Return to Home Page</Button>
                 </div>
@@ -81,9 +81,10 @@ const RecipeInfo = ({ hasPageAaccess, onselect }) => {
         </Row>
         <Row className="styleRow justify-content-md-center text-center p-3">
             <Card
-                style={{ width: '58rem' }}
+                // style={{ width: '58rem' }}
                 className="mb-2"
                 border="warning"
+                id="styleCardInfo"
             >
                 <Row className="justify-content-md-center text-center p-3">
                     <Col>

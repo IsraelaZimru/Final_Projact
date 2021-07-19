@@ -37,9 +37,24 @@ a {
   background-image: linear-gradient(
     to bottom left,
     rgba(255, 255, 255, 0.904) 35%,
-    #fb84a0 100%
+    #e7b796 100%
   );
   /* url("../imgs/bkgd1.png"); */
+}
+
+#styleCardInfo {
+  width: 58rem;
+  border: 2px solid black;
+  /* border-radius: 5%; */
+  padding: 27px;
+  box-shadow: 10px 34px 58px 10px rgba(0, 0, 0, 0.63),
+    10px 16px 60px 10px rgba(0, 0, 0, 0.26);
+  background-color: #c7c1c973;
+  background-image: linear-gradient(
+    to bottom left,
+    rgba(255, 255, 255, 0.904) 35%,
+    #e7e545 100%
+  );
 }
 
 #logoImg {
@@ -50,6 +65,14 @@ a {
 #textStyle {
   width: 80%;
   margin: auto;
+}
+
+#groupBtn {
+  z-index: -1;
+}
+
+#namelist {
+  z-index: 6;
 }
 
 #styleIcon:hover + .dropDownUser,
@@ -86,7 +109,7 @@ a {
   /* background-image: url("../imgs/bkgd1.png"), rgba(255, 255, 255, 0.2); */
   background-image: linear-gradient(
       to bottom,
-      rgb(255, 255, 255) 15%,
+      rgb(255, 255, 255) 8%,
       rgba(255, 255, 255, 0.2) 100%,
       rgba(255, 255, 255, 0.952) 10%
     ),
@@ -100,7 +123,8 @@ a {
 }
 
 #introduction {
-  background-color: #a18ba8;
+  background-color: #e2ae44;
+  /* background-color: #a18ba8; */
 }
 
 #listStyle {
@@ -125,7 +149,8 @@ a {
   margin: 30px auto;
   padding: 10px;
   width: 400px;
-  background-color: #897291;
+  /* background-color: #897291; */
+  background-color: #e7b796;
   color: white;
 }
 
@@ -141,6 +166,12 @@ a {
   font-family: "Fuggles", cursive;
   font-size: 130px;
   font-weight: 200;
+}
+
+.h1styleUser {
+  /* font-family: "Fuggles", cursive; */
+  /* font-family: "Caveat", cursive; */
+  font-family: "Dancing Script", cursive;
 }
 
 .sortRacipes span {
@@ -163,7 +194,8 @@ a {
 }
 
 .styleCard {
-  background-color: #a68fad;
+  background-color: #dbd9d4;
+  /* color:black; */
 }
 
 .dropDownUser {
@@ -244,10 +276,18 @@ a {
   margin-left: 25px;
 }
 
+.mediaStyle {
+  min-height: 400px;
+}
+
 @media screen and (max-width: 600px) {
   .optional {
     display: none;
   }
+  .mediaStyle {
+    min-height: 350px;
+  }
+
   #formMedia {
     width: 90vw;
   }

@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { useEffect, useState, useRef } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, Prompt } from "react-router-dom";
 import { useParams } from "react-router";
 import { Container, Row, Col, Button, Form, Card, InputGroup, ListGroup, Alert, FormControl } from "react-bootstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -24,6 +24,8 @@ function Phase2() {
     })
 
     useEffect(() => {
+        window.scrollTo(0, 0);
+
         (async () => {
             const dataFromDb = await unitsAndIngs()
             setIngsUnits(pev => [dataFromDb[0], dataFromDb[1]])
@@ -40,6 +42,7 @@ function Phase2() {
     const checkIngredients = () => {
         if (combineData.length < 2) {
             setShow(true)
+            window.scrollTo(0, 0);
             setTimeout(() => setShow(false), 3000)
             return;
         }
@@ -155,6 +158,12 @@ function Phase2() {
         }
     }
 
+    const formIsHalfFiled = Object.values(details)
+        .filter(item => item.value && item.value !== "")
+        .length > 0;
+
+    console.log("formIsHalfFiled", formIsHalfFiled);
+
 
     return <Container className="mb-5">
         <h1 className="display-2 text-center"> Add A New Recipe</h1>
@@ -164,14 +173,17 @@ function Phase2() {
             <Col > <Link to="/newRecipe_step3"> 3  </Link>  </Col>
         </Row>
 
-        <Alert show={show} variant="secondary" onClose={() => setShow(false)}>
+        <Alert show={show} variant="danger" onClose={() => setShow(false)}>
             Please add at least 2 Ingredients.
         </Alert>
 
 
+        <Prompt when={formIsHalfFiled} message="You have unsaved changes. Sure you want to leave?" />
+
+
         <h1 className="display-4 pb-2">Ingredients:</h1>
         <p>Enter at least two ingredients.</p>
-        <Row className="align-items-center mb-4">
+        <Row className="mb-4 mediaStyle">
             <Col >
                 <Form noValidate validated={validated} onSubmit={handleSubmit}>
                     <Row >
@@ -211,7 +223,7 @@ function Phase2() {
                                 {details.unit.msg}
                             </Form.Control.Feedback>
                             <ListGroup>
-                                {!!details.unitlst.length && details.unitlst.map((unit, i) => <ListGroup.Item
+                                {!!details.unitlst.length && details.unitlst.slice(0, 3).map((unit, i) => <ListGroup.Item
                                     key={i}
                                     onClick={() => updateValue("unit", unit)}
                                 >

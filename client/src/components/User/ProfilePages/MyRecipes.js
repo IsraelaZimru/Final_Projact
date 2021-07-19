@@ -50,11 +50,13 @@ const MyRecipes = ({ connected, hasPageAaccess }) => {
     };
 
     return <Container >
-        <h1 className="display-2 mb-5 text-center"> I Made It:</h1>
-        <Row className="justify-content-md-center">
+            <h1 className="display-2 mb-5 text-center"> I Made It:</h1>
+        <Row className="justify-content-center">
             {recipes.map((item, i) => <Card
                 key={i}
-                text={'white'}
+                sm={6}
+                md={4}
+                text={'dark'}
                 style={{ width: '18rem' }}
                 className="m-3 styleCard"
             >
@@ -66,7 +68,12 @@ const MyRecipes = ({ connected, hasPageAaccess }) => {
                     <Card.Img variant="top" src={item.pic} height="160px" weidth="240px" />
 
                     <p className="text-center my-2">
-                        {item.allCategories && item.allCategories.map((type, i) => <span key={i}>|{type} </span>)}
+                        {item.allCategories && item.allCategories.map((type, i) => {
+                            if (i === 0) {
+                                return <span className="text-capitalize" key={i}> {type} </span>
+                            }
+                            return <span className="text-capitalize" key={i}>| {type} </span>
+                        })}
                     </p>
 
                 </div>

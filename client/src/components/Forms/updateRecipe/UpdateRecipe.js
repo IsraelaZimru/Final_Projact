@@ -1,4 +1,4 @@
-import { Link, useHistory, useParams } from "react-router-dom";
+import { Link, useHistory, useParams, Prompt } from "react-router-dom";
 import { Button, Form, InputGroup, Alert, Container, Col, Row } from 'react-bootstrap';
 import { useEffect, useState } from "react";
 import { getCatsAndDiets, getUpdateDetails, isRecipeNameAvailable } from '../../../DAL/api'
@@ -178,6 +178,16 @@ const UpdateRecipe = ({ connected, hasPageAaccess }) => {
     }
 
 
+
+    const formIsHalfFiled = Object.values(details)
+        .filter(item => item.value && (item.value !== "" || item.value.length > 0))
+        .length > 0;
+
+    console.log("formIsHalfFiled", formIsHalfFiled);
+
+
+
+
     return <Container fluid>
         <h1 className="display-2 text-center"> Update your Recipe</h1>
         <Row className="phase-top">
@@ -193,6 +203,10 @@ const UpdateRecipe = ({ connected, hasPageAaccess }) => {
         <Alert show={show} variant="secondary" onClose={() => setShow(false)}>
             User recipe name already exist. Please try with another name.
         </Alert>
+
+        <Prompt when={formIsHalfFiled} message="You have unsaved changes. Sure you want to leave?" />
+
+
         <Row className="justify-content-center">
             <Form noValidate validated={validated} onSubmit={handleSubmit} className="w-75 text-center">
 
