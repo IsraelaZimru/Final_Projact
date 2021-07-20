@@ -61,6 +61,13 @@ function Phase2() {
     });
 
     const handleSubmit = (event) => {
+        setDetails(prev => ({
+            ...prev,
+            unitlst: [],
+            ingredientlst: [],
+        }))
+
+
         event.preventDefault();
         let status = false;
         const checkErrors = [];
@@ -69,7 +76,14 @@ function Phase2() {
                 // console.log(key, details[key].value)
                 checkErrors.push(validation({ name: key, value: details[key].value }));
             }
+            // if (name === "ingredient" && !!value) {
+            //     if (!ingsUnits[0].includes(value)) {
+            //         isMsgShowing = true
+            //         errorMsg.push(`Select ${name} that exists in the website.`)
+            //     }
+            // }
         }
+
 
         for (const error of checkErrors) { //if there is error msg ->submit don't happens!
             if (error) {
@@ -114,7 +128,7 @@ function Phase2() {
         setDetails(prev => ({ ...prev, [type]: { ...prev[type], value: name, id }, [type + "lst"]: [] }))
     }
 
-
+    // name === "unit"
     function validation({ name, value }) {
         const errorMsg = [];
         let isMsgShowing = false;
@@ -148,6 +162,12 @@ function Phase2() {
                 // console.log("newNamesLst", newNamesLst);
                 const filerOne = await findName(ingsUnits[index], value)
                 // console.log("filerOne", filerOne);
+                if (!filerOne.length) {
+                    let isMsgShowing = true
+                    let errorMsg = [`Select ${name} that exists in the website.`]
+                    setDetails(prevDetails => ({ ...prevDetails, [name]: { ...prevDetails[name], value: value.name, isInVaild: isMsgShowing, msg: errorMsg }, [name + "lst"]: [] }))
+                    return;
+                }
                 const filterd = value ? filerOne.slice(0, 5) : [];
                 // console.log("filterd", filterd);
                 setDetails(prev => ({ ...prev, [name]: { ...prev[name], value: value.name, id: value.id }, [name + "lst"]: filterd }))
@@ -160,7 +180,9 @@ function Phase2() {
 
     const formIsHalfFiled = Object.values(details)
         .filter(item => item.value && item.value !== "")
-        .length > 0;
+        .length > 0 && Object.values(details)
+            .filter(item => item.value && item.value !== "")
+            .length < 3;
 
     console.log("formIsHalfFiled", formIsHalfFiled);
 
@@ -178,7 +200,7 @@ function Phase2() {
         </Alert>
 
 
-        <Prompt when={formIsHalfFiled} message="You have unsaved changes. Sure you want to leave?" />
+        {/* <Prompt when={formIsHalfFiled} message="You have unsaved changes. Sure you want to leave?" /> */}
 
 
         <h1 className="display-4 pb-2">Ingredients:</h1>
@@ -289,7 +311,7 @@ function Phase2() {
 
             </Col>
         </Row>
-        <Row className="text-center my-3 justify-content-between">
+        <Row className="text-center my-3 mx-2 justify-content-between">
             <div >
                 <Button
                     variant="warning"

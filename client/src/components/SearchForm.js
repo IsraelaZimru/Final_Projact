@@ -47,7 +47,7 @@ function SearchForm({ connected, userName }) {
     }
 
     return <Container fluid id="bkgdStyle">
-        <div className="row align-items-center py-auto" id="bkgdStyle2">
+        <div className="row  pt-5" id="bkgdStyle2">
             {/* <Row>
                 <Col className="text-center my-0 py-0">
                     <hr className="hrMain"></hr>
@@ -108,7 +108,7 @@ function SearchForm({ connected, userName }) {
                             value={details.recipeName.value}
                             placeholder="Search for a recipe..." />
                         <ListGroup id="namelist">
-                            {details.recipeNamelst.slice(0, 4).map((food, i) => <ListGroup.Item
+                            {details.recipeNamelst.slice(0, 3).map((food, i) => <ListGroup.Item
                                 onClick={() => history.push(`/recipe_details/${food.id}`)}
                                 // onClick={() => updateValue("recipeName", name)}
                                 key={i}

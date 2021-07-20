@@ -14,7 +14,13 @@ function Login({ showLogin, onClose, setConnected, setUser }) {
     useEffect(() => {
         window.scrollTo(0, 0);
         if (!showLogin) {
-            setError(false)
+            setError(false);
+            setDetails(prevDetails => ({
+                ...prevDetails,
+                email: { ...prevDetails["email"], value: "", isInVaild: false },
+                password: { ...prevDetails["password"], value: "", isInVaild: false }
+            }))
+
         }
     }, [showLogin])
 
@@ -47,12 +53,13 @@ function Login({ showLogin, onClose, setConnected, setUser }) {
             setUser(prev => chekingDetails);
             localStorage.setItem("user", JSON.stringify(chekingDetails))
             setError(false)
+            // const initialization = {
+            //     ...details,
+            //     password: { ...details["password"], value: "", isInVaild: false },
+            //     email: { ...details["email"], value: " ", isInVaild: false },
+            // }
+            // setDetails(prevDetails => initialization)
             onClose()
-            setDetails(prevDetails => ({
-                ...prevDetails,
-                email: { ...prevDetails["email"], value: "" },
-                password: { ...prevDetails["password"], value: "" }
-            }))
 
         } else {
             setValidated(false);
@@ -73,7 +80,6 @@ function Login({ showLogin, onClose, setConnected, setUser }) {
 
 
     function validation({ name, value }) {
-        console.log(name, value);
         const errorMsg = [];
         let isMsgShowing = false;
         if (value === "") {
@@ -85,6 +91,7 @@ function Login({ showLogin, onClose, setConnected, setUser }) {
             errorMsg.push(`Not Valid.`)
             isMsgShowing = true
         }
+        console.log(name, "value", value, "isMsgShowing", isMsgShowing, "errorMsg", errorMsg);
         setDetails(prevDetails => ({ ...prevDetails, [name]: { ...prevDetails[name], value, isInVaild: isMsgShowing, msg: errorMsg } }))
         return errorMsg[0] //importent for sumbit form!!!
     }
@@ -93,7 +100,7 @@ function Login({ showLogin, onClose, setConnected, setUser }) {
         <Card
             id="loginCard">
             <Alert show={error} variant="secondary" onClose={() => setError(false)}>
-                worng email or password ! try again.
+                Worng email or password ! try again.
             </Alert>
             <Form noValidate validated={validated} onSubmit={handleSubmit}>
                 <h1 className="display-4 text-center">Login</h1>
@@ -104,7 +111,7 @@ function Login({ showLogin, onClose, setConnected, setUser }) {
                             type="email"
                             name="email"
                             onBlur={e => validation(e.target)}
-                            onChange={(e) => validation(e.target)}
+                            onChange={e => validation(e.target)}
                             value={details.email.value}
                             placeholder="Enter email..."
                             isInvalid={details.email.isInVaild}
@@ -122,7 +129,7 @@ function Login({ showLogin, onClose, setConnected, setUser }) {
                             type="password"
                             name="password"
                             onBlur={e => validation(e.target)}
-                            onChange={(e) => validation(e.target)}
+                            onChange={e => validation(e.target)}
                             value={details.password.value}
                             placeholder="Enter password..."
                             isInvalid={details.password.isInVaild}

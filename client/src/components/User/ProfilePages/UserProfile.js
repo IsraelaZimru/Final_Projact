@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
 import { Container, Row, Alert, Col, Form, Button, InputGroup } from 'react-bootstrap';
+import { updateUserInfo } from "../../../DAL/api";
 
-
-const UserProfile = ({ connected, hasPageAaccess, updateUserInfo, getDetaildsFromDb, userLoginHandler }) => {
+const UserProfile = ({ connected, hasPageAaccess, getDetaildsFromDb, userLoginHandler }) => {
     let history = useHistory();
     const [validated, setValidated] = useState(false);
     const [show, setShow] = useState(false);
@@ -11,7 +11,7 @@ const UserProfile = ({ connected, hasPageAaccess, updateUserInfo, getDetaildsFro
         email: { isRequired: true, pattern: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, msg: [], value: "", isInVaild: false },
         firstName: { isRequired: true, pattern: /\w{2,}/, msg: [], value: "", isInVaild: false },
         lastName: { isRequired: true, pattern: /\w{2,}/, msg: [], value: "", isInVaild: false },
-        // password: { isRequired: true, pattern: /[\s\S]{2,}/, msg: [], value: "", isInVaild: false },
+        password: { isRequired: true, pattern: /[\s\S]{2,}/, msg: [], value: "", isInVaild: false },
         // passwordVerification: { isRequired: true, pattern: /[\s\S]{2,}/, msg: [], value: "", isInVaild: false },
     })
 
@@ -66,7 +66,6 @@ const UserProfile = ({ connected, hasPageAaccess, updateUserInfo, getDetaildsFro
         }
 
         console.log("input whitout errors");
-        setValidated(true);
         event.preventDefault();
 
         const allRelevantData = {
@@ -77,7 +76,12 @@ const UserProfile = ({ connected, hasPageAaccess, updateUserInfo, getDetaildsFro
             password: details.password.value
         }
         const checkUpdateDb = await updateUserInfo(allRelevantData)
-        if (checkUpdateDb) {
+        if (checkUpdateDb.error) {
+            setValidated(false);
+            setShow(true)
+            setTimeout(() => setShow(false), 3000)
+        } else {
+            setValidated(true);
             alert("Updated successfully")
             const info = { email: details.email.value, password: details.password.value }
             userLoginHandler(prev => info)
@@ -102,7 +106,7 @@ const UserProfile = ({ connected, hasPageAaccess, updateUserInfo, getDetaildsFro
 
     return <Container fluid className="aboutmeBkgd p-3">
         <h1 className="display-2 mb-5 bolder"> My Profile </h1>
-        <Alert show={show} variant="secondary" onClose={() => setShow(false)}>
+        <Alert show={show} variant="danger" className="text-center" onClose={() => setShow(false)}>
             User email already exist. Please try with another email.
         </Alert>
         <Form noValidate validated={validated} onSubmit={handleSubmit} className="w-50 mb-5">

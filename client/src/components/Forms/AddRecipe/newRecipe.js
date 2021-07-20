@@ -16,7 +16,7 @@ const NewRecipe = ({ connected, hasPageAaccess }) => {
 
 
     useEffect(() => {
-        (async () => {
+        const addingDataFromDb = async () => {
             const data = await getCatsAndDiets();
             console.log(data, "data");
 
@@ -65,7 +65,9 @@ const NewRecipe = ({ connected, hasPageAaccess }) => {
             });
             const checkboxsInfo = { diets: data[0], categories: data[1] }
             setCheckboxs(prev => checkboxsInfo)
-        })()
+        }
+
+        addingDataFromDb()
     }, [])
 
 
@@ -198,7 +200,7 @@ const NewRecipe = ({ connected, hasPageAaccess }) => {
         .filter(item => item.value && (item.value !== "" || item.value.length > 0))
         .length > 0 && Object.values(details)
             .filter(item => item.value && (item.value !== "" || item.value.length > 0))
-            .length < 8
+            .length < 8;
 
     console.log("formIsHalfFiled", formIsHalfFiled);
 
@@ -214,7 +216,7 @@ const NewRecipe = ({ connected, hasPageAaccess }) => {
                 <Link to="/newRecipe_step3"> 3</Link>
             </Col>
 
-            <Prompt when={formIsHalfFiled} message="You have unsaved changes. Sure you want to leave?" />
+            {/* <Prompt when={formIsHalfFiled} message="You have unsaved changes. Sure you want to leave?" /> */}
 
 
         </Row>
@@ -274,7 +276,7 @@ const NewRecipe = ({ connected, hasPageAaccess }) => {
                                 required>
                                 <option value={""}>Select level...</option>
                                 <option value={"easy"}>Easy</option>
-                                <option value={"medium"}>intermediate</option>
+                                <option value={"medium"}>Intermediate</option>
                                 <option value={"hard"}>Hard</option>
                             </Form.Control>
                             <Form.Control.Feedback type="invalid" className="feedback">

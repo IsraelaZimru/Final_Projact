@@ -49,9 +49,10 @@ router.put('/:id', async function (req, res) { //I have to add validation!!!
     const userId = await api.updateUser(id, firstName, lastName, password, email)
     res.json(userId)
   } catch (err) {
-    res.status(404).send(err);
+    res.status(404).json({ error: 'A user with this email address already exists.' });
   }
 })
 
 
 module.exports = router;
+``
