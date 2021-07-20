@@ -95,7 +95,7 @@ const updateUser = async (id, firstName, lastName, password, email) => {
         const userId = await user.find(element => element.constructor === Array)
         return userId;
     } catch (err) {
-        console.log(err)
+        throw new Error(err)
     }
 }
 

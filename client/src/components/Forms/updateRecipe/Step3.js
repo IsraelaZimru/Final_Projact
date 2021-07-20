@@ -149,7 +149,7 @@ function Step3() {
             {errMsg}
         </Alert>
 
-        <Prompt when={formIsHalfFiled} message="You have unsaved changes. Sure you want to leave?" />
+        {/* <Prompt when={formIsHalfFiled} message="You have unsaved changes. Sure you want to leave?" /> */}
 
 
         <h1 className="display-4 pb-2">Instructions:</h1>

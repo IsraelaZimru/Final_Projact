@@ -71,19 +71,17 @@ const RecipeInfo = ({ hasPageAaccess, onselect }) => {
                     <li className="px-2">By: {selectRecipe.username}</li>
                 </ul>
                 <h4 className="mt-5"><u>Description:</u> {selectRecipe.description}</h4>
-                <div className="mt-5 notPrint">
+                <div className="my-5 notPrint">
                     <Button variant="outline-dark" onClick={exit}>Return to Home Page</Button>
                 </div>
             </Col>
             <Col lg={7} className=" mx-0 px-0">
-                <img id="imgFood" alt="food pic" src={selectRecipe.image} style={{ maxHeight: '730px', width: 'inherit' }}></img>
+                <img id="imgFood" alt="food pic" src={selectRecipe.image} style={{ minHeight: '472px', width: 'inherit', objectFit: "cover" }}></img>
             </Col>
         </Row>
         <Row className="styleRow justify-content-md-center text-center p-3">
             <Card
-                // style={{ width: '58rem' }}
                 className="mb-2"
-                // border="warning"
                 id="styleCardInfo"
             >
                 <Row className="justify-content-md-center text-center p-3">

@@ -12,10 +12,6 @@ a {
   color: black;
 }
 
-.Foodsimg {
-  object-fit: cover;
-}
-
 #root {
   position: relative;
   min-height: 100%;
@@ -162,6 +158,19 @@ a {
   width: 50%;
 }
 
+#myFav:hover {
+  background-color: #f8f7f686;
+  transform: scale(1.04, 1.04);
+  /* transform: skew(1deg, 1deg); */
+}
+
+.Foodsimg:hover {
+}
+
+.Foodsimg {
+  object-fit: cover;
+}
+
 .hrMain {
   border: 3px solid rgba(0, 0, 0, 0.192);
 }
@@ -187,11 +196,6 @@ a {
 .sortRacipes span:hover {
   font-weight: bold;
 }
-
-/* .navStyle {
-  justify-content: space-between;
-  height: 50px;
-} */
 
 .styleMainNav {
   background-color: #dbd9d4;
@@ -294,6 +298,11 @@ a {
 
   #formMedia {
     width: 90vw;
+  }
+
+  #loginCard {
+    width: 70%;
+    height: 50%;
   }
 }
 

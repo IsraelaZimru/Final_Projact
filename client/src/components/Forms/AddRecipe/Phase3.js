@@ -122,7 +122,7 @@ function Phase3() {
 
     const formIsHalfFiled = Object.values(details)
         .filter(item => item.value && item.value !== "")
-        .length > 0;
+        .length > 0 && !file;
 
     console.log("formIsHalfFiled", formIsHalfFiled);
 
@@ -135,7 +135,7 @@ function Phase3() {
             <Col className="active"> 3 </Col>
         </Row>
 
-        <Prompt when={formIsHalfFiled} message="You have unsaved changes. Sure you want to leave?" />
+        {/* <Prompt when={formIsHalfFiled} message="You have unsaved changes. Sure you want to leave?" /> */}
 
 
         <Alert show={show} variant="secondary" onClose={() => setShow(false)}>

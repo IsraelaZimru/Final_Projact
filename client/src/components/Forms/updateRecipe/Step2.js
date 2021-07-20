@@ -147,13 +147,14 @@ function Step2() {
                 setDetails(prev => ({ ...prev, [name]: { ...prev[name], value: value.name, id: value.id } }))
             } else {
                 const index = name === "unit" ? 1 : 0;
-                // const newNamesLst = await getRecipeNames()
-                // const newNamesLst = await apiFun()
-                // console.log("newNamesLst", newNamesLst);
                 const filerOne = await findName(ingsUnits[index], value)
-                // console.log("filerOne", filerOne);
+                if (!filerOne.length) {
+                    let isMsgShowing = true
+                    let errorMsg = [`Select ${name} that exists in the website.`]
+                    setDetails(prevDetails => ({ ...prevDetails, [name]: { ...prevDetails[name], value: value.name, isInVaild: isMsgShowing, msg: errorMsg }, [name + "lst"]: [] }))
+                    return;
+                }
                 const filterd = value ? filerOne.slice(0, 5) : [];
-                // console.log("filterd", filterd);
                 setDetails(prev => ({ ...prev, [name]: { ...prev[name], value: value.name, id: value.id }, [name + "lst"]: filterd }))
 
             }
@@ -166,7 +167,7 @@ function Step2() {
     return <Container className="mb-5">
         <h1 className="display-2 text-center"> Update your Recipe</h1>
 
-        <Prompt when={formIsHalfFiled} message="You have unsaved changes. Sure you want to leave?" />
+        {/* <Prompt when={formIsHalfFiled} message="You have unsaved changes. Sure you want to leave?" /> */}
 
         <Row className="phase-top">
             <Col onClick={() => history.push(`updateRecipe_step1/${id}`)}> 1  </Col>

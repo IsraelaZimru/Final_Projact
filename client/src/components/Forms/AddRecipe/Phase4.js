@@ -1,4 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
+import bkgd from '../../../imgs/youdidit.jpg'
 import { useEffect, useState, useRef } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useParams } from "react-router";
@@ -27,28 +28,26 @@ const Phase4 = () => {
 
     return <Container className="py-4 ">
         <Row className="justify-content-center text-center">
-            <Col></Col>
-            <Col md={8} >
-                <Card bg={"warning"} text={"light"}>
-                    <Card.Header> <strong>You Did It !</strong></Card.Header>
-                    <Card.Body>
-                        <Card.Title>
-                            The recipe was successfully uploaded and is now available for public view on our site.
-                        </Card.Title>
-                        <Row>
-                            <Col >
-                                <Button variant="secondary" onClick={recipePage} >Go to your recipe page</Button>
-                            </Col>
-                            <Col >
-                                <Button variant="secondary" onClick={homePage} >Go to home page</Button>
-                            </Col>
-                        </Row>
-                    </Card.Body>
-                </Card>
+            <Col md={{ span: 11 }} >
+                <img alt="you did it" className="Foodsimg youDidIt" variant="top" src={bkgd} />
             </Col>
-            <Col></Col>
         </Row>
-    </Container>
+        <Row className="justify-content-center text-center p-3 my-4">
+            <Col >
+                <p className="display-4">
+                    The recipe was successfully uploaded and is now available for public view on our site.
+                </p>
+            </Col>
+        </Row>
+        <Row className="justify-content-around text-center py-2">
+            <Col md={4}>
+                <Button size="lg" className="sizeBt" variant="warning" onClick={recipePage} >Go to your Recipe Page</Button>
+            </Col>
+            <Col md={4}>
+                <Button size="lg" className="sizeBt" variant="warning" onClick={homePage} >Go to Home Page</Button>
+            </Col>
+        </Row>
+    </Container >
 }
 
 export default Phase4;

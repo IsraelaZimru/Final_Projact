@@ -71,6 +71,16 @@
   background-size: cover;
 } */
 
+.youDidIt {
+  max-height: 160px;
+  min-width: 300px;
+  margin-bottom: 2%;
+}
+
+.sizeBt {
+  min-width: 304px;
+}
+
 .bkgdImg {
   background-image: url("../../../imgs/hatss.jpg");
   background-size: cover;
