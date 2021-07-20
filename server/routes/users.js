@@ -40,6 +40,8 @@ router.post('/login', async function (req, res) {
 });
 
 
+const x = 33;
+
 //לוודא שהפרמטרים תקינים - לוודא שיש בכלל יוזר עם ת.ז הזו, אחרת לשלוח הודעת שגיאה 
 router.put('/:id', async function (req, res) { //I have to add validation!!!
   try {
