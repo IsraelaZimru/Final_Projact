@@ -165,7 +165,7 @@ function Phase2() {
     console.log("formIsHalfFiled", formIsHalfFiled);
 
 
-    return <Container className="mb-5">
+    return <Container fluid className="mb-5">
         <h1 className="display-2 text-center"> Add A New Recipe</h1>
         <Row className="phase-top">
             <Col > <Link to="/newRecipe_step1"> 1  </Link>  </Col>
@@ -183,7 +183,7 @@ function Phase2() {
 
         <h1 className="display-4 pb-2">Ingredients:</h1>
         <p>Enter at least two ingredients.</p>
-        <Row className="mb-4 mediaStyle">
+        <Row className="justify-content-center mb-4 mediaStyle">
             <Col >
                 <Form noValidate validated={validated} onSubmit={handleSubmit}>
                     <Row >

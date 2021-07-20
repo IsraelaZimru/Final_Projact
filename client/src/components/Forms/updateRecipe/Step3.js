@@ -242,12 +242,12 @@ function Step3() {
         </Row>
         <hr style={{ borderStyle: "solid", borderWidth: "5px" }}></hr>
         <Row className="my-5">
-            <Col>
+            <Col sx={12} md={6} className="my-2">
                 <Button variant="warning" size="lg" onClick={() => history.push(`/updateRecipe_step2/${id}`)} block>
                     Previous Step
                 </Button>
             </Col>
-            <Col>
+            <Col sx={12} md={6} className="my-2">
                 <Button variant="warning" size="lg" onClick={finshRecipe} block>
                     Upload your Recipe!
                 </Button>

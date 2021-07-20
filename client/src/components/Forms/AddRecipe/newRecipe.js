@@ -243,7 +243,7 @@ const NewRecipe = ({ connected, hasPageAaccess }) => {
                 </Form.Group>
 
                 <Form.Row>
-                    <Form.Group as={Col} className="text-center">
+                    <Form.Group as={Col} md={12} lg={3} className="text-center">
                         <Form.Label >Servings:</Form.Label>
                         <InputGroup hasValidation>
                             <Form.Control
@@ -261,7 +261,29 @@ const NewRecipe = ({ connected, hasPageAaccess }) => {
                         </InputGroup>
                     </Form.Group>
 
-                    <Form.Group as={Col} className="text-center">
+                    <Form.Group as={Col} md={12} lg={3} className="text-center">
+                        <Form.Label>Difficulty:</Form.Label>
+                        <InputGroup hasValidation>
+                            <Form.Control
+                                as="select"
+                                name="level"
+                                onBlur={e => validation(e.target)}
+                                onChange={(e) => validation(e.target)}
+                                value={details.level.value}
+                                isInvalid={details.level.isInVaild}
+                                required>
+                                <option value={""}>Select level...</option>
+                                <option value={"easy"}>Easy</option>
+                                <option value={"medium"}>intermediate</option>
+                                <option value={"hard"}>Hard</option>
+                            </Form.Control>
+                            <Form.Control.Feedback type="invalid" className="feedback">
+                                {details.level.msg}
+                            </Form.Control.Feedback>
+                        </InputGroup>
+                    </Form.Group>
+
+                    <Form.Group as={Col} md={12} lg={3} className="text-center">
                         <Form.Label>Cooking Time in Minutes:</Form.Label>
                         <InputGroup hasValidation>
                             <Form.Control
@@ -280,7 +302,7 @@ const NewRecipe = ({ connected, hasPageAaccess }) => {
                     </Form.Group>
 
 
-                    <Form.Group as={Col} className="text-center">
+                    <Form.Group as={Col} md={12} lg={3} className="text-center">
                         <Form.Label>Prep Time in Minutes:</Form.Label>
                         <InputGroup hasValidation>
                             <Form.Control
@@ -294,29 +316,6 @@ const NewRecipe = ({ connected, hasPageAaccess }) => {
                             />
                             <Form.Control.Feedback type="invalid" className="feedback">
                                 {details.prepTimeMins.msg}
-                            </Form.Control.Feedback>
-                        </InputGroup>
-                    </Form.Group>
-
-
-                    <Form.Group as={Col} className="text-center">
-                        <Form.Label>Difficulty:</Form.Label>
-                        <InputGroup hasValidation>
-                            <Form.Control
-                                as="select"
-                                name="level"
-                                onBlur={e => validation(e.target)}
-                                onChange={(e) => validation(e.target)}
-                                value={details.level.value}
-                                isInvalid={details.level.isInVaild}
-                                required>
-                                <option value={""}>Select level...</option>
-                                <option value={"easy"}>Easy</option>
-                                <option value={"medium"}>intermediate</option>
-                                <option value={"hard"}>Hard</option>
-                            </Form.Control>
-                            <Form.Control.Feedback type="invalid" className="feedback">
-                                {details.level.msg}
                             </Form.Control.Feedback>
                         </InputGroup>
                     </Form.Group>

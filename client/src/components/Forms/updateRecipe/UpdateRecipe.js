@@ -229,7 +229,7 @@ const UpdateRecipe = ({ connected, hasPageAaccess }) => {
                 </Form.Group>
 
                 <Form.Row>
-                    <Form.Group as={Col} className="text-center">
+                    <Form.Group as={Col} md={12} lg={3} className="text-center">
                         <Form.Label >Servings:</Form.Label>
                         <InputGroup hasValidation>
                             <Form.Control
@@ -247,45 +247,7 @@ const UpdateRecipe = ({ connected, hasPageAaccess }) => {
                         </InputGroup>
                     </Form.Group>
 
-                    <Form.Group as={Col} className="text-center">
-                        <Form.Label>Cooking Time in Minutes:</Form.Label>
-                        <InputGroup hasValidation>
-                            <Form.Control
-                                type="number"
-                                name="CookingTime"
-                                onBlur={e => validation(e.target)}
-                                onChange={(e) => validation(e.target)}
-                                value={details.CookingTime.value}
-                                isInvalid={details.CookingTime.isInVaild}
-                                required
-                            />
-                            <Form.Control.Feedback type="invalid" className="feedback">
-                                {details.CookingTime.msg}
-                            </Form.Control.Feedback>
-                        </InputGroup>
-                    </Form.Group>
-
-
-                    <Form.Group as={Col} className="text-center">
-                        <Form.Label>Prep Time in Minutes:</Form.Label>
-                        <InputGroup hasValidation>
-                            <Form.Control
-                                type="number"
-                                name="prepTimeMins"
-                                onBlur={e => validation(e.target)}
-                                onChange={(e) => validation(e.target)}
-                                value={details.prepTimeMins.value}
-                                isInvalid={details.prepTimeMins.isInVaild}
-                                required
-                            />
-                            <Form.Control.Feedback type="invalid" className="feedback">
-                                {details.prepTimeMins.msg}
-                            </Form.Control.Feedback>
-                        </InputGroup>
-                    </Form.Group>
-
-
-                    <Form.Group as={Col} className="text-center">
+                    <Form.Group as={Col} md={12} lg={3} className="text-center">
                         <Form.Label>Difficulty:</Form.Label>
                         <InputGroup hasValidation>
                             <Form.Control
@@ -307,6 +269,42 @@ const UpdateRecipe = ({ connected, hasPageAaccess }) => {
                         </InputGroup>
                     </Form.Group>
 
+                    <Form.Group as={Col} md={12} lg={3} className="text-center">
+                        <Form.Label>Cooking Time in Minutes:</Form.Label>
+                        <InputGroup hasValidation>
+                            <Form.Control
+                                type="number"
+                                name="CookingTime"
+                                onBlur={e => validation(e.target)}
+                                onChange={(e) => validation(e.target)}
+                                value={details.CookingTime.value}
+                                isInvalid={details.CookingTime.isInVaild}
+                                required
+                            />
+                            <Form.Control.Feedback type="invalid" className="feedback">
+                                {details.CookingTime.msg}
+                            </Form.Control.Feedback>
+                        </InputGroup>
+                    </Form.Group>
+
+
+                    <Form.Group as={Col} md={12} lg={3} className="text-center">
+                        <Form.Label>Prep Time in Minutes:</Form.Label>
+                        <InputGroup hasValidation>
+                            <Form.Control
+                                type="number"
+                                name="prepTimeMins"
+                                onBlur={e => validation(e.target)}
+                                onChange={(e) => validation(e.target)}
+                                value={details.prepTimeMins.value}
+                                isInvalid={details.prepTimeMins.isInVaild}
+                                required
+                            />
+                            <Form.Control.Feedback type="invalid" className="feedback">
+                                {details.prepTimeMins.msg}
+                            </Form.Control.Feedback>
+                        </InputGroup>
+                    </Form.Group>
                 </Form.Row>
 
                 <Form.Group >

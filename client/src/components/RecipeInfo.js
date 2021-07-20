@@ -71,19 +71,19 @@ const RecipeInfo = ({ hasPageAaccess, onselect }) => {
                     <li className="px-2">By: {selectRecipe.username}</li>
                 </ul>
                 <h4 className="mt-5"><u>Description:</u> {selectRecipe.description}</h4>
-                <div className="mt-5">
+                <div className="mt-5 notPrint">
                     <Button variant="outline-dark" onClick={exit}>Return to Home Page</Button>
                 </div>
             </Col>
-            <Col lg={7} className=" mx-0 px-0 siz">
-                <img alt="food pic" src={selectRecipe.image} style={{ height: '100vh', width: 'inherit' }}></img>
+            <Col lg={7} className=" mx-0 px-0">
+                <img id="imgFood" alt="food pic" src={selectRecipe.image} style={{ maxHeight: '730px', width: 'inherit' }}></img>
             </Col>
         </Row>
         <Row className="styleRow justify-content-md-center text-center p-3">
             <Card
                 // style={{ width: '58rem' }}
                 className="mb-2"
-                border="warning"
+                // border="warning"
                 id="styleCardInfo"
             >
                 <Row className="justify-content-md-center text-center p-3">
@@ -93,7 +93,7 @@ const RecipeInfo = ({ hasPageAaccess, onselect }) => {
                     </Col>
                     <Col>
                         <h4><u>Difficulty:</u></h4>
-                        <p>{selectRecipe.level}</p>
+                        <p className="text-capitalize">{selectRecipe.level}</p>
                     </Col>
                     <Col>
                         <h4><u>Categories:</u></h4>
@@ -110,6 +110,7 @@ const RecipeInfo = ({ hasPageAaccess, onselect }) => {
                 </Row>
             </Card>
         </Row>
+        <div className="pagebreak"> </div>
         <Row className="styleRow">
             <Col className="my-5">
                 <h1 className="mt-4">Ingredients:</h1>
@@ -136,9 +137,9 @@ const RecipeInfo = ({ hasPageAaccess, onselect }) => {
             </Col>
         </Row>
         <Row className="justify-content-center p-3">
-            <div className="text-center">
-                <Button className="mr-2" variant="outline-dark" onClick={exit}>Go Back to Home Page</Button>
-                <Button variant="outline-dark" onClick={printRecipe}>
+            <div className="text-center notPrint">
+                <Button className="mr-2" variant="outline-warning" onClick={exit}>Go Back to Home Page</Button>
+                <Button variant="outline-warning" onClick={printRecipe}>
                     <FontAwesomeIcon icon={faPrint} className="mx-3" />
                 </Button>
             </div>

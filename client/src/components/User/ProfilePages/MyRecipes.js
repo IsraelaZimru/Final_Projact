@@ -50,7 +50,7 @@ const MyRecipes = ({ connected, hasPageAaccess }) => {
     };
 
     return <Container >
-            <h1 className="display-2 mb-5 text-center"> I Made It:</h1>
+        <h1 className="display-2 mb-5 text-center"> I Made It:</h1>
         <Row className="justify-content-center">
             {recipes.map((item, i) => <Card
                 key={i}
@@ -65,7 +65,7 @@ const MyRecipes = ({ connected, hasPageAaccess }) => {
                     style={{ cursor: "pointer" }}
                 >
                     <Card.Header>{item.name}</Card.Header>
-                    <Card.Img variant="top" src={item.pic} height="160px" weidth="240px" />
+                    <Card.Img className="Foodsimg" variant="top" src={item.pic} height="160px" weidth="240px" />
 
                     <p className="text-center my-2">
                         {item.allCategories && item.allCategories.map((type, i) => {
