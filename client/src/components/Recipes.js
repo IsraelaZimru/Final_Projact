@@ -267,7 +267,7 @@ export default function Recipes({ isConnected, UserId }) {
                     onClick={e => chooseRepice(item)}
                     style={{ cursor: "pointer" }}
                 >
-                    <Card.Img variant="top" src={item.pic} height="180px" weidth="286px" />
+                    <Card.Img className="Foodsimg" variant="top" src={item.pic} height="180px" weidth="286px" />
                     <Card.Title className="text-center py-1">{item.name}</Card.Title>
                     <Card.Text className="text-center m-1" style={{ minHeight: "8vh" }}>
                         {item.description}

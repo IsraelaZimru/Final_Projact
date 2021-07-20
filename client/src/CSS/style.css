@@ -12,6 +12,10 @@ a {
   color: black;
 }
 
+.Foodsimg {
+  object-fit: cover;
+}
+
 #root {
   position: relative;
   min-height: 100%;
@@ -44,7 +48,7 @@ a {
 
 #styleCardInfo {
   width: 58rem;
-  border: 2px solid black;
+  border: 2px solid #a88770;
   /* border-radius: 5%; */
   padding: 27px;
   box-shadow: 10px 34px 58px 10px rgba(0, 0, 0, 0.63),
@@ -53,7 +57,7 @@ a {
   background-image: linear-gradient(
     to bottom left,
     rgba(255, 255, 255, 0.904) 35%,
-    #e7e545 100%
+    #f8dc8d 100%
   );
 }
 
@@ -123,7 +127,7 @@ a {
 }
 
 #introduction {
-  background-color: #e2ae44;
+  background-color: #f8dc8d;
   /* background-color: #a18ba8; */
 }
 
@@ -290,5 +294,30 @@ a {
 
   #formMedia {
     width: 90vw;
+  }
+}
+
+@media print {
+  #introduction {
+    /* max-height: none !important; */
+    max-height: 30% !important;
+    width: 100%;
+    margin: auto auto;
+  }
+
+  #imgFood {
+    max-height: 50vh !important;
+  }
+
+  #styleCardInfo {
+    margin: 60px 60px 100px 60px;
+    display: block;
+  }
+  .pagebreak {
+    clear: both;
+    page-break-before: always;
+  }
+  .notPrint {
+    display: none;
   }
 }

@@ -45,7 +45,7 @@ const MyFavorites = ({ connected, hasPageAaccess }) => {
     }
 
     return <Container>
-            <h1 className="display-2 mb-5 text-center"> Favorite Recipes:</h1>
+        <h1 className="display-2 mb-5 text-center"> Favorite Recipes:</h1>
         <Row className="justify-content-center">
             {recipes.map((item, i) => <Card
                 key={i}
@@ -60,7 +60,7 @@ const MyFavorites = ({ connected, hasPageAaccess }) => {
                     style={{ cursor: "pointer" }}
                 >
                     <Card.Header>{item.name}</Card.Header>
-                    <Card.Img variant="top" src={item.pic} height="160px" weidth="240px" />
+                    <Card.Img className="Foodsimg" variant="top" src={item.pic} height="160px" weidth="240px" />
 
                     <p className="text-center my-2">
                         {/* {item.allCategories && item.allCategories.map((type, i) => <span key={i}>| {type} </span>)} */}
