@@ -116,6 +116,11 @@ a {
     url("../imgs/bkgd2.jpg");
   background-size: cover;
   height: 500px;
+  /* height: 350px; */
+}
+
+#recipes {
+  min-height: 20px;
 }
 
 #bkgdStyle2 {
@@ -150,19 +155,22 @@ a {
   padding: 10px;
   width: 400px;
   /* background-color: #897291; */
-  background-color: #e7b796;
-  color: white;
+  background-color: #fde2d3;
+  color: black;
 }
 
 #formMedia {
   width: 50%;
 }
 
-#myFav:hover {
+#styleNav {
+  background-color: #fdede3;
+}
+
+/* #myFav:hover {
   background-color: #f8f7f686;
   transform: scale(1.04, 1.04);
-  /* transform: skew(1deg, 1deg); */
-}
+}  */
 
 .Foodsimg:hover {
 }
@@ -204,6 +212,11 @@ a {
 .styleCard {
   background-color: #dbd9d4;
   /* color:black; */
+}
+
+.styleCard:hover {
+  background-color: #f8f7f686;
+  transform: scale(1.06, 1.06);
 }
 
 .dropDownUser {

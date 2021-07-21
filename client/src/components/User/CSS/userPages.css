@@ -77,6 +77,11 @@
   margin-bottom: 2%;
 }
 
+.h1styleUser2 {
+  /* font-family: "Yomogi", cursive; */
+  font-family: "Caveat", cursive;
+}
+
 .sizeBt {
   min-width: 304px;
 }
@@ -111,6 +116,7 @@
 .userNav {
   /* display: block; */
   background-color: #cca9d6a6;
+  box-shadow: 0 3px 6px rgb(0 0 0 / 30%);
 }
 
 .error {
@@ -138,5 +144,17 @@ div.active {
 @media screen and (max-width: 600px) {
   .userNav {
     display: none;
+  }
+
+  #msgDefaultFAV {
+    height: 220px;
+    /* width: 700px; */
+    /* padding: 0px; */
+    /* margin: 0px; */
+    /* font-size: 95%; */
+  }
+
+  #msgDefault {
+    height: 220px;
   }
 }

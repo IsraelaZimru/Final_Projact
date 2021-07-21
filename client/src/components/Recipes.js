@@ -144,8 +144,8 @@ export default function Recipes({ isConnected, UserId }) {
     );
 
     return <Container fluid className="py-2">
-
-        <Navbar collapseOnSelect expand="lg" bg="light" className="text-center font-weight-bold">
+        <div id="recipes"></div>
+        <Navbar collapseOnSelect expand="lg" id="styleNav" className="text-center font-weight-bold">
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Nav className="m-auto">
                 <Row className="justify-content-center">

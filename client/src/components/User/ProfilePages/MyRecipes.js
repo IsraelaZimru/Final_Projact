@@ -15,6 +15,8 @@ const MyRecipes = ({ connected, hasPageAaccess }) => {
 
     useEffect(() => {
         hasPageAaccess(connected, history);
+        window.scrollTo(0, 0)
+
         // eslint-disable-next-line
     }, [connected]);
 
@@ -50,8 +52,8 @@ const MyRecipes = ({ connected, hasPageAaccess }) => {
     };
 
     return <Container >
-        <h1 className="display-2 mb-5 text-center"> I Made It:</h1>
-        <Row className="justify-content-center">
+        <h1 className="display-2 mb-5 text-center h1styleUser2"> I Made It:</h1>
+        <Row className="justify-content-center mb-4">
             {recipes.map((item, i) => <Card
                 key={i}
                 sm={6}
@@ -64,17 +66,17 @@ const MyRecipes = ({ connected, hasPageAaccess }) => {
                     onClick={() => history.push(`/recipe_details/${item.id}`)}
                     style={{ cursor: "pointer" }}
                 >
-                    <Card.Header>{item.name}</Card.Header>
                     <Card.Img className="Foodsimg" variant="top" src={item.pic} height="160px" weidth="240px" />
+                    <Card.Header>{item.name}</Card.Header>
 
-                    <p className="text-center my-2">
+                    {/* <p className="text-center my-2">
                         {item.allCategories && item.allCategories.map((type, i) => {
                             if (i === 0) {
                                 return <span className="text-capitalize" key={i}> {type} </span>
                             }
                             return <span className="text-capitalize" key={i}>| {type} </span>
                         })}
-                    </p>
+                    </p> */}
 
                 </div>
                 <Card.Footer className="text-black">
@@ -116,7 +118,7 @@ const MyRecipes = ({ connected, hasPageAaccess }) => {
         </Row>
         <Row className="justify-content-center">
             <Col></Col>
-            {!recipes.length && <Col id="msgDefault" className="text-center h1font my-5">
+            {!recipes.length && <Col md={{ span: 6 }} id="msgDefault" className="text-center h1font my-5">
                 Feel free to add a new recipe to the site !
                 <br></br>
                 <FontAwesomeIcon icon={faSmileWink} style={{}} />
