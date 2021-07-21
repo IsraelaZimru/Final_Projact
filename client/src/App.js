@@ -7,7 +7,7 @@ import { BrowserRouter as Router, Switch, Route, Link, useHistory } from "react-
 import { Nav, Navbar, ListGroup, Container, NavDropdown, Row, Col } from 'react-bootstrap';
 import Recipes from './components/Recipes';
 import SearchForm from './components/SearchForm';
-import { hasPageAaccess } from './DAL/api';
+import { hasPageAaccess } from './DAL/utilFun';
 import Login from './components/Login';
 import SignUp from './components/SignUp';
 import MyFavorites from './components/User/ProfilePages/MyFavorites';
@@ -26,7 +26,7 @@ import UpdateRecipe from './components/Forms/updateRecipe/UpdateRecipe';
 import Step2 from './components/Forms/updateRecipe/Step2';
 import Step3 from './components/Forms/updateRecipe/Step3';
 import Step4 from './components/Forms/updateRecipe/Step4';
-import NavbarHome from './NavbarHome';
+import NavbarHome from './components/NavbarHome';
 
 function App() {
   const [showLogin, setShowLogin] = useState(false)
@@ -102,7 +102,7 @@ function App() {
     <Router>
       <NavbarHome connected={connected} user={user} logOut={logOut} showLogin={showLogin} displayLogin={displayLogin} />
 
-          <Login showLogin={showLogin} onClose={displayLogin} setUser={setUser} setConnected={setConnected} />
+      <Login showLogin={showLogin} onClose={displayLogin} setUser={setUser} setConnected={setConnected} />
 
       <Switch>
         <Route exact path="/" >

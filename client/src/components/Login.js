@@ -140,9 +140,9 @@ function Login({ showLogin, onClose, setConnected, setUser }) {
                     </InputGroup>
                 </Form.Group>
 
-                <Button variant="outline-light" onClick={onClose} className="mx-2">
+                <Button variant="outline-dark" onClick={onClose} className="mx-2">
                     close </Button>
-                <Button variant="outline-light" type="submit">
+                <Button variant="outline-dark" type="submit">
                     Submit  </Button>
             </Form>
         </Card>

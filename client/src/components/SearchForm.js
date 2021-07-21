@@ -140,7 +140,7 @@ function SearchForm({ connected, userName }) {
                 </Col>
             </Row> */}
         </div>
-        <hr className="hrMain"></hr>
+        {/* <hr className="hrMain"></hr> */}
     </Container>
 }
 

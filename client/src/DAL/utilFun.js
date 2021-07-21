@@ -1,3 +1,10 @@
+export function hasPageAaccess(connected, history) {
+    if (!connected) {
+        console.log(connected, "connected");
+        history.push("/")
+    }
+}
+
 
 export default function checkpPreviousPages(histoy, ...localObjects) {
     for (const localObj of localObjects) {
@@ -14,3 +21,4 @@ export default function checkpPreviousPages(histoy, ...localObjects) {
         }
     }
 }
+

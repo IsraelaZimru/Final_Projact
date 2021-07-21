@@ -15,7 +15,9 @@ const MyFavorites = ({ connected, hasPageAaccess }) => {
 
 
     useEffect(() => {
-        hasPageAaccess(connected, history)
+        hasPageAaccess(connected, history);
+        window.scrollTo(0, 0)
+
         // eslint-disable-next-line
     }, [connected]);
 
@@ -45,7 +47,7 @@ const MyFavorites = ({ connected, hasPageAaccess }) => {
     }
 
     return <Container>
-        <h1 className="display-2 mb-5 text-center"> Favorite Recipes:</h1>
+        <h1 className="display-2 mb-5 text-center h1styleUser2"> Favorite Recipes:</h1>
         <Row className="justify-content-center">
             {recipes.map((item, i) => <Card
                 key={i}
@@ -59,18 +61,18 @@ const MyFavorites = ({ connected, hasPageAaccess }) => {
                     onClick={e => chooseRepice(item)}
                     style={{ cursor: "pointer" }}
                 >
-                    <Card.Header>{item.name}</Card.Header>
                     <Card.Img className="Foodsimg" variant="top" src={item.pic} height="160px" weidth="240px" />
+                    <Card.Header>{item.name}</Card.Header>
 
-                    <p className="text-center my-2">
-                        {/* {item.allCategories && item.allCategories.map((type, i) => <span key={i}>| {type} </span>)} */}
+                    {/* {item.allCategories && item.allCategories.map((type, i) => <span key={i}>| {type} </span>)} */}
+                    {/* <p className="text-center my-2">
                         {item.allCategories && item.allCategories.map((type, i) => {
                             if (i === 0) {
                                 return <span className="text-capitalize" key={i}> {type} </span>
                             }
                             return <span className="text-capitalize" key={i}>| {type} </span>
                         })}
-                    </p>
+                    </p> */}
 
                 </div>
                 <Card.Footer className="text-black">
@@ -87,8 +89,7 @@ const MyFavorites = ({ connected, hasPageAaccess }) => {
             </Card>)}
         </Row>
         <Row className="justify-content-center my-2">
-            <Col></Col>
-            {!recipes.length && <Col id="msgDefaultFAV" className="my-4 text-center h1font">
+            {!recipes.length && <Col md={{ span: 6 }} id="msgDefaultFAV" className="my-4 text-center h1font">
                 <p className="pt-5">
                     This recipes collection is empty :(
                     <br></br>
@@ -97,7 +98,6 @@ const MyFavorites = ({ connected, hasPageAaccess }) => {
                     <FontAwesomeIcon icon={faThumbtack} />
                 </p>
             </Col>}
-            <Col></Col>
         </Row>
 
     </Container>

@@ -105,10 +105,10 @@ const UserProfile = ({ connected, hasPageAaccess, getDetaildsFromDb, userLoginHa
     }
 
     return <Container fluid className="aboutmeBkgd p-3">
-        <h1 className="display-2 mb-5 bolder"> My Profile </h1>
         <Alert show={show} variant="danger" className="text-center" onClose={() => setShow(false)}>
             User email already exist. Please try with another email.
         </Alert>
+        <h1 className="display-2 mb-5 bolder"> My Profile </h1>
         <Form noValidate validated={validated} onSubmit={handleSubmit} className="w-50 mb-5">
             <Row>
                 <Col md={12}>

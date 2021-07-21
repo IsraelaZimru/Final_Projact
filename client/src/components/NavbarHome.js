@@ -1,11 +1,9 @@
-import logo3 from '../src/imgs/logo3.png'
+import logo3 from '../imgs/logo3.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import { ListGroup, Nav, Navbar } from 'react-bootstrap';
-import { Link, useHistory } from "react-router-dom";
-
-
-
+import { Link } from "react-router-dom";
+import { HashLink } from 'react-router-hash-link';
 
 
 
@@ -25,6 +23,12 @@ const NavbarHome = ({ connected, user, logOut, showLogin, displayLogin }) => {
             <Nav className="mr-auto">
                 <Nav.Link>
                     <Link to="/"> Home Page </Link>
+                </Nav.Link>
+
+                <Nav.Link>
+                    <HashLink smooth to="/#recipes">
+                        All Recipes
+                    </HashLink>
                 </Nav.Link>
 
                 <Nav.Link style={{ display: connected ? 'none' : 'block' }}>

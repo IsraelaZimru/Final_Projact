@@ -76,7 +76,7 @@ const RecipeInfo = ({ hasPageAaccess, onselect }) => {
                 </div>
             </Col>
             <Col lg={7} className=" mx-0 px-0">
-                <img id="imgFood" alt="food pic" src={selectRecipe.image} style={{ minHeight: '472px', width: 'inherit', objectFit: "cover" }}></img>
+                <img id="imgFood" alt="food pic" src={selectRecipe.image} style={{ minHeight: '552px', width: 'inherit', objectFit: "cover" }}></img>
             </Col>
         </Row>
         <Row className="styleRow justify-content-md-center text-center p-3">

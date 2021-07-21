@@ -6,37 +6,84 @@ axios.defaults.withCredentials = true;
 axios.defaults.headers['Access-Control-Allow-Origin'] = "http://localhost:3100";
 // const fetcher = require('./fetcher');
 
-
-export function hasPageAaccess(connected, history) {
-    if (!connected) {
-        console.log(connected, "connected");
-        history.push("/")
-    }
-}
-
 export async function getRecipe() {
-    const response = await fetch(`http://localhost:3100/recipes`);
-    const recipes = await response.json();
-    // recipes.forEach(recipe => recipe.pic = `http://localhost:3100/${recipe.image_url}`);
+    const response = await axios(`/recipes`);
+    const recipes = response.data;
     recipes.forEach(recipe => recipe.pic = `http://localhost:3100/${recipe.image}`);
     return recipes;
 }
 
 export async function getRecipeNames() {
-    const response = await fetch(`http://localhost:3100/recipeNames`);
-    const onlyNames = await response.json();
-    return onlyNames;
+    const response = await axios(`/recipeNames`);
+    return response.data;
 }
 
 export async function getingredientsNames() {
-    const response = await fetch(`http://localhost:3100/ingredientsName`);
-    const onlyNames = await response.json();
-    return onlyNames;
+    const response = await axios(`/ingredientsName`);
+    return response.data;
 }
 
+export async function getCatsAndDiets() {
+    const response = await axios.get(`/information`);
+    return response.data;
+}
 
+export async function isRecipeNameAvailable(name) {
+    const response = await axios.get(`/information/RecipeNameAvailable/${name}`);
+    console.log("RecipeNameAvailable-", response);
+    return response.data;
+}
 
+export async function unitsAndIngs(name) {
+    const response = await axios.get(`/information/unitsAndIngs`);
+    return response.data;
+}
 
+export async function getUpdateDetails(id) {
+    const response = await axios.get(`http://localhost:3100/recipeInfo/${id}`);
+    return response.data;
+}
+
+export async function getMyRecipes(id) {
+    const response = await axios.get(`/recipes/myRecipes/${id}`);
+    response.data.forEach(recipe => recipe.pic = `http://localhost:3100/${recipe.image}`);
+    return response.data;
+}
+
+export async function getMyFavorites(id) {
+    const response = await axios.get(`/recipes/MyFavorites/${id}`);
+    response.data.forEach(recipe => recipe.pic = `http://localhost:3100/${recipe.image}`);
+    return response.data;
+}
+
+export async function RemoveAndReturnFavoritesRecipes(userId, recipeId) {
+    const response = await axios.delete(`/recipes/MyFavorites/${userId}/${recipeId}`);
+    response.data.forEach(recipe => recipe.pic = `http://localhost:3100/${recipe.image}`);
+    return response.data;
+}
+
+export async function addToMyFavorites(userId, recipeId) {
+    const response = await axios.put(`/recipes/MyFavorites/${userId}/${recipeId}`);
+    const onlyId = await response.data.map(recipe => recipe.recipeID);
+    return onlyId;
+}
+
+export async function getMyFavoritesId(userId) {
+    const response = await axios.get(`/recipes/MyFavorites/ids/${userId}`);
+    const onlyId = await response.data.map(recipe => recipe.recipeID);
+    return onlyId;
+}
+
+export async function RemoveFromMyFavorites(userId, recipeId) {
+    const response = await axios.delete(`/recipes/MyFavorites/ids/${userId}/${recipeId}`);
+    const onlyId = await response.data.map(recipe => recipe.recipeID);
+    return onlyId;
+}
+
+export async function setUnSeenRecipe(recipeId) {
+    const response = await axios.put(`recipeInfo/unSeenRecipe/${recipeId}`);
+    return response.data;
+}
 
 export async function checkLoginAccess({ email, password }) {
     try {
@@ -46,6 +93,7 @@ export async function checkLoginAccess({ email, password }) {
         console.log('login error', err);
     }
 }
+
 
 
 export async function addNewUser(details) {
@@ -121,31 +169,6 @@ export async function setNewRecipe(data, image) {
     }
 }
 
-export async function getCatsAndDiets() {
-    const response = await axios.get(`/information`);
-    // const onlyNames = await response.json();
-    return response.data;
-}
-
-export async function isRecipeNameAvailable(name) {
-    const response = await axios.get(`/information/RecipeNameAvailable/${name}`);
-    console.log("RecipeNameAvailable-", response);
-    return response.data;
-}
-
-export async function unitsAndIngs(name) {
-    const response = await axios.get(`/information/unitsAndIngs`);
-    // console.log("RecipeNameAvailable-", response);
-    return response.data;
-}
-
-export async function getUpdateDetails(id) {
-    const response = await axios.get(`http://localhost:3100/recipeInfo/${id}`);
-    // console.log("RecipeNameAvailable-", response);
-    return response.data;
-}
-
-
 export async function updateRecipe(id, data, image) {
     try {
         const response = await axios.put(`http://localhost:3100/recipeInfo/${id}`, data);
@@ -161,49 +184,4 @@ export async function updateRecipe(id, data, image) {
     } catch (err) {
         console.log(err)
     }
-}
-
-export async function getMyRecipes(id) {
-    const response = await axios.get(`/recipes/myRecipes/${id}`);
-    response.data.forEach(recipe => recipe.pic = `http://localhost:3100/${recipe.image}`);
-    return response.data;
-}
-
-export async function getMyFavorites(id) {
-    const response = await axios.get(`/recipes/MyFavorites/${id}`);
-    response.data.forEach(recipe => recipe.pic = `http://localhost:3100/${recipe.image}`);
-    return response.data;
-}
-
-export async function RemoveAndReturnFavoritesRecipes(userId, recipeId) {
-    const response = await axios.delete(`/recipes/MyFavorites/${userId}/${recipeId}`);
-    response.data.forEach(recipe => recipe.pic = `http://localhost:3100/${recipe.image}`);
-    return response.data;
-}
-
-export async function addToMyFavorites(userId, recipeId) {
-    const response = await axios.put(`/recipes/MyFavorites/${userId}/${recipeId}`);
-    const onlyId = await response.data.map(recipe => recipe.recipeID);
-    return onlyId;
-}
-
-export async function getMyFavoritesId(userId) {
-    const response = await axios.get(`/recipes/MyFavorites/ids/${userId}`);
-    const onlyId = await response.data.map(recipe => recipe.recipeID);
-    return onlyId;
-}
-
-
-
-export async function RemoveFromMyFavorites(userId, recipeId) {
-    const response = await axios.delete(`/recipes/MyFavorites/ids/${userId}/${recipeId}`);
-    const onlyId = await response.data.map(recipe => recipe.recipeID);
-    console.log("onlyId", onlyId);
-    return onlyId;
-}
-
-
-export async function setUnSeenRecipe(recipeId) {
-    const response = await axios.put(`recipeInfo/unSeenRecipe/${recipeId}`);
-    return response.data;
 }
