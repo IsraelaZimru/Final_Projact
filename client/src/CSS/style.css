@@ -2,7 +2,6 @@ html {
   scroll-behavior: smooth;
 }
 
-html,
 body {
   height: 100vh;
   margin: 0px;
@@ -14,7 +13,7 @@ a {
 
 #root {
   position: relative;
-  min-height: 100%;
+  height: 100vh;
 }
 
 #bkgdImge {
@@ -72,7 +71,43 @@ a {
 }
 
 #namelist {
-  z-index: 6;
+  position: absolute;
+  width: 90%;
+  z-index: 5;
+}
+
+#mostPopular {
+  z-index: 1;
+  top: 70px;
+  position: relative;
+  padding: 0;
+}
+
+#mostPopular div,
+#mostPopular img {
+  /* border-radius: 10%; */
+}
+
+#mostPopular div {
+  border: 1px solid blue;
+  /* border-style: groove; */
+  /* background-color: white; */
+  padding: 0px;
+  min-height: 160px;
+}
+
+#mostPopular span {
+  font-weight: bolder;
+  font-family: "Dancing Script", cursive;
+  font-size: larger;
+  position: absolute;
+  width: 30%;
+  bottom: 60px;
+  background-color: white;
+}
+
+#tagRecent {
+  left: 0px;
 }
 
 #styleIcon:hover + .dropDownUser,
@@ -106,16 +141,17 @@ a {
 }
 
 #bkgdStyle {
-  /* background-image: url("../imgs/bkgd1.png"), rgba(255, 255, 255, 0.2); */
   background-image: linear-gradient(
       to bottom,
       rgb(255, 255, 255) 8%,
-      rgba(255, 255, 255, 0.2) 100%,
-      rgba(255, 255, 255, 0.952) 10%
+      rgba(255, 255, 255, 0.534) 100%,
+      rgba(255, 255, 255) 8%
     ),
-    url("../imgs/bkgd2.jpg");
+    url("../imgs/bkgd7.jpg");
+  object-fit: cover;
   background-size: cover;
-  height: 500px;
+  height: 490px;
+  /* position: absolute; */
   /* height: 350px; */
 }
 
@@ -165,6 +201,16 @@ a {
 
 #styleNav {
   background-color: #fdede3;
+}
+
+#h1Home {
+  text-align: center;
+  font-weight: bolder;
+  font-size: x-large;
+}
+
+#fontStyle * {
+  font-size: 12px;
 }
 
 /* #myFav:hover {
@@ -237,9 +283,9 @@ a {
 
 .footer {
   margin-bottom: 0rem;
-  padding: 1rem;
+  padding: 2px;
   background-color: black;
-  position: absolute;
+  /* position: absolute; */
   bottom: 0;
   left: 0;
   width: 100%;

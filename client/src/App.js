@@ -6,7 +6,7 @@ import './components/User/CSS/userPages.css'
 import { BrowserRouter as Router, Switch, Route, Link, useHistory } from "react-router-dom";
 import { Nav, Navbar, ListGroup, Container, NavDropdown, Row, Col } from 'react-bootstrap';
 import Recipes from './components/Recipes';
-import SearchForm from './components/SearchForm';
+import Home from './components/Home';
 import { hasPageAaccess } from './DAL/utilFun';
 import Login from './components/Login';
 import SignUp from './components/SignUp';
@@ -106,7 +106,9 @@ function App() {
 
       <Switch>
         <Route exact path="/" >
-          <SearchForm connected={connected} userName={user.name} />
+          <Home connected={connected} userName={user.name} />
+        </Route>
+        <Route exact path="/AllRecipes">
           <Recipes isConnected={connected} UserId={user.id} />
         </Route>
         <Route exact path="/Sign_Up">
@@ -155,7 +157,7 @@ function App() {
       </Switch>
 
 
-      <div style={{ height: "65px" }}>
+      <div style={{ height: "35px" }}>
         <div className="footer text-white text-center mb-0">
           <p>
             © Israela Zimru
