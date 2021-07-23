@@ -311,6 +311,16 @@ const unSeenRecipe = async (recipeId) => {
     }
 }
 
+const MostRecipes = async () => {
+    try {
+        const [recipes, fields] = await db.query(`SELECT id,name,image,CookingTime FROM recipes order by CookingTime limit 4;
+        SELECT id,image,date FROM recipes order by date desc limit 1; SELECT id,image,views  FROM recipes order by views desc limit 1;`);
+        return recipes;
+    } catch (err) {
+        throw new Error('Problem connecting with SQL')
+    }
+}
+
 module.exports = {
     recipes,
     onlyRecipesName,
@@ -333,5 +343,6 @@ module.exports = {
     AddToMyFavorites,
     MyFavoritesId,
     removeFromMyFavoritesIds,
-    unSeenRecipe
+    unSeenRecipe,
+    MostRecipes
 }

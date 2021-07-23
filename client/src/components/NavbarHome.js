@@ -25,11 +25,16 @@ const NavbarHome = ({ connected, user, logOut, showLogin, displayLogin }) => {
                     <Link to="/"> Home Page </Link>
                 </Nav.Link>
 
+
                 <Nav.Link>
+                    <Link to="/AllRecipes"> All Recipes </Link>
+                </Nav.Link>
+
+                {/* <Nav.Link>
                     <HashLink smooth to="/#recipes">
                         All Recipes
                     </HashLink>
-                </Nav.Link>
+                </Nav.Link> */}
 
                 <Nav.Link style={{ display: connected ? 'none' : 'block' }}>
                     <Link to="/Sign_Up">Sign Up</Link>

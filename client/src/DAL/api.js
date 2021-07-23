@@ -85,6 +85,16 @@ export async function setUnSeenRecipe(recipeId) {
     return response.data;
 }
 
+export async function MostRecipes() {
+    const response = await axios(`/information/MostRecipes`);
+    response.data[0].forEach(recipe => recipe.pic = `http://localhost:3100/${recipe.image}`);
+    response.data[1].forEach(recipe => recipe.pic = `http://localhost:3100/${recipe.image}`);
+    response.data[2].forEach(recipe => recipe.pic = `http://localhost:3100/${recipe.image}`);
+    return response.data;
+}
+
+
+
 export async function checkLoginAccess({ email, password }) {
     try {
         const result = await axios.post('/users/login', { email, password });

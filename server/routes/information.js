@@ -23,7 +23,14 @@ router.get('/RecipeNameAvailable/:name', async function (req, res) {
     res.json(response);
 });
 
-
+router.get('/MostRecipes', async function (req, res) {
+    try {
+        const recipes = await api.MostRecipes();
+        res.json(recipes);
+    } catch (err) {
+        res.status(404).json({ error: 'Problem retrieving information from server.' });
+    }
+});
 
 
 
