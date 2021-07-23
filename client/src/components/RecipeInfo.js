@@ -4,6 +4,8 @@ import { useHistory, useParams } from "react-router";
 import { Container, Row, Col, Button, Form, Card } from "react-bootstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUtensils, faPrint } from "@fortawesome/free-solid-svg-icons";
+import facebook from '../imgs/facebook2.png'
+import whatapp from '../imgs/whatapp2.jfif'
 
 
 
@@ -112,6 +114,17 @@ const RecipeInfo = ({ hasPageAaccess, onselect }) => {
         <Row className="styleRow">
             <Col className="my-5">
                 <h1 className="mt-4">Ingredients:</h1>
+                <p>
+                    <a style={{ marginRight: "5px" }} target="_blank" rel="noreferrer" href={`https://api.whatsapp.com/send?text=http://localhost:3000/recipe_details/${selectRecipe.id}`} data-action="share/whatsapp/share">
+                        <img alt="facebook" src={whatapp} style={{ maxHeight: "16px", width: "34px" }} />
+
+                    </a>
+                    <a target="_blank" rel="noreferrer" href={`https://www.facebook.com/sharer/sharer.php?u=http://localhost:3000/recipe_details/${selectRecipe.id}`} class="fb-xfbml-parse-ignore">
+                        <img alt="facebook" src={facebook} style={{ maxHeight: "16px", width: "34px" }} />
+                    </a>
+                    <FontAwesomeIcon icon={faPrint} className="mx-2 mb-0 pb-0" onClick={printRecipe} style={{ cursor: "pointer" }} />
+
+                </p>
                 <p>To create a shopping list -<br></br> highlight the missing ingredients and click on the print icon</p>
                 {selectRecipe.ingredients && selectRecipe.ingredients.map((ingredient, i) =>
                     <Form.Check key={i} className="checkItems" column="lg" lg={2} type="checkbox" label={ingredient} />
@@ -137,9 +150,6 @@ const RecipeInfo = ({ hasPageAaccess, onselect }) => {
         <Row className="justify-content-center p-3">
             <div className="text-center notPrint">
                 <Button className="mr-2" variant="outline-warning" onClick={exit}>Go Back to Home Page</Button>
-                <Button variant="outline-warning" onClick={printRecipe}>
-                    <FontAwesomeIcon icon={faPrint} className="mx-3" />
-                </Button>
             </div>
         </Row>
 

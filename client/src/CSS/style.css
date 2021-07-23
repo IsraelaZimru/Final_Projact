@@ -67,7 +67,7 @@ a {
 }
 
 #groupBtn {
-  z-index: -1;
+  z-index: 2;
 }
 
 #namelist {
@@ -77,8 +77,8 @@ a {
 }
 
 #mostPopular {
-  z-index: 1;
-  top: 70px;
+  /* z-index: 1; */
+  /* top: 70px; */
   position: relative;
   padding: 0;
 }
@@ -89,7 +89,7 @@ a {
 }
 
 #mostPopular div {
-  border: 1px solid blue;
+  /* border: 1px solid; */
   /* border-style: groove; */
   /* background-color: white; */
   padding: 0px;
@@ -130,6 +130,9 @@ a {
 #btnAdvenced {
   background-color: #a18ba8;
   border: none;
+  z-index: 4;
+  top: 70px;
+  position: relative;
 }
 
 #msg404 {

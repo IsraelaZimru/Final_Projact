@@ -63,7 +63,7 @@ function Home({ connected, userName }) {
     return <Container fluid id="bkgdStyle" >
         <div className="row  pt-3" id="bkgdStyle2">
 
-            <Col md={{ span: 7, offset: 1 }} className="text-center">
+            <Col md={{ span: 6, offset: 0 }} className="text-center">
                 <Form className="pt-0" id="formMedia text-center">
                     {!connected && <><h1 className="display-1 h1style mb-0"> Recipes:</h1>
 
@@ -96,29 +96,20 @@ function Home({ connected, userName }) {
                             >{food.name}</ListGroup.Item>)}
                         </ListGroup>
                     </Form.Group>
+
+                    {/* <div > */}
+                    <Button
+                        onClick={() => { history.push("/AllRecipes") }}
+                        variant="outline-light"
+                        id="btnAdvenced"
+                    >
+                        Advanced Search
+                    </Button>
+                    {/* </div> */}
                 </Form>
-
-                <Row id="mostPopular">
-                    <Col md={{ span: 5, offset: 0 }}
-                        style={{ cursor: "pointer" }}
-                        onClick={() => history.push(`/recipe_details/${recipes.popular[0].id}`)}>
-                        <span >Most Popular Recipe</span>
-                        <img alt="food pic" src={recipes.popular.length ? recipes.popular[0].pic : ""} style={{ minHeight: '195px', maxHeight: '145px', width: 'inherit', objectFit: "cover" }}></img>
-                    </Col>
-                    <Col md={{ span: 5, offset: 1 }}
-                        style={{ cursor: "pointer" }}
-                        onClick={() => history.push(`/recipe_details/${recipes.recent[0].id}`)}>
-                        <span id="tagRecent">Most Recent Recipe</span>
-                        <img alt="food pic" src={recipes.recent.length ? recipes.recent[0].pic : ""} style={{ minHeight: '195px', maxHeight: '145px', width: 'inherit', objectFit: "cover" }}></img>
-                        <span id="tagRecent">Most Recent Recipe</span>
-
-                    </Col>
-                </Row>
-
-
             </Col>
 
-            <Col md={4}>
+            <Col md={3}>
                 <Card border="primary" style={{ width: '18rem', marginTop: "20px" }}>
                     <Card.Body>
                         <Card.Title id="h1Home">Most Quickest</Card.Title>
@@ -147,8 +138,31 @@ function Home({ connected, userName }) {
                     <img src={logo2} style={{ height: '250px', width: '300px', borderRadius: "50%" }} alt="logo"></img>
                 </Col>
             </Row> */}
+
+            <Col id="mostPopular" md={3}>
+                <div
+                    style={{ cursor: "pointer", marginTop: "17px" }}
+                    onClick={() => history.push(`/recipe_details/${recipes.popular[0].id}`)}>
+                    <Card text={'dark'}>
+                        <Card.Img className="Foodsimg" variant="top" src={recipes.popular.length ? recipes.popular[0].pic : ""} style={{ minHeight: '195px', maxHeight: '145px', width: '', objectFit: "cover" }} />
+                        <span >Most Popular Recipe</span>
+                    </Card>
+                </div>
+                {/* <img alt="food pic" src={recipes.popular.length ? recipes.popular[0].pic : ""} style={{ minHeight: '195px', maxHeight: '145px', width: 'inherit', objectFit: "cover" }}></img> */}
+
+
+                <div
+                    style={{ cursor: "pointer", marginTop: "5px" }}
+                    onClick={() => history.push(`/recipe_details/${recipes.recent[0].id}`)}>
+                    <Card text={'dark'}>
+                        <Card.Img className="Foodsimg" variant="top" src={recipes.recent.length ? recipes.recent[0].pic : ""} style={{ minHeight: '195px', maxHeight: '145px', width: '', objectFit: "cover" }} />
+                        <span id="tagRecent">Most Recent Recipe</span>
+                    </Card>
+                </div>
+                {/* <img alt="food pic" src={recipes.recent.length ? recipes.recent[0].pic : ""} style={{ minHeight: '195px', maxHeight: '145px', width: 'inherit', objectFit: "cover" }}></img> */}
+            </Col>
+            {/* <hr className="hrMain"></hr> */}
         </div>
-        {/* <hr className="hrMain"></hr> */}
     </Container >
 }
 
