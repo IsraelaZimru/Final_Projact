@@ -1,8 +1,8 @@
-import { Card, Container, Row, Col, Pagination, ListGroup, Navbar, Nav, NavDropdown, Jumbotron, Button } from "react-bootstrap";
+import { Card, Container, Row, Col, Pagination, ListGroup, Navbar, Nav, NavDropdown, Jumbotron, Button, Dropdown, FormControl } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThumbsUp, faEdit, faHeart, faEye, faTimesCircle, faBookmark, faSearch } from "@fortawesome/free-solid-svg-icons";
-import { useState, useEffect } from "react";
+import { useState, useEffect, forwardRef } from "react";
 import { getRecipe, addToMyFavorites, getMyFavoritesId, RemoveFromMyFavorites, getCatsAndDiets, getingredientsNames } from "../DAL/api";
 
 
@@ -45,8 +45,8 @@ export default function Recipes({ isConnected, UserId }) {
                 const checkboxsInfo = { diets: data[0], categories: data[1], ings: getIngs }
                 checkboxsInfo.diets.forEach(item => item.class = "alldiets")
                 checkboxsInfo.categories.forEach(item => item.class = "allCategories")
-                checkboxsInfo.ings.forEach(item => item.class = "ings")
-                // console.log(checkboxsInfo);
+                checkboxsInfo.ings.forEach(item => item.class = "allIngredients")
+                // console.log("checkboxsInfo", checkboxsInfo);
                 setCheckboxs(prev => checkboxsInfo)
             } catch (err) {
                 alert("cant import ings, cats and diets")
@@ -143,6 +143,43 @@ export default function Recipes({ isConnected, UserId }) {
         </div>
     );
 
+    // const CustomToggle = forwardRef(({ children, onClick }, ref) => (
+    //     <Navbar.Collapse id="responsive-navbar-nav"
+    //         ref={ref}
+    //         onClick={(e) => {
+    //             e.preventDefault();
+    //             onClick(e);
+    //         }}
+    //     >
+    //         {children}
+    //         &#x25bc;
+    //     </Navbar.Collapse>
+    // ));
+
+    const CustomMenu = forwardRef(
+        ({ children, style, className, 'aria-labelledby': labeledBy }, ref) => {
+            const [value, setValue] = useState('');
+
+            return (<div>
+                <FormControl
+                    autoFocus
+                    className="mx-3 my-2 w-auto"
+                    placeholder="Type to filter..."
+                    onChange={(e) => setValue(e.target.value)}
+                    value={value}
+                />
+                <ul className="list-unstyled">
+                    {children.filter(
+                        (child) =>
+                            !value || child.props.children.toLowerCase().startsWith(value),
+                    )}
+                </ul>
+            </div >
+            );
+        },
+    );
+
+
     return <Container fluid className="py-2">
         <div id="recipes"></div>
         <Navbar collapseOnSelect expand="lg" id="styleNav" className="text-center font-weight-bold">
@@ -157,6 +194,33 @@ export default function Recipes({ isConnected, UserId }) {
                                     onClick={() => updateValue(type, "categories")}
                                     key={i}
                                 >{type.name}</NavDropdown.Item>)}
+                            </NavDropdown>
+                        </Navbar.Collapse>
+                    </Col>
+
+                    {/* <Col>
+                        <Navbar.Collapse id="responsive-navbar-nav">
+                            <NavDropdown title="Ingredients" id="collasible-nav-dropdown">
+                                {checkboxs.ings.map((type, i) => <NavDropdown.Item
+                                    value={type}
+                                    onClick={() => updateValue(type, "allIngredients")}
+                                    key={i}
+                                >{type.name}</NavDropdown.Item>)}
+                            </NavDropdown>
+                        </Navbar.Collapse>
+                    </Col> */}
+
+
+                    <Col>
+                        <Navbar.Collapse id="responsive-navbar-nav">
+                            <NavDropdown title="Ingredients" id="collasible-nav-dropdown">
+                                <Dropdown.Menu as={CustomMenu}>
+                                    {checkboxs.ings.map((type, i) => <NavDropdown.Item
+                                        value={type}
+                                        onClick={() => updateValue(type, "allIngredients")}
+                                        key={i}
+                                    >{type.name}</NavDropdown.Item>)}
+                                </Dropdown.Menu>
                             </NavDropdown>
                         </Navbar.Collapse>
                     </Col>
@@ -188,22 +252,11 @@ export default function Recipes({ isConnected, UserId }) {
                             </NavDropdown>
                         </Navbar.Collapse>
                     </Col>
-
-
-                    {/* <Col>
-                        <Navbar.Collapse id="responsive-navbar-nav">
-                        <NavDropdown title="Ingredients" id="collasible-nav-dropdown">
-                                {checkboxs.ings.slice(0, 6).map((type, i) => <NavDropdown.Item
-                                    value={type}
-                                    onClick={() => updateValue(type)}
-                                    key={i}
-                                    >{type.name}</NavDropdown.Item>)}
-                                    </NavDropdown>
-                                    </Navbar.Collapse>
-                    </Col> */}
                 </Row>
             </Nav>
         </Navbar>
+
+
         <ListGroup horizontal>
             {!!selectedIng.length && selectedIng.map((ing, i) => (<ListGroup.Item key={i}>
                 <FontAwesomeIcon icon={faTimesCircle}
@@ -213,12 +266,6 @@ export default function Recipes({ isConnected, UserId }) {
                 {ing.name}
             </ListGroup.Item>))}
         </ListGroup>
-        {/* 
-        <div>
-        <p className="sortRacipes">Sort By :
-        <span onClick={sortQuick}>the Quickest</span>|
-        <span onClick={sortViews}>Views</span></p>
-    </div> */}
 
         <Row className="justify-content-center">
             {!!apiRecipes.length && apiRecipes.map((item, i) => <Card
@@ -250,11 +297,6 @@ export default function Recipes({ isConnected, UserId }) {
                             </div>
                         </Col>
                         <Col className="px-0" sx={{ span: 4, offset: 4 }} md={{ span: 4, offset: 4 }} >
-                            {/* <FontAwesomeIcon icon={faEye}
-                                className="ml-2 mr-0" />
-                            <span className="pl-2">
-                                {item.views}
-                            </span> */}
                             {/* <FontAwesomeIcon icon={faHeart}
                                 className="ml-2 mr-0" />
                             <span className="pl-2">
@@ -272,15 +314,9 @@ export default function Recipes({ isConnected, UserId }) {
                     <Card.Text className="text-center m-1" style={{ minHeight: "8vh" }}>
                         {item.description}
                     </Card.Text>
-                    {/* <Card.Footer className="text-black">
-                        <p className="text-center">
-                            {item.allCategories && item.allCategories.map((type, i) => <span key={i}>| {type} </span>)}
-                        </p>
-                    </Card.Footer> */}
-                    {/* <Card.Footer className="text-black"> */}
+
                     <hr></hr>
                     <p className="text-center">
-                        {/* {item.allCategories && item.allCategories.map((type, i) => <span key={i}>| {type} </span>)} */}
                         {item.allCategories && item.allCategories.map((type, i) => {
                             if (i === 0) {
                                 return <span className="text-capitalize" key={i}> {type} </span>
@@ -288,13 +324,11 @@ export default function Recipes({ isConnected, UserId }) {
                             return <span className="text-capitalize" key={i}>| {type} </span>
                         })}
                     </p>
-                    {/* </Card.Footer> */}
                 </div>
             </Card>)}
 
             {!apiRecipes.length && <Jumbotron fluid className="mt-3">
                 <Container>
-                    {/* <h1>Hello, world!</h1> */}
                     <p>
                         No matching recipes were found.
                     </p>
@@ -302,8 +336,5 @@ export default function Recipes({ isConnected, UserId }) {
 
             </Jumbotron>}
         </Row>
-        {/* <Row className="justify-content-md-center">
-            {paginationBasic}
-        </Row> */}
     </Container >
 }

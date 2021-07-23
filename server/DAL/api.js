@@ -3,12 +3,14 @@ const { mergeTwoSQLTable, addingredientsToRecipe, organizedData, organizedIngred
 
 const recipes = async () => {
     try {
-        const [recipes, fields] = await db.execute('Select * from recipes where isPrivate = 0');
+        const [recipes, fields] = await db.execute('Select * from recipes where isPrivate = 0 order by date desc');
         const [categories, catFields] = await db.execute('select name, recipeId from recipecategory join categories on recipecategory.CategoryTypeId = categories.id; ');
         const [diets, fieldsRD] = await db.execute(`select name, recipeId from recipediet join diets on diets.id = recipediet.DietId`);
+        const [ings, fieldsI] = await db.execute(`select name, recipeId from recipeingredients join ingredients on ingredients.id = recipeingredients.IngredientID;`);
 
         mergeTwoSQLTable([recipes, categories], "allCategories");
         mergeTwoSQLTable([recipes, diets], "alldiets");
+        mergeTwoSQLTable([recipes, ings], "allIngredients");
         return recipes;
     } catch (err) {
         console.log(err)
@@ -82,7 +84,7 @@ const onlyRecipesName = async () => {
 }
 
 const onlyingredientsName = async () => {
-    const [names, fields] = await db.execute('Select name from ingredients');
+    const [names, fields] = await db.execute('Select id,name from ingredients');
     return names;
 }
 

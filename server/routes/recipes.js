@@ -31,6 +31,13 @@ router.get('/', async function (req, res) {
     res.json(recipes);
 });
 
+router.get('/withIng', async function (req, res) {
+    const recipes = await api.recipesAndIngs();
+    res.json(recipes);
+});
+
+
+
 router.get('/myRecipes/:id', async function (req, res) {
     try {
         const { id } = req.params;
