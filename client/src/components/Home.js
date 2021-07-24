@@ -63,6 +63,30 @@ function Home({ connected, userName }) {
     return <Container fluid id="bkgdStyle" >
         <div className="row  pt-3" id="bkgdStyle2">
 
+            <Col md={3}>
+                <Card border="primary" style={{ width: '18rem', marginTop: "20px" }}>
+                    <Card.Body>
+                        <Card.Title id="h1Home">Most Quickest</Card.Title>
+                        <Card.Text>
+                            {!!recipes.quickest.length && recipes.quickest.map((item, i) => <Row className="py-2"
+                                style={{ cursor: "pointer" }}
+                                onClick={e => chooseRepice(item)}>
+                                <Col md={5}>
+                                    <img alt="food pic" src={item.pic} style={{ minHeight: '60px', maxHeight: '60px', width: '80px', objectFit: "cover" }}></img>
+                                </Col>
+                                <Col id="fontStyle">
+                                    <p>{item.name}
+                                        <br></br>
+                                        <FontAwesomeIcon icon={faHistory} className="m-0 p-0 mr-2" />
+                                        {item.CookingTime}
+                                    </p>
+                                </Col>
+                            </Row>)}
+                        </Card.Text>
+                    </Card.Body>
+                </Card>
+            </Col>
+
             <Col md={{ span: 6, offset: 0 }} className="text-center">
                 <Form className="pt-0" id="formMedia text-center">
                     {!connected && <><h1 className="display-1 h1style mb-0"> Recipes:</h1>
@@ -97,7 +121,6 @@ function Home({ connected, userName }) {
                         </ListGroup>
                     </Form.Group>
 
-                    {/* <div > */}
                     <Button
                         onClick={() => { history.push("/AllRecipes") }}
                         variant="outline-light"
@@ -105,33 +128,9 @@ function Home({ connected, userName }) {
                     >
                         Advanced Search
                     </Button>
-                    {/* </div> */}
                 </Form>
             </Col>
 
-            <Col md={3}>
-                <Card border="primary" style={{ width: '18rem', marginTop: "20px" }}>
-                    <Card.Body>
-                        <Card.Title id="h1Home">Most Quickest</Card.Title>
-                        <Card.Text>
-                            {!!recipes.quickest.length && recipes.quickest.map((item, i) => <Row className="py-2"
-                                style={{ cursor: "pointer" }}
-                                onClick={e => chooseRepice(item)}>
-                                <Col md={5}>
-                                    <img alt="food pic" src={item.pic} style={{ minHeight: '60px', maxHeight: '60px', width: '80px', objectFit: "cover" }}></img>
-                                </Col>
-                                <Col id="fontStyle">
-                                    <p>{item.name}
-                                        <br></br>
-                                        <FontAwesomeIcon icon={faHistory} className="m-0 p-0 mr-2" />
-                                        {item.CookingTime}
-                                    </p>
-                                </Col>
-                            </Row>)}
-                        </Card.Text>
-                    </Card.Body>
-                </Card>
-            </Col>
             {/* </Row> */}
             {/* <Row className="p-2 py-3" >
                 <Col className="p-2 pt-3 text-center">
