@@ -2,19 +2,16 @@ const db = require('../utils/database') // mysql2.pool.promise()
 const { mergeTwoSQLTable, addingredientsToRecipe, organizedData, organizedIngredients, organizedinstructions } = require('../utils/halpersFun')
 
 const recipes = async () => {
-    try {
-        const [recipes, fields] = await db.execute('Select * from recipes where isPrivate = 0 order by date desc');
-        const [categories, catFields] = await db.execute('select name, recipeId from recipecategory join categories on recipecategory.CategoryTypeId = categories.id; ');
-        const [diets, fieldsRD] = await db.execute(`select name, recipeId from recipediet join diets on diets.id = recipediet.DietId`);
-        const [ings, fieldsI] = await db.execute(`select name, recipeId from recipeingredients join ingredients on ingredients.id = recipeingredients.IngredientID;`);
+    const [recipes, fields] = await db.execute('Select * from recipes where isPrivate = 0 order by date desc');
+    const [categories, catFields] = await db.execute('select name, recipeId from recipecategory join categories on recipecategory.CategoryTypeId = categories.id; ');
+    const [diets, fieldsRD] = await db.execute(`select name, recipeId from recipediet join diets on diets.id = recipediet.DietId`);
+    const [ings, fieldsI] = await db.execute(`select name, recipeId from recipeingredients join ingredients on ingredients.id = recipeingredients.IngredientID;`);
 
-        mergeTwoSQLTable([recipes, categories], "allCategories");
-        mergeTwoSQLTable([recipes, diets], "alldiets");
-        mergeTwoSQLTable([recipes, ings], "allIngredients");
-        return recipes;
-    } catch (err) {
-        console.log(err)
-    }
+    mergeTwoSQLTable([recipes, categories], "allCategories");
+    mergeTwoSQLTable([recipes, diets], "alldiets");
+    mergeTwoSQLTable([recipes, ings], "allIngredients");
+    return recipes;
+
 }
 
 const recipeInfoRow = async (recipeId) => {

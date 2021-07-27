@@ -62,32 +62,7 @@ function Home({ connected, userName }) {
 
     return <Container fluid id="bkgdStyle" >
         <div className="row  pt-3" id="bkgdStyle2">
-
-            <Col md={3}>
-                <Card border="primary" style={{ width: '18rem', marginTop: "20px" }}>
-                    <Card.Body>
-                        <Card.Title id="h1Home">Most Quickest</Card.Title>
-                        <Card.Text>
-                            {!!recipes.quickest.length && recipes.quickest.map((item, i) => <Row className="py-2"
-                                style={{ cursor: "pointer" }}
-                                onClick={e => chooseRepice(item)}>
-                                <Col md={5}>
-                                    <img alt="food pic" src={item.pic} style={{ minHeight: '60px', maxHeight: '60px', width: '80px', objectFit: "cover" }}></img>
-                                </Col>
-                                <Col id="fontStyle">
-                                    <p>{item.name}
-                                        <br></br>
-                                        <FontAwesomeIcon icon={faHistory} className="m-0 p-0 mr-2" />
-                                        {item.CookingTime}
-                                    </p>
-                                </Col>
-                            </Row>)}
-                        </Card.Text>
-                    </Card.Body>
-                </Card>
-            </Col>
-
-            <Col md={{ span: 6, offset: 0 }} className="text-center">
+            <Col md={{ span: 6, offset: 3 }} className="text-center">
                 <Form className="pt-0" id="formMedia text-center">
                     {!connected && <><h1 className="display-1 h1style mb-0"> Recipes:</h1>
 
@@ -138,6 +113,9 @@ function Home({ connected, userName }) {
                 </Col>
             </Row> */}
 
+            {/* <hr className="hrMain"></hr> */}
+        </div>
+        <Row className="justify-content-center">
             <Col id="mostPopular" md={3}>
                 <div
                     style={{ cursor: "pointer", marginTop: "17px" }}
@@ -160,8 +138,31 @@ function Home({ connected, userName }) {
                 </div>
                 {/* <img alt="food pic" src={recipes.recent.length ? recipes.recent[0].pic : ""} style={{ minHeight: '195px', maxHeight: '145px', width: 'inherit', objectFit: "cover" }}></img> */}
             </Col>
-            {/* <hr className="hrMain"></hr> */}
-        </div>
+
+            <Col md={3}>
+                <Card border="primary" style={{ width: '18rem', marginTop: "20px" }}>
+                    <Card.Body>
+                        <Card.Title id="h1Home">Most Quickest</Card.Title>
+                        <Card.Text>
+                            {!!recipes.quickest.length && recipes.quickest.map((item, i) => <Row className="py-2"
+                                style={{ cursor: "pointer" }}
+                                onClick={e => chooseRepice(item)}>
+                                <Col md={5}>
+                                    <img alt="food pic" src={item.pic} style={{ minHeight: '60px', maxHeight: '60px', width: '80px', objectFit: "cover" }}></img>
+                                </Col>
+                                <Col id="fontStyle">
+                                    <p>{item.name}
+                                        <br></br>
+                                        <FontAwesomeIcon icon={faHistory} className="m-0 p-0 mr-2" />
+                                        {item.CookingTime}
+                                    </p>
+                                </Col>
+                            </Row>)}
+                        </Card.Text>
+                    </Card.Body>
+                </Card>
+            </Col>
+        </Row>
     </Container >
 }
 

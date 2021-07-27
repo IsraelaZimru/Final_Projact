@@ -27,8 +27,12 @@ router.delete('/:id', async function (req, res) {  //router ==app.get but with m
 
 
 router.get('/', async function (req, res) {
-    const recipes = await api.recipes();
-    res.json(recipes);
+    try {
+        const recipes = await api.recipes();
+        res.json(recipes);
+    } catch (err) {
+        res.status(500).json({ err: "cant return recipes" })
+    }
 });
 
 router.get('/withIng', async function (req, res) {

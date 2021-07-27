@@ -1,10 +1,26 @@
 import axios from 'axios';
 import fetch from 'node-fetch';
 
-axios.defaults.baseURL = 'http://localhost:3100';
 axios.defaults.withCredentials = true;
+axios.defaults.baseURL = 'http://localhost:3100';
 axios.defaults.headers['Access-Control-Allow-Origin'] = "http://localhost:3100";
 // const fetcher = require('./fetcher');
+
+export async function MostRecipes() {
+    // const response = await axios(`/information/MostRecipes`);
+    const response = await axios(`http://127.0.0.1:5000/MostRecipes`, { withCredentials: false });
+    response.data[0].forEach(recipe => recipe.pic = `http://localhost:3100/${recipe.image}`);
+    response.data[1].forEach(recipe => recipe.pic = `http://localhost:3100/${recipe.image}`);
+    response.data[2].forEach(recipe => recipe.pic = `http://localhost:3100/${recipe.image}`);
+    return response.data;
+}
+
+export async function getMyRecipes(id) {
+    //const response = axios.get(`/recipes/myRecipes/${id}`);
+    const response = await axios(`http://127.0.0.1:5000/getMyRecipes/${id}`, { withCredentials: false });
+    response.data.forEach(recipe => recipe.pic = `http://localhost:3100/${recipe.image}`);
+    return response.data;
+}
 
 export async function getRecipe() {
     const response = await axios(`/recipes`);
@@ -44,12 +60,6 @@ export async function getUpdateDetails(id) {
     return response.data;
 }
 
-export async function getMyRecipes(id) {
-    const response = await axios.get(`/recipes/myRecipes/${id}`);
-    response.data.forEach(recipe => recipe.pic = `http://localhost:3100/${recipe.image}`);
-    return response.data;
-}
-
 export async function getMyFavorites(id) {
     const response = await axios.get(`/recipes/MyFavorites/${id}`);
     response.data.forEach(recipe => recipe.pic = `http://localhost:3100/${recipe.image}`);
@@ -82,14 +92,6 @@ export async function RemoveFromMyFavorites(userId, recipeId) {
 
 export async function setUnSeenRecipe(recipeId) {
     const response = await axios.put(`recipeInfo/unSeenRecipe/${recipeId}`);
-    return response.data;
-}
-
-export async function MostRecipes() {
-    const response = await axios(`/information/MostRecipes`);
-    response.data[0].forEach(recipe => recipe.pic = `http://localhost:3100/${recipe.image}`);
-    response.data[1].forEach(recipe => recipe.pic = `http://localhost:3100/${recipe.image}`);
-    response.data[2].forEach(recipe => recipe.pic = `http://localhost:3100/${recipe.image}`);
     return response.data;
 }
 
