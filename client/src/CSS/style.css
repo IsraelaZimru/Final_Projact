@@ -100,7 +100,7 @@ a {
 .mostPopular span {
   font-weight: bolder;
   font-family: "Dancing Script", cursive;
-  font-size: larger;
+  font-size:x-large;
   position: absolute;
   width: 30%;
   bottom: 60px;
@@ -370,6 +370,15 @@ a {
   #loginCard {
     width: 70%;
     height: 50%;
+  }
+  #fontStyle {
+    text-align: center;
+    padding-top: 5px;
+    margin-bottom: 5px;
+  }
+
+  #mediaFixImg {
+    min-height: 120px !important;
   }
 }
 

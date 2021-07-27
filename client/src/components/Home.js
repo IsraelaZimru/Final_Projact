@@ -158,10 +158,10 @@ function Home({ connected, userName }) {
                                 {!!recipes.quickest.length && recipes.quickest.map((item, i) => <Row className="py-2"
                                     style={{ cursor: "pointer" }}
                                     onClick={e => chooseRepice(item)}>
-                                    <Col md={5}>
-                                        <img alt="food pic" src={item.pic} style={{ minHeight: '60px', maxHeight: '60px', width: '80px', objectFit: "cover" }}></img>
+                                    <Col md={5} >
+                                        <img id="mediaFixImg" alt="food pic" src={item.pic} style={{ minHeight: '60px', maxHeight: '60px', width: 'inherit', objectFit: "cover" }}></img>
                                     </Col>
-                                    <Col id="fontStyle">
+                                    <Col sx={7} id="fontStyle">
                                         <p>{item.name}
                                             <br></br>
                                             <FontAwesomeIcon icon={faHistory} className="m-0 p-0 mr-2" />
