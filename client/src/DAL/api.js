@@ -6,6 +6,9 @@ axios.defaults.baseURL = 'http://localhost:3100';
 axios.defaults.headers['Access-Control-Allow-Origin'] = "http://localhost:3100";
 // const fetcher = require('./fetcher');
 
+
+
+// With flask python-----------------------------------------------------------
 export async function MostRecipes() {
     // const response = await axios(`/information/MostRecipes`);
     const response = await axios(`http://127.0.0.1:5000/MostRecipes`, { withCredentials: false });
@@ -22,6 +25,9 @@ export async function getMyRecipes(id) {
     return response.data;
 }
 
+
+
+// With express node js -----------------------------------------------------------
 export async function getRecipe() {
     const response = await axios(`/recipes`);
     const recipes = response.data;

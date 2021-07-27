@@ -76,27 +76,28 @@ a {
   z-index: 5;
 }
 
-#mostPopular {
+.mostPopular {
   /* z-index: 1; */
   /* top: 70px; */
   position: relative;
   padding: 0;
 }
 
-#mostPopular div,
-#mostPopular img {
+.mostPopular div,
+.mostPopular img {
   /* border-radius: 10%; */
 }
 
-#mostPopular div {
+.mostPopular div {
   /* border: 1px solid; */
   /* border-style: groove; */
   /* background-color: white; */
   padding: 0px;
   min-height: 160px;
+  width: inherit;
 }
 
-#mostPopular span {
+.mostPopular span {
   font-weight: bolder;
   font-family: "Dancing Script", cursive;
   font-size: larger;
@@ -104,6 +105,10 @@ a {
   width: 30%;
   bottom: 60px;
   background-color: white;
+}
+
+.mostCarusel {
+  height: 200px;
 }
 
 #tagRecent {
@@ -150,10 +155,10 @@ a {
       rgba(255, 255, 255, 0.534) 100%,
       rgba(255, 255, 255) 8%
     ),
-    url("../imgs/bkgd7.jpg");
+    url("../imgs/bkgd2.jpg");
   object-fit: cover;
   background-size: cover;
-  height: 890px;
+  /* height: 890px; */
   /* position: absolute; */
   /* height: 350px; */
 }
@@ -163,7 +168,7 @@ a {
 }
 
 #bkgdStyle2 {
-  height: 450px;
+  height: 380px;
 }
 
 #introduction {
