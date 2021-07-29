@@ -62,7 +62,7 @@ function Home({ connected, userName }) {
 
     return <Container fluid  >
         <div id="bkgdStyle">
-            <div className="row  pt-3" id="bkgdStyle2">
+            <div className="row  pt-4" id="bkgdStyle2">
                 <Col md={{ span: 6, offset: 3 }} className="text-center">
                     <Form className="pt-0" id="formMedia text-center">
                         {!connected && <><h1 className="display-1 h1style mb-0"> Recipes:</h1>
@@ -71,7 +71,7 @@ function Home({ connected, userName }) {
                             <p > <strong>Easy and quick meal ideas and healthy recipes</strong></p>
                         </>}
                         {connected && <div>
-                            <h1 className="display-4 mb-3 h1styleUser">
+                            <h1 className="display-4 pt-4 h1styleUser">
                                 <span className="optional mx-1"> Hi {userName}!</span>
                                 <br></br>
                                 Search for a Recipe:</h1>

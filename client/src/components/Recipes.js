@@ -4,14 +4,20 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThumbsUp, faEdit, faHeart, faEye, faTimesCircle, faBookmark, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect, forwardRef } from "react";
 import { getRecipe, addToMyFavorites, getMyFavoritesId, RemoveFromMyFavorites, getCatsAndDiets, getingredientsNames } from "../DAL/api";
+import MyPagination from "./MyPagination";
 
 
 export default function Recipes({ isConnected, UserId }) {
     const history = useHistory()
     const [selectedIng, setSelectedIng] = useState([]);
-    const [likes, setLikes] = useState([]); //להכניס לכל יוזר מערך מתכונים אהובים ומתכון ששם או נכנס יוחלף צבעו
+    const [likes, setLikes] = useState([]);
     const [apiRecipes, setApiRecipes] = useState([]);
     const [checkboxs, setCheckboxs] = useState({ diets: [], categories: [], ings: [] });
+    // const [loading, setLoading] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [recipesPerPage, setRecipesPerPage] = useState(6); //for pagination uses
+    const [active, setActive] = useState(1)
+
 
     // let originalRecipe;
 
@@ -30,10 +36,12 @@ export default function Recipes({ isConnected, UserId }) {
     useEffect(() => {
         const fetchRecipes = async () => {
             try {
+                // setLoading(true)
                 const recipes = await getRecipe()
                 console.log("recipes", recipes);
                 // originalRecipe = recipes;
                 setApiRecipes(prev => recipes)
+                // setLoading(false)
             } catch (err) {
                 alert("Error, please refresh the site", err)
             }
@@ -53,9 +61,24 @@ export default function Recipes({ isConnected, UserId }) {
             }
         }
         fetchRecipes()
+
         return () => setSelectedIng([]);
     }, [likes])
 
+
+    //Get current recipes
+    const indexOfLastRecipes = currentPage * recipesPerPage;
+    const indexOfFirstRecipes = indexOfLastRecipes - recipesPerPage;
+    const currentRecipes = apiRecipes.slice(indexOfFirstRecipes, indexOfLastRecipes)
+
+    const paginate = (num) => {
+        window.scrollTo(0, 0);
+        setCurrentPage(num)
+        setActive(num)
+    }
+
+
+    //filter recipes 
     const closeHandler = async (ing) => {
         const newArr = await selectedIng.filter(type => type.name !== ing.name)
         setSelectedIng(prev => newArr);
@@ -82,6 +105,7 @@ export default function Recipes({ isConnected, UserId }) {
     const sortViews = () => {
         const sorted = apiRecipes.sort((b, a) => a.views - b.views)
         setApiRecipes(prev => [...sorted])
+        paginate(1)
     }
 
     const sortQuick = () => {
@@ -89,6 +113,7 @@ export default function Recipes({ isConnected, UserId }) {
         const temp = apiRecipes.map(a => a.CookingTime)
         console.log(temp);
         setApiRecipes(prev => [...sorted])
+        paginate(1)
     }
 
 
@@ -103,6 +128,8 @@ export default function Recipes({ isConnected, UserId }) {
         })
         setApiRecipes(prev => [...temp])
         console.log("temp-add", temp);
+        paginate(1)
+
     }
 
     const chooseRepice = (food) => {
@@ -126,35 +153,6 @@ export default function Recipes({ isConnected, UserId }) {
         }
     }
 
-    //---------------------------
-    let active = 1;
-    let items = [];
-    for (let number = 1; number <= 3; number++) {
-        items.push(
-            <Pagination.Item key={number} active={number === active}>
-                {number}
-            </Pagination.Item>,
-        );
-    }
-
-    const paginationBasic = (
-        <div >
-            <Pagination>{items}</Pagination>
-        </div>
-    );
-
-    // const CustomToggle = forwardRef(({ children, onClick }, ref) => (
-    //     <Navbar.Collapse id="responsive-navbar-nav"
-    //         ref={ref}
-    //         onClick={(e) => {
-    //             e.preventDefault();
-    //             onClick(e);
-    //         }}
-    //     >
-    //         {children}
-    //         &#x25bc;
-    //     </Navbar.Collapse>
-    // ));
 
     const CustomMenu = forwardRef(
         ({ children, style, className, 'aria-labelledby': labeledBy }, ref) => {
@@ -168,7 +166,7 @@ export default function Recipes({ isConnected, UserId }) {
                     onChange={(e) => setValue(e.target.value)}
                     value={value}
                 />
-                <ul className="list-unstyled">
+                <ul className="list-unstyled" style={{ overflow: "auto", maxHeight: "310px" }}>
                     {children.filter(
                         (child) =>
                             !value || child.props.children.toLowerCase().startsWith(value),
@@ -182,6 +180,7 @@ export default function Recipes({ isConnected, UserId }) {
 
     return <Container fluid className="py-2">
         <div id="recipes"></div>
+        <h1 className="display-1 h1style text-center">The Recipes</h1>
         <Navbar collapseOnSelect expand="lg" id="styleNav" className="text-center font-weight-bold">
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Nav className="m-auto">
@@ -257,7 +256,7 @@ export default function Recipes({ isConnected, UserId }) {
         </Navbar>
 
 
-        <ListGroup horizontal>
+        <ListGroup horizontal className="mt-2">
             {!!selectedIng.length && selectedIng.map((ing, i) => (<ListGroup.Item key={i}>
                 <FontAwesomeIcon icon={faTimesCircle}
                     style={{ cursor: "pointer" }}
@@ -268,7 +267,8 @@ export default function Recipes({ isConnected, UserId }) {
         </ListGroup>
 
         <Row className="justify-content-center">
-            {!!apiRecipes.length && apiRecipes.map((item, i) => <Card
+            {/* {!!apiRecipes.length && apiRecipes.map((item, i) => <Card */}
+            {!!currentRecipes.length && currentRecipes.map((item, i) => <Card
                 id="myFav"
                 key={i}
                 sm={6}
@@ -336,5 +336,6 @@ export default function Recipes({ isConnected, UserId }) {
 
             </Jumbotron>}
         </Row>
+        <MyPagination recipesPerPage={recipesPerPage} totalRecipes={apiRecipes.length} paginate={paginate} active={active} />
     </Container >
 }

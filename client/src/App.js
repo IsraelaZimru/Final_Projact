@@ -1,15 +1,13 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './CSS/style.css'
 import './components/User/CSS/userPages.css'
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
-import { BrowserRouter as Router, Switch, Route, Link, useHistory } from "react-router-dom";
-import { Nav, Navbar, ListGroup, Container, NavDropdown, Row, Col } from 'react-bootstrap';
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { Container } from 'react-bootstrap';
 import Recipes from './components/Recipes';
 import Home from './components/Home';
 import { hasPageAaccess } from './DAL/utilFun';
-import Login from './components/Login';
-import SignUp from './components/SignUp';
+import Login from './components/Forms/usersForms/Login';
+import SignUp from './components/Forms/usersForms/SignUp';
 import MyFavorites from './components/User/ProfilePages/MyFavorites';
 import MyRecipes from './components/User/ProfilePages/MyRecipes';
 import UserProfile from './components/User/ProfilePages/UserProfile';
@@ -159,14 +157,11 @@ function App() {
 
       <div style={{ height: "35px" }}>
         <div className="footer text-white text-center mb-0">
-          <p>
-            © Israela Zimru
-            <a href="#top" className="text-white pl-2">
-              | top
-            </a>
-          </p>
+          <p> © Israela Zimru <a href="#top" className="text-white pl-2"> | top </a> </p>
         </div>
       </div>
+
+
     </Router >
   </Container>
 }

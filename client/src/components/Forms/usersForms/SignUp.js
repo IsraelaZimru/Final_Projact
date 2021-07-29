@@ -1,8 +1,8 @@
 import { Button, Card, Form, InputGroup, Alert, Container, Row } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
-import logo from '../imgs/logo6.png'
-import { addNewUser } from "../DAL/api";
+import logo from '../../../imgs/logo6.png'
+import { addNewUser } from "../../../DAL/api";
 
 
 function SignUp({ hasPageAaccess, connected }) {

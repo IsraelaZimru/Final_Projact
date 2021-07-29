@@ -41,7 +41,7 @@ const Phase4 = () => {
         </Row>
         <Row className="justify-content-around text-center py-2">
             <Col md={4}>
-                <Button size="lg" className="sizeBt" variant="warning" onClick={recipePage} >Go to your Recipe Page</Button>
+                <Button size="lg" className="sizeBt" variant="warning" onClick={recipePage} > View your Recipe Page </Button>
             </Col>
             <Col md={4}>
                 <Button size="lg" className="sizeBt" variant="warning" onClick={homePage} >Go to Home Page</Button>
