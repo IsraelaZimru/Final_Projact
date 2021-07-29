@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Button, Card, Form, Collapse, InputGroup, Alert } from "react-bootstrap";
-import { checkLoginAccess } from "../DAL/api";
+import { checkLoginAccess } from "../../../DAL/api";
 
 function Login({ showLogin, onClose, setConnected, setUser }) {
     const [error, setError] = useState(false);
