@@ -39,7 +39,7 @@ router.post('/login', async function (req, res) {
   }
 });
 
-
+JSON.stringify
 const x = 33;
 
 //לוודא שהפרמטרים תקינים - לוודא שיש בכלל יוזר עם ת.ז הזו, אחרת לשלוח הודעת שגיאה 

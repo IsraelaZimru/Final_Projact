@@ -69,7 +69,7 @@ function Login({ showLogin, onClose, setConnected, setUser }) {
     };
 
     const checkingMatch = isData => {
-        if (!isData) {
+        if (isData.error) {
             console.log('no match');
             return false;
         }
