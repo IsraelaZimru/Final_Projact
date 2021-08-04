@@ -4,8 +4,13 @@ import json
 import os
 from flask_httpauth import HTTPBasicAuth
 from werkzeug.security import generate_password_hash, check_password_hash
+from utils.helper_functions import return_organize_list, return_organize_ings_list, return_only_ings
+
+UPLOAD_FOLDER = 'public/images'
+
 
 connect(host="mongodb+srv://IsraelaZimru:7qGPRky0r5lbdUir@cluster0.zr2d0.mongodb.net/RecipesFullstack")
+
 
 class Users(Document):
     # from Modules.Recipes import Recipes
@@ -44,19 +49,95 @@ class Recipes(Document):
     prepTimeMins = IntField(required=True)
     CookingTime = IntField(required=True)
     isPrivate = IntField(required=True)
+    instructions = ListField(StringField(max_length=90))
     allCategories = ListField(StringField(max_length=90))
     alldiets = ListField(StringField(max_length=90))
-    allIngredients = ListField(StringField(max_length=90))
+    allIngredients = ListField()
+
+    def json(self):
+        recipe_dict = {
+            "name": self.name,
+            # "user_id": str(self.user_id),
+            "user_id": self.user_id,
+            "image": self.image,
+            "description": self.description,
+            "views": self.views,
+            "date": self.date,
+            "level": self.level,
+            "Servings": self.Servings,
+            "prepTimeMins": self.prepTimeMins,
+            "CookingTime": self.CookingTime,
+            "isPrivate": self.isPrivate,
+            "instructions": self.instructions,
+            "allCategories": self.allCategories,
+            "alldiets": self.alldiets,
+            "allIngredients": self.allIngredients
+            }
+        return json.dumps(recipe_dict, default=str)
+        # return recipe_dict
+
+
+    def data(self):
+        cats = return_organize_list(self.allCategories, Categories.objects)
+        ings = return_only_ings(self.allIngredients, Ingredients.objects)
+        diets = return_organize_list(self.alldiets, Diets.objects)
+
+        recipe_dict = {
+            "id": str(self.id),
+            "name": self.name,
+            "userID": self.user_id,
+            "image": self.image,
+            "description": self.description,
+            "views": self.views,
+            # "date": self.date,
+            # "level": self.level,
+            # "Servings": self.Servings,
+            # "prepTimeMins": self.prepTimeMins,
+            # "CookingTime": self.CookingTime,
+            "isPrivate": self.isPrivate,
+            "allCategories": cats,
+            "alldiets": diets,
+            "allIngredients": ings
+            }
+        return recipe_dict
+
+    def all_data(self):
+        cats = return_organize_list(self.allCategories, Categories.objects)
+        ings = return_organize_ings_list(self.allIngredients, Measuring_Units.objects, Ingredients.objects)
+        diets = return_organize_list(self.alldiets, Diets.objects)
+
+        recipe_dict = {
+            "id": str(self.id),
+            "name": self.name,
+            "description": self.description,
+            "userID": str(self.user_id),
+            "image": self.image,
+            "instructions": self.instructions,
+            "views": self.views,
+            "date": self.date,
+            "level": self.level,
+            "Servings": self.Servings,
+            "prepTimeMins": self.prepTimeMins,
+            "CookingTime": self.CookingTime,
+            "isPrivate": self.isPrivate,
+            "categories": cats,
+            "diets": diets,
+            "ingredients": ings
+            }
+        return recipe_dict
 
 
 class Measuring_Units(Document):
     name = StringField(required=True, unique=True)
 
+
 class Ingredients(Document):
     name = StringField(required=True, unique=True)
 
+
 class Diets(Document):
     name = StringField(required=True, unique=True)
+
 
 class Categories(Document):
     name = StringField(required=True, unique=True)
