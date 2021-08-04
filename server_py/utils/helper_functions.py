@@ -9,7 +9,8 @@ def return_organize_list(obj, db):
         # print(new_lst)
     return new_lst
 
-def return_organize_ings_list(obj,units_db, ings_db):
+
+def return_organize_ings_list(obj, units_db, ings_db):
     new_lst = []
 
     for element in obj:
@@ -21,6 +22,7 @@ def return_organize_ings_list(obj,units_db, ings_db):
         new_lst.append(result)
         print(result)
     return new_lst
+
 
 def return_only_ings(obj, db):
     new_lst = []
