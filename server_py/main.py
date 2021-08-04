@@ -8,8 +8,11 @@ from flask_httpauth import HTTPBasicAuth
 from werkzeug.security import generate_password_hash, check_password_hash
 # import pymongo
 from mongoengine import *
-from Modules.classes import *
+from Modules.classes import Users, Diets, Categories, Ingredients, Recipes, Measuring_Units
 from datetime import datetime
+from datetime import time
+
+from werkzeug.utils import secure_filename
 
 
 
@@ -17,11 +20,20 @@ from datetime import datetime
 
 
 # creating server
-app = Flask(__name__)
+app = Flask(__name__, static_url_path= "", static_folder="public")
 CORS(app)
 app.config['CORS_HEADERS'] = 'content-type'
 
 
+
+UPLOAD_FOLDER = 'public/images'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+
+def upload_image(file):
+    filename = str(round(time.time()*1000)) + secure_filename(file.filename)
+    file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+    return filename
 
 # auth and hash password
 auth = HTTPBasicAuth()
@@ -84,7 +96,7 @@ def login():
 
 
 
-@app.route('/MostRecipes')
+@app.route('/information/MostRecipes')
 def get_most_recipes():
     res = requests.get("http://localhost:3100/information/MostRecipes")
     return json.dumps(res.json())
@@ -93,6 +105,87 @@ def get_most_recipes():
 def hello_user(id):
     res = requests.get(f"http://localhost:3100/recipes/myRecipes/{id}")
     return json.dumps(res.json())
+
+
+
+@app.route('/information')
+def get_diets_cats():
+    diets = []
+    cats = []
+    for diet in Diets.objects:
+        diets.append({"id": diet.id, "name": diet.name})
+
+    for cat in Categories.objects:
+        cats.append({"id": cat.id, "name": cat.name})
+
+    return json.dumps([diets, cats], default=str)
+
+
+@app.route('/ingredientsName')
+def get_ings():
+    ings = []
+    for ing in Ingredients.objects:
+        ings.append({"id": ing.id, "name": ing.name})
+    return json.dumps(ings, default=str)
+
+@app.route('/recipes')
+def get_all_recipes():
+    recipes = []
+    for recipe in Recipes.objects:
+        recipes.append(recipe.data())
+    return json.dumps(recipes, default=str)
+    # return recipes
+
+
+@app.route('/recipeInfo', methods=['POST'])
+def get_single_recipe():
+    info = request.get_json()  # making it as dictionary
+    _id = info["id"]
+    recipe = Recipes.objects(id=_id).get().all_data()
+    return json.dumps([recipe], default=str)
+
+@app.route('/information/unitsAndIngs')
+def get_unitsAndIngs():
+    ings = []
+    units = []
+    for ing in Ingredients.objects:
+        ings.append({"id": ing.id, "name": ing.name})
+
+    for unit in Measuring_Units.objects:
+        units.append({"id": unit.id, "name": unit.name})
+
+    return json.dumps([ings, units], default=str)
+
+
+@app.route('/addNewRecipe', methods=['POST'])
+def add_recipe():
+    recipe, ings, insts = request.get_json()
+    print("lllll", recipe, ings, insts)
+    return json.dumps([recipe, ings, insts], default=str)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 app.run(debug=True)

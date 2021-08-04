@@ -17,7 +17,7 @@ const RecipeInfo = ({ hasPageAaccess, onselect }) => {
         image: "",
         addedDate: "",
         views: 0,
-        likes: 0,
+        // likes: 0,
         date: "",
         userID: "",
         Servings: 0,
@@ -44,9 +44,12 @@ const RecipeInfo = ({ hasPageAaccess, onselect }) => {
     const getRecipe = async (id) => {
         try {
             const chosenRecipe = await onselect(id)
-                .then(data => setSelectRecipe(prev => data))
+                .then(data => {
+                    console.log("data", data);
+                    setSelectRecipe(prev => (data))
+                })
                 .catch(err => alert("error", err))
-            console.log(chosenRecipe);
+            console.log("chosenRecipe", chosenRecipe);
             // const getdata = await updateStateRecipe(chosenRecipe)
         } catch (err) {
             console.log(err);
@@ -101,7 +104,7 @@ const RecipeInfo = ({ hasPageAaccess, onselect }) => {
                     </Col>
                     <Col>
                         <h4><u>diets:</u></h4>
-                        {selectRecipe.diets.map((type, i) => <p key={i}>{type}</p>)}
+                        {selectRecipe.diets && selectRecipe.diets.map((type, i) => <p key={i}>{type}</p>)}
                     </Col>
                     <Col>
                         <h4><u>Servings:</u></h4>

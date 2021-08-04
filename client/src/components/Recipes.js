@@ -49,7 +49,8 @@ export default function Recipes({ isConnected, UserId }) {
             try {
                 const data = await getCatsAndDiets();
                 const getIngs = await getingredientsNames();
-
+                console.log("catsDiets:", data);
+                console.log("getIngs:", getIngs);
                 const checkboxsInfo = { diets: data[0], categories: data[1], ings: getIngs }
                 checkboxsInfo.diets.forEach(item => item.class = "alldiets")
                 checkboxsInfo.categories.forEach(item => item.class = "allCategories")

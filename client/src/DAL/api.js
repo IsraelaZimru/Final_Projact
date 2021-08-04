@@ -4,9 +4,9 @@ import fetch from 'node-fetch';
 const port = 3100;
 // const port = 5000;
 
-axios.defaults.withCredentials = true;
+axios.defaults.withCredentials = false; //I changed it to false!!! meaning that cookies not required!!
 axios.defaults.baseURL = `http://localhost:${port}`;
-axios.defaults.headers['Access-Control-Allow-Origin'] = `http://localhost:${port}`;
+// axios.defaults.headers['Access-Control-Allow-Origin'] = `http://localhost:3100`;
 // const fetcher = require('./fetcher');
 
 
@@ -23,7 +23,7 @@ export async function MostRecipes() {
 
 export async function getMyRecipes(id) {
     //const response = axios.get(`/recipes/myRecipes/${id}`);
-    const response = await axios(`http://127.0.0.1:5000/getMyRecipes/${id}`, { withCredentials: false });
+    const response = await axios(`/getMyRecipes/${id}`, { withCredentials: false });
     response.data.forEach(recipe => recipe.pic = `http://localhost:${port}/${recipe.image}`);
     return response.data;
 }
@@ -139,9 +139,10 @@ export async function selectedItem(id) {
         console.log("result", data);
         const recipe = data[0];
         recipe.image = recipe.image ? `http://localhost:${port}/${recipe.image}` : "";
+        console.log("recipe", recipe);
         return recipe;
     } catch (err) {
-        console.log("err.cant fetch")
+        console.log("Error. Cant fetch")
     }
 }
 
