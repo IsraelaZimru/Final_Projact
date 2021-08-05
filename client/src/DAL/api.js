@@ -1,8 +1,8 @@
 import axios from 'axios';
 import fetch from 'node-fetch';
 
-// const port = 3100;
-const port = 5000;
+const port = 3100;
+// const port = 5000;
 
 axios.defaults.withCredentials = false; //I changed it to false!!! meaning that cookies not required!!
 axios.defaults.baseURL = `http://localhost:${port}`;
@@ -107,11 +107,15 @@ export async function setUnSeenRecipe(recipeId) {
 
 
 export async function checkLoginAccess({ email, password }) {
+    // const result = await axios.post('/users/login', { email, password }, { withCredentials: false });
+    // return result.data;
+
     try {
         const result = await axios.post('/users/login', { email, password }, { withCredentials: false });
         return result.data;
     } catch (err) {
-        console.log('login error', err);
+        console.log(err);
+        return err.message;
     }
 }
 

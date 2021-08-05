@@ -22,11 +22,11 @@ def login():
             else:
                 return {
                            "error": "incorrect password"
-                       }, 403
+                       }
         else:
             return {
                        "error": 'user not exist'
-                   }, 403
+                   }
 
     except Exception as e:
         return {"error": "user not found"}, 400

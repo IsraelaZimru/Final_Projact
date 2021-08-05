@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
-import { Button, Card, Form, Collapse, InputGroup, Alert } from "react-bootstrap";
+import { Button, Card, Form, Collapse, InputGroup, Alert, Spinner } from "react-bootstrap";
 import { checkLoginAccess } from "../../../DAL/api";
 
 function Login({ showLogin, onClose, setConnected, setUser }) {
     const [error, setError] = useState(false);
-
+    const [loading, setLoading] = useState(false)
     const [validated, setValidated] = useState(false);
     const [details, setDetails] = useState({
         email: { isRequired: true, pattern: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, msg: [], value: "", isInVaild: false },
@@ -41,13 +41,14 @@ function Login({ showLogin, onClose, setConnected, setUser }) {
                 return;
             }
         }
-
+        setLoading(true)
         setValidated(true);
         event.preventDefault();
         const info = { email: details.email.value, password: details.password.value }
         const chekingDetails = await checkLoginAccess(info)
+        console.log("chekingDetails", chekingDetails);
         const res = await checkingMatch(chekingDetails);
-
+        setLoading(false)
         if (res) {
             setConnected(true);
             setUser(prev => chekingDetails);
@@ -62,6 +63,7 @@ function Login({ showLogin, onClose, setConnected, setUser }) {
             onClose()
 
         } else {
+            setLoading(true)
             setValidated(false);
             console.log("error changed to true-", error);
             setError(true)
@@ -143,7 +145,15 @@ function Login({ showLogin, onClose, setConnected, setUser }) {
                 <Button variant="outline-dark" onClick={onClose} className="mx-2">
                     close </Button>
                 <Button variant="outline-dark" type="submit">
-                    Submit  </Button>
+                    {loading && <Spinner
+                        as="span"
+                        animation="border"
+                        size="sm"
+                        role="status"
+                        aria-hidden="true"
+                    />}
+                    {loading ? <span>Loading...</span> : <span>Submit</span>}
+                </Button>
             </Form>
         </Card>
     </Collapse >
