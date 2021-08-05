@@ -18,7 +18,6 @@ const NewRecipe = ({ connected, hasPageAaccess }) => {
     useEffect(() => {
         const addingDataFromDb = async () => {
             const data = await getCatsAndDiets();
-            console.log(data, "data");
 
             let inputsPage1Local;
             if (localStorage.getItem("step1")) {
@@ -30,6 +29,7 @@ const NewRecipe = ({ connected, hasPageAaccess }) => {
                 data[0].forEach(el => el.selected = false);
                 data[1].forEach(el => el.selected = false);
 
+                // console.log("data", data);
                 localStorage.removeItem("step1")
                 localStorage.removeItem("step2")
                 localStorage.removeItem("step3")
@@ -40,7 +40,8 @@ const NewRecipe = ({ connected, hasPageAaccess }) => {
                     }
                     if (key === "diets") {
                         data[0].forEach(el => {
-                            if (inputsPage1Local[key].includes(+el.id)) {
+                            const id = +el.id || el.id
+                            if (inputsPage1Local[key].includes(id)) {
                                 el.selected = true;
                             } else {
                                 el.selected = false;
@@ -49,7 +50,8 @@ const NewRecipe = ({ connected, hasPageAaccess }) => {
                     }
                     if (key === "categories") {
                         data[1].forEach(el => {
-                            if (inputsPage1Local[key].includes(+el.id)) {
+                            const id = +el.id || el.id
+                            if (inputsPage1Local[key].includes(id)) {
                                 el.selected = true;
                             } else {
                                 el.selected = false;
@@ -64,6 +66,7 @@ const NewRecipe = ({ connected, hasPageAaccess }) => {
                 ...details,
             });
             const checkboxsInfo = { diets: data[0], categories: data[1] }
+            // console.log("details", details);
             setCheckboxs(prev => checkboxsInfo)
         }
 
@@ -169,11 +172,11 @@ const NewRecipe = ({ connected, hasPageAaccess }) => {
     const updateBox = (e, listName) => {
         let data = {
             checked: e.target.checked,
-            currId: +e.target.id,
+            currId: +e.target.id || e.target.id,
             currName: e.target.name,
             allChecked: []
         }
-        // console.log("data", data);
+        console.log("updateData", data);
         let { [listName]: newBox } = checkboxs;
         for (let box of newBox) {
             if (box.id === data.currId && box.name === data.currName) {

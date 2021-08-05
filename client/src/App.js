@@ -155,14 +155,14 @@ function App() {
       </Switch>
 
 
-      <div style={{ height: "35px" }}>
-        <div className="footer text-white text-center mb-0">
-          <p> © Israela Zimru <a href="#top" className="text-white pl-2"> | top </a> </p>
-        </div>
-      </div>
-
 
     </Router >
+
+    <div style={{ height: "35px" }} >
+      <div className="footer text-white text-center mb-0">
+        <p> © Israela Zimru <a href="#top" className="text-white pl-2"> | top </a> </p>
+      </div>
+    </div>
   </Container>
 }
 export default App;

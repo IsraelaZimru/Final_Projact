@@ -6,7 +6,7 @@ const port = 5000;
 
 axios.defaults.withCredentials = false; //I changed it to false!!! meaning that cookies not required!!
 axios.defaults.baseURL = `http://localhost:${port}`;
-// axios.defaults.headers['Access-Control-Allow-Origin'] = `http://localhost:3100`;
+axios.defaults.headers['Access-Control-Allow-Origin'] = `http://localhost:3100`;
 // const fetcher = require('./fetcher');
 
 
@@ -54,7 +54,7 @@ export async function getCatsAndDiets() {
 }
 
 export async function isRecipeNameAvailable(name) {
-    const response = await axios.get(`/information/RecipeNameAvailable/${name}`);
+    const response = await axios.get(`/information/RecipeNameAvailable/${name}`, { withCredentials: false });
     console.log("RecipeNameAvailable-", response);
     return response.data;
 }

@@ -1,7 +1,7 @@
 import json
 import requests
 from flask import Blueprint
-from Modules.classes import Diets, Categories, Ingredients, Measuring_Units
+from Modules.classes import Diets, Categories, Ingredients, Measuring_Units, Recipes
 
 information = Blueprint('information', __name__)
 
@@ -44,3 +44,11 @@ def get_unitsAndIngs():
         units.append({"id": unit.id, "name": unit.name})
 
     return json.dumps([ings, units], default=str)
+
+
+@information.route('/information/RecipeNameAvailable/<_name>')
+def is_recipe_name_available(_name):
+    name_exist = Recipes.objects(name=_name).get() or None
+    if name_exist:
+        return True, 200
+    return False, 200
