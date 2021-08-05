@@ -115,7 +115,6 @@ export async function checkLoginAccess({ email, password }) {
         return result.data;
     } catch (err) {
         console.log(err);
-        return err.message;
     }
 }
 
