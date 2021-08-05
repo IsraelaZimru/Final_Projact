@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
-import { Button, Card, Form, Collapse, InputGroup, Alert } from "react-bootstrap";
+import { Button, Card, Form, Collapse, InputGroup, Alert, Spinner } from "react-bootstrap";
 import { checkLoginAccess } from "../../../DAL/api";
 
 function Login({ showLogin, onClose, setConnected, setUser }) {
     const [error, setError] = useState(false);
-
+    const [loading, setLoading] = useState(false)
     const [validated, setValidated] = useState(false);
     const [details, setDetails] = useState({
         email: { isRequired: true, pattern: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, msg: [], value: "", isInVaild: false },
@@ -24,6 +24,63 @@ function Login({ showLogin, onClose, setConnected, setUser }) {
         }
     }, [showLogin])
 
+    // const handleSubmit = async (event) => {
+    //     const checkErrors = [];
+    //     for (const key in details) {
+    //         if (Object.hasOwnProperty.call(details, key)) {
+    //             checkErrors.push(validation({ name: key, value: details[key].value }))
+
+    //         }
+    //     }
+
+    //     for (const error of checkErrors) { //if there is error msg ->submit don't happens!
+    //         if (error) {
+    //             setValidated(false)
+    //             event.preventDefault();
+    //             event.stopPropagation();
+    //             return;
+    //         }
+    //     }
+    //     setLoading(true)
+    //     setValidated(true);
+    //     event.preventDefault();
+    //     const info = { email: details.email.value, password: details.password.value }
+    //     const chekingDetails = await checkLoginAccess(info)
+    //     console.log("chekingDetails", chekingDetails);
+    //     const res = await checkingMatch(chekingDetails);
+    //     setLoading(false)
+    //     if (res) {
+    //         setConnected(true);
+    //         setUser(prev => chekingDetails);
+    //         localStorage.setItem("user", JSON.stringify(chekingDetails))
+    //         setError(false)
+    //         // const initialization = {
+    //         //     ...details,
+    //         //     password: { ...details["password"], value: "", isInVaild: false },
+    //         //     email: { ...details["email"], value: " ", isInVaild: false },
+    //         // }
+    //         // setDetails(prevDetails => initialization)
+    //         onClose()
+
+    //     } else {
+    //         setLoading(true)
+    //         setValidated(false);
+    //         console.log("error changed to true-", error);
+    //         setError(true)
+    //     }
+    // };
+
+    // const checkingMatch = isData => {
+    //     if (isData.error) {
+    //         console.log('no match');
+    //         return false;
+    //     }
+    //     setConnected(true);
+    //     onClose()
+    //     return true;
+    // }
+
+
     const handleSubmit = async (event) => {
         const checkErrors = [];
         for (const key in details) {
@@ -41,13 +98,13 @@ function Login({ showLogin, onClose, setConnected, setUser }) {
                 return;
             }
         }
-
+        setLoading(true)
         setValidated(true);
         event.preventDefault();
         const info = { email: details.email.value, password: details.password.value }
         const chekingDetails = await checkLoginAccess(info)
         const res = await checkingMatch(chekingDetails);
-
+        setLoading(false)
         if (res) {
             setConnected(true);
             setUser(prev => chekingDetails);
@@ -62,6 +119,7 @@ function Login({ showLogin, onClose, setConnected, setUser }) {
             onClose()
 
         } else {
+            setLoading(false)
             setValidated(false);
             console.log("error changed to true-", error);
             setError(true)
@@ -69,7 +127,8 @@ function Login({ showLogin, onClose, setConnected, setUser }) {
     };
 
     const checkingMatch = isData => {
-        if (isData.error) {
+        // console.log("isData", isData);
+        if (!isData) {
             console.log('no match');
             return false;
         }
@@ -143,7 +202,15 @@ function Login({ showLogin, onClose, setConnected, setUser }) {
                 <Button variant="outline-dark" onClick={onClose} className="mx-2">
                     close </Button>
                 <Button variant="outline-dark" type="submit">
-                    Submit  </Button>
+                    {loading && <Spinner
+                        as="span"
+                        animation="border"
+                        size="sm"
+                        role="status"
+                        aria-hidden="true"
+                    />}
+                    {loading ? <span>Loading...</span> : <span>Submit</span>}
+                </Button>
             </Form>
         </Card>
     </Collapse >
