@@ -1,4 +1,4 @@
-import { Card, Container, Row, Col, Pagination, ListGroup, Navbar, Nav, NavDropdown, Jumbotron, Button, Dropdown, FormControl } from "react-bootstrap";
+import { Card, Container, Row, Col, Pagination, ListGroup, Navbar, Nav, NavDropdown, Jumbotron, Button, Dropdown, FormControl, Spinner } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThumbsUp, faEdit, faHeart, faEye, faTimesCircle, faBookmark, faSearch } from "@fortawesome/free-solid-svg-icons";
@@ -13,7 +13,7 @@ export default function Recipes({ isConnected, UserId }) {
     const [likes, setLikes] = useState([]);
     const [apiRecipes, setApiRecipes] = useState([]);
     const [checkboxs, setCheckboxs] = useState({ diets: [], categories: [], ings: [] });
-    // const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
     const [recipesPerPage, setRecipesPerPage] = useState(6); //for pagination uses
     const [active, setActive] = useState(1)
@@ -41,7 +41,7 @@ export default function Recipes({ isConnected, UserId }) {
                 console.log("recipes", recipes);
                 // originalRecipe = recipes;
                 setApiRecipes(prev => recipes)
-                // setLoading(false)
+                setLoading(false)
             } catch (err) {
                 alert("Error, please refresh the site", err)
             }
@@ -62,7 +62,6 @@ export default function Recipes({ isConnected, UserId }) {
             }
         }
         fetchRecipes()
-
         return () => setSelectedIng([]);
     }, [likes])
 
@@ -85,6 +84,7 @@ export default function Recipes({ isConnected, UserId }) {
         setSelectedIng(prev => newArr);
         console.log("selectedIng", newArr);
 
+        setLoading(true)
         let temp = await getRecipe()
         console.log("temp1", temp);
 
@@ -101,6 +101,8 @@ export default function Recipes({ isConnected, UserId }) {
 
         console.log("temp2", temp);
         setApiRecipes(prev => temp)
+        setLoading(false)
+
     };
 
     const sortViews = () => {
@@ -158,7 +160,6 @@ export default function Recipes({ isConnected, UserId }) {
     const CustomMenu = forwardRef(
         ({ children, style, className, 'aria-labelledby': labeledBy }, ref) => {
             const [value, setValue] = useState('');
-
             return (<div>
                 <FormControl
                     autoFocus
@@ -179,7 +180,7 @@ export default function Recipes({ isConnected, UserId }) {
     );
 
 
-    return <Container fluid className="py-2">
+    return <Container fluid className="py-2" style={{ height: "100%" }}>
         <div id="recipes"></div>
         <h1 className="display-1 h1style text-center">The Recipes</h1>
         <Navbar collapseOnSelect expand="lg" id="styleNav" className="text-center font-weight-bold">
@@ -267,7 +268,11 @@ export default function Recipes({ isConnected, UserId }) {
             </ListGroup.Item>))}
         </ListGroup>
 
-        <Row className="justify-content-center">
+        {loading && <Row className="justify-content-center mx-auto" id="spinnerStlye">
+            <Spinner animation="border" variant="warning" />
+        </Row>}
+
+        <Row className="justify-content-center mb-3">
             {/* {!!apiRecipes.length && apiRecipes.map((item, i) => <Card */}
             {!!currentRecipes.length && currentRecipes.map((item, i) => <Card
                 id="myFav"
@@ -328,7 +333,7 @@ export default function Recipes({ isConnected, UserId }) {
                 </div>
             </Card>)}
 
-            {!apiRecipes.length && <Jumbotron fluid className="mt-3">
+            {!apiRecipes.length && !loading && <Jumbotron fluid className="mt-3">
                 <Container>
                     <p>
                         No matching recipes were found.

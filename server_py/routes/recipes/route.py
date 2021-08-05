@@ -31,6 +31,10 @@ def get_single_recipe():
 
 @recipe.route('/addNewRecipe', methods=['POST'])
 def add_recipe():
-    recipe, ings, insts = request.get_json()
-    print("lllll", recipe, ings, insts)
-    return json.dumps([recipe, ings, insts], default=str)
+    info = request.get_json()
+    _recipe = info["recipe"]
+    _ings = info["ings"]
+    _insts = info["insts"]
+    print("lllll", _recipe, _ings, _insts)
+    # return json.dumps([_recipe, _ings, _insts], default=str)
+    return {"error": "err"}, 400

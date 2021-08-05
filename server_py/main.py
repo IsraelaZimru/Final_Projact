@@ -11,17 +11,15 @@ from Modules.classes import Users, Diets, Categories, Ingredients, Recipes, Meas
 from datetime import datetime
 from datetime import time
 from werkzeug.utils import secure_filename
-
+from routes.information.route import information
+from routes.recipes.route import recipe
+from routes.users.route import users
 
 
 
 
 
 # creating server
-from routes.information.route import information
-from routes.recipes.route import recipe
-from routes.users.route import users
-
 app = Flask(__name__, static_url_path="", static_folder="public")
 CORS(app)
 app.config['CORS_HEADERS'] = 'content-type'

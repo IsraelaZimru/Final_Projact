@@ -22,7 +22,7 @@ const MyPagination = ({ recipesPerPage, totalRecipes, paginate, active }) => {
         )
     }
 
-    return <Row className="justify-content-center">
+    return <Row className="justify-content-center pt-3 mb-4 pb-3">
         <Pagination>{pageNumbers}</Pagination>
     </Row>
 }
