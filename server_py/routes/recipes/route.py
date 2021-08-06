@@ -37,13 +37,11 @@ def get_single_recipe():
 def add_recipe():
     info = request.get_json()
     _recipe = info["recipe"]
-<<<<<<< HEAD
-    _ings = info["ings"]
-    _insts = info["insts"]
-    print("lllll", _recipe, _ings, _insts)
+    # _ings = info["ings"]
+    # _insts = info["insts"]
+    # print("lllll", _recipe, _ings, _insts)
     # return json.dumps([_recipe, _ings, _insts], default=str)
-    return {"error": "err"}, 400
-=======
+    # return {"error": "err"}, 400
     _ings = info["ingredients"]
     _insts = info["instructions"]
     print("lllll", _ings)
@@ -72,4 +70,3 @@ def add_recipe():
 
 
 # @recipe.route('/recipes/upload/<id>')
->>>>>>> 34ae9ab577207faf271d47e375522d96350d465e
