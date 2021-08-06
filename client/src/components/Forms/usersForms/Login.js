@@ -53,12 +53,6 @@ function Login({ showLogin, onClose, setConnected, setUser }) {
             setUser(prev => chekingDetails);
             localStorage.setItem("user", JSON.stringify(chekingDetails))
             setError(false)
-            // const initialization = {
-            //     ...details,
-            //     password: { ...details["password"], value: "", isInVaild: false },
-            //     email: { ...details["email"], value: " ", isInVaild: false },
-            // }
-            // setDetails(prevDetails => initialization)
             onClose()
 
         } else {

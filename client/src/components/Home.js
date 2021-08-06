@@ -153,7 +153,7 @@ function Home({ connected, userName }) {
                 <Row className="justify-content-center">
                     <Card border="primary" style={{ width: '20rem', marginTop: "20px" }}>
                         <Card.Body>
-                            <Card.Title id="h1Home">Most Quickest</Card.Title>
+                            <Card.Title id="h1Home">The Quickest</Card.Title>
                             <Card.Text>
                                 {!!recipes.quickest.length && recipes.quickest.map((item, i) => <Row className="py-2"
                                     style={{ cursor: "pointer" }}
