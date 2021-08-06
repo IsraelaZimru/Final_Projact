@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
 import axios from "axios";
-import { setNewRecipe } from '../../../DAL/api'
+import { setNewRecipe, loadImgePY } from '../../../DAL/api'
 import { useEffect, useState } from "react";
 import { Link, useHistory, Prompt } from "react-router-dom";
 import { Container, Row, Col, Button, Form, Card, InputGroup, ListGroup, Alert, FormControl } from "react-bootstrap";
@@ -126,6 +126,20 @@ function Phase3() {
 
     console.log("formIsHalfFiled", formIsHalfFiled);
 
+
+
+
+    // const send = async () => {
+    //     const newImage = new FormData()
+    //     newImage.append("image", file)
+    //     const res = await loadImgePY("610cde36607af3b8e64e7ed6", newImage)
+    //     if (res) {
+    //         console.log("It workssssss😍🤩😏");
+    //     } else {
+    //         console.log("opss... dont workssssss😑😑");
+
+    //     }
+    // }
 
     return <Container>
         <h1 className="display-2 text-center"> Add A New Recipe</h1>

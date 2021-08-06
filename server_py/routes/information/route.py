@@ -48,7 +48,9 @@ def get_unitsAndIngs():
 
 @information.route('/information/RecipeNameAvailable/<_name>')
 def is_recipe_name_available(_name):
-    name_exist = Recipes.objects(name=_name).get() or None
-    if name_exist:
-        return True, 200
-    return False, 200
+    if Recipes.objects(name=_name):
+        name_exist = Recipes.objects(name=_name).get()
+        print("name:", name_exist.name, True)
+        return json.dumps(False), 200
+    print(False)
+    return json.dumps(True), 200

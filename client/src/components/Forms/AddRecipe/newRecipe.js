@@ -1,5 +1,5 @@
 import { Link, useHistory, Prompt } from "react-router-dom";
-import { Button, Form, InputGroup, Alert, Container, Col, Row } from 'react-bootstrap';
+import { Button, Form, InputGroup, Alert, Container, Col, Row, Spinner } from 'react-bootstrap';
 import { useEffect, useState } from "react";
 import { getCatsAndDiets, isRecipeNameAvailable } from '../../../DAL/api'
 
@@ -79,7 +79,7 @@ const NewRecipe = ({ connected, hasPageAaccess }) => {
     };
     const [validated, setValidated] = useState(false);
     const [show, setShow] = useState(false);
-
+    const [loading, setLoading] = useState(false)
     const [checkboxs, setCheckboxs] = useState({ diets: [], categories: [] });
     const [details, setDetails] = useState({
         categories: { isRequired: true, pattern: /[\s\S]{1,}/, msg: [], value: [], isInVaild: false },
@@ -115,8 +115,10 @@ const NewRecipe = ({ connected, hasPageAaccess }) => {
                 return;
             }
         }
+        setLoading(true)
         const statusRecipeName = await isRecipeNameAvailable(details.recipeName.value);
-        // console.log("statusRecipeName", statusRecipeName)
+        console.log("statusRecipeName", statusRecipeName)
+        setLoading(false)
         if (!statusRecipeName) {
             setValidated(false)
             event.stopPropagation();
@@ -392,7 +394,16 @@ const NewRecipe = ({ connected, hasPageAaccess }) => {
 
                 <hr></hr>
                 <Row className="text-center my-3 justify-content-center">
-                    <Button variant="outline-dark" type="submit">Continue to the Next Step</Button>
+                    <Button variant="outline-dark" type="submit">
+                        {loading && <Spinner
+                            as="span"
+                            animation="border"
+                            size="sm"
+                            role="status"
+                            aria-hidden="true"
+                        />}
+                        {loading ? <span>Loading...</span> : <span>Continue to the Next Step</span>}
+                    </Button>
                 </Row>
             </Form>
         </Row>

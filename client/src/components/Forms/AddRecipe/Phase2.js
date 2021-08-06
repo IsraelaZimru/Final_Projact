@@ -47,6 +47,7 @@ function Phase2() {
             return;
         }
         localStorage.setItem("step2", JSON.stringify(combineData));
+        console.log("combineData", combineData);
         history.push("/newRecipe_step3")
     }
 

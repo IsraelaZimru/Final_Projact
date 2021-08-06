@@ -1,3 +1,5 @@
+import time
+
 from flask import Flask, request, jsonify, abort
 from flask_cors import CORS
 # from flask_restplus import abort
@@ -9,7 +11,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from mongoengine import *
 from Modules.classes import Users, Diets, Categories, Ingredients, Recipes, Measuring_Units
 from datetime import datetime
-from datetime import time
+# from datetime import time
 from werkzeug.utils import secure_filename
 from routes.information.route import information
 from routes.recipes.route import recipe
@@ -40,6 +42,15 @@ def upload_image(file):
     file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
     return filename
 
+
+@app.route('/recipes/upload/<_id>', methods=["POST"])
+def load_recipe_image(_id):
+    get_image = request.files["image"]
+    if get_image:
+        get_recipe = Recipes.objects(id=_id).get()
+        get_recipe.update(image='images/' + upload_image(get_image))
+        return json.dumps(id, default=str)
+    return jsonify({'status': "not ok"})
 
 
 # auth and hash password
