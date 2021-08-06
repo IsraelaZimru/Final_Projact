@@ -109,7 +109,6 @@ class Recipes(Document):
         cats = return_organize_list(self.allCategories, Categories.objects)
         ings = return_organize_ings_list(self.allIngredients, Measuring_Units.objects, Ingredients.objects)
         diets = return_organize_list(self.alldiets, Diets.objects)
-
         recipe_dict = {
             "id": str(self.id),
             "name": self.name,
@@ -118,7 +117,7 @@ class Recipes(Document):
             "image": self.image,
             "instructions": self.instructions,
             "views": self.views,
-            "date": self.date,
+            "date": "-".join(self.date.split(" ")[0].split("-")[::-1]),
             "level": self.level,
             "Servings": self.Servings,
             "prepTimeMins": self.prepTimeMins,
@@ -128,6 +127,7 @@ class Recipes(Document):
             "diets": diets,
             "ingredients": ings
             }
+        print("self.date", self.date, type(self.date))
         return recipe_dict
 
 

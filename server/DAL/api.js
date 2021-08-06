@@ -62,6 +62,7 @@ const recipeInfo = async (recipeId) => {
             mergeTwoSQLTable([recipe, newProperties[i]], newPropertyTitles[i])
         }
         // console.log(recipe);
+        recipe[0]["date"] = recipe[0]["date"].toLocaleString().split(',')[0]
         return recipe;
     } catch (err) {
         console.log(err);;

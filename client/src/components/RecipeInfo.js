@@ -92,7 +92,7 @@ const RecipeInfo = ({ hasPageAaccess, onselect }) => {
                 <Row className="justify-content-md-center text-center p-3">
                     <Col>
                         <h4><u>Date:</u></h4>
-                        <p>{selectRecipe.date.slice(0, selectRecipe.date.indexOf("T")).split("-").reverse().join("-")}</p>
+                        <p>{selectRecipe.date}</p>
                     </Col>
                     <Col>
                         <h4><u>Difficulty:</u></h4>
