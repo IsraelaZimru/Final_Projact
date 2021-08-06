@@ -35,6 +35,6 @@ def add_recipe():
     _recipe = info["recipe"]
     _ings = info["ings"]
     _insts = info["insts"]
-    # print("lllll", _recipe, _ings, _insts)
+    print("lllll", _recipe, _ings, _insts)
     # return json.dumps([_recipe, _ings, _insts], default=str)
     return {"error": "err"}, 400
