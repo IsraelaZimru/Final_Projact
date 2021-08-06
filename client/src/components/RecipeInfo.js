@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
-import { Container, Row, Col, Button, Form, Card } from "react-bootstrap";
+import { Container, Row, Col, Button, Form, Card, Modal, Spinner } from "react-bootstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUtensils, faPrint } from "@fortawesome/free-solid-svg-icons";
 import facebook from '../imgs/facebook2.png'
@@ -12,6 +12,7 @@ import whatapp from '../imgs/whatapp2.jfif'
 const RecipeInfo = ({ hasPageAaccess, onselect }) => {
     let { id } = useParams()
     let history = useHistory();
+    const [loading, setLoading] = useState(true)
     const [selectRecipe, setSelectRecipe] = useState({
         name: "",
         image: "",
@@ -47,6 +48,7 @@ const RecipeInfo = ({ hasPageAaccess, onselect }) => {
                 .then(data => {
                     console.log("data", data);
                     setSelectRecipe(prev => (data))
+                    setLoading(false)
                 })
                 .catch(err => alert("error", err))
             console.log("chosenRecipe", chosenRecipe);
@@ -64,7 +66,32 @@ const RecipeInfo = ({ hasPageAaccess, onselect }) => {
         history.push("/")
     }
 
+
+    // const [show, setShow] = useState(true);
+
+    // const handleClose = () => setShow(false);
+    // const handleShow = () => setShow(true);
+
     return <Container fluid className="mx-0">
+
+        <Modal show={loading} className="text-center">
+            <Modal.Header >
+            </Modal.Header>
+            <Modal.Title classname="text-center display-h1">Loading Recipe...</Modal.Title>
+            <Modal.Body className="text-center">
+                <Spinner
+                    as="span"
+                    animation="border"
+                    size="sm"
+                    role="status"
+                    aria-hidden="true"
+                />
+            </Modal.Body>
+            <Modal.Footer>
+            </Modal.Footer>
+        </Modal>
+
+
         <Row id="introduction" className="align-items-center">
             <Col lg={5} >
                 <h1 className="display-3"> {selectRecipe.name}</h1>
