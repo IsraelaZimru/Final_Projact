@@ -46,14 +46,14 @@ class Recipes(Document):
     image = StringField()
     description = StringField(required=True)
     views = IntField(required=True, default=0)
-    date = StringField(required=True, default=str(datetime.utcnow())) #x.strftime("%d-%m-%Y") export the date from this
+    date = StringField(required=True, default=str(datetime.utcnow()))
     # level = StringField(required=True)
     level = StringField(choices=['easy', 'medium', 'hard'])
     Servings = IntField(required=True)
     prepTimeMins = IntField(required=True)
     CookingTime = IntField(required=True)
     isPrivate = IntField(required=True, default=0)
-    instructions = ListField(StringField(max_length=90))
+    instructions = ListField(StringField(max_length=600))
     allCategories = ListField(StringField(max_length=90))
     alldiets = ListField(StringField(max_length=90))
     allIngredients = ListField()
@@ -109,11 +109,13 @@ class Recipes(Document):
         cats = return_organize_list(self.allCategories, Categories.objects)
         ings = return_organize_ings_list(self.allIngredients, Measuring_Units.objects, Ingredients.objects)
         diets = return_organize_list(self.alldiets, Diets.objects)
+        recipe_user = Users.objects(id=str(self.user_id.id)).get()
         recipe_dict = {
             "id": str(self.id),
             "name": self.name,
+            "username": recipe_user.first_name,
             "description": self.description,
-            "userID": str(self.user_id),
+            "userID": str(self.user_id.id),
             "image": self.image,
             "instructions": self.instructions,
             "views": self.views,
@@ -127,7 +129,7 @@ class Recipes(Document):
             "diets": diets,
             "ingredients": ings
             }
-        print("self.date", self.date, type(self.date))
+        # print("self.date", self.date, type(self.date))
         return recipe_dict
 
 

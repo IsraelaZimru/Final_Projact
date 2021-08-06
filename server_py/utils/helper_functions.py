@@ -20,7 +20,7 @@ def return_organize_ings_list(obj, units_db, ings_db):
 
         result = f"{quantity} {unit} {ing}"
         new_lst.append(result)
-        print(result)
+        # print(result)
     return new_lst
 
 
