@@ -24,62 +24,6 @@ function Login({ showLogin, onClose, setConnected, setUser }) {
         }
     }, [showLogin])
 
-    // const handleSubmit = async (event) => {
-    //     const checkErrors = [];
-    //     for (const key in details) {
-    //         if (Object.hasOwnProperty.call(details, key)) {
-    //             checkErrors.push(validation({ name: key, value: details[key].value }))
-
-    //         }
-    //     }
-
-    //     for (const error of checkErrors) { //if there is error msg ->submit don't happens!
-    //         if (error) {
-    //             setValidated(false)
-    //             event.preventDefault();
-    //             event.stopPropagation();
-    //             return;
-    //         }
-    //     }
-    //     setLoading(true)
-    //     setValidated(true);
-    //     event.preventDefault();
-    //     const info = { email: details.email.value, password: details.password.value }
-    //     const chekingDetails = await checkLoginAccess(info)
-    //     console.log("chekingDetails", chekingDetails);
-    //     const res = await checkingMatch(chekingDetails);
-    //     setLoading(false)
-    //     if (res) {
-    //         setConnected(true);
-    //         setUser(prev => chekingDetails);
-    //         localStorage.setItem("user", JSON.stringify(chekingDetails))
-    //         setError(false)
-    //         // const initialization = {
-    //         //     ...details,
-    //         //     password: { ...details["password"], value: "", isInVaild: false },
-    //         //     email: { ...details["email"], value: " ", isInVaild: false },
-    //         // }
-    //         // setDetails(prevDetails => initialization)
-    //         onClose()
-
-    //     } else {
-    //         setLoading(true)
-    //         setValidated(false);
-    //         console.log("error changed to true-", error);
-    //         setError(true)
-    //     }
-    // };
-
-    // const checkingMatch = isData => {
-    //     if (isData.error) {
-    //         console.log('no match');
-    //         return false;
-    //     }
-    //     setConnected(true);
-    //     onClose()
-    //     return true;
-    // }
-
 
     const handleSubmit = async (event) => {
         const checkErrors = [];
@@ -110,12 +54,6 @@ function Login({ showLogin, onClose, setConnected, setUser }) {
             setUser(prev => chekingDetails);
             localStorage.setItem("user", JSON.stringify(chekingDetails))
             setError(false)
-            // const initialization = {
-            //     ...details,
-            //     password: { ...details["password"], value: "", isInVaild: false },
-            //     email: { ...details["email"], value: " ", isInVaild: false },
-            // }
-            // setDetails(prevDetails => initialization)
             onClose()
 
         } else {

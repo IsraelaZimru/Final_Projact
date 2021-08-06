@@ -205,6 +205,17 @@ export async function setNewRecipe(data, image) {
     }
 }
 
+
+// export async function loadImgePY(id, image) {
+//     try {
+//         const response = await axios.post(`/recipes/upload/${id}`, image);
+//         console.log(response.data);
+//         return response.data;
+//     } catch (err) {
+//         console.log(err)
+//     }
+// }
+
 export async function updateRecipe(id, data, image) {
     try {
         const response = await axios.put(`http://localhost:${port}/recipeInfo/${id}`, data);

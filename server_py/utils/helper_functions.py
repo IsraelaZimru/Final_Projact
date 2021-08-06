@@ -32,3 +32,8 @@ def return_only_ings(obj, db):
         new_lst.append(temp.name)
         # print(new_lst)
     return new_lst
+
+
+def organize_ings_for_db(arr):
+    new_lst = [[el["quantity"], el["unit"]["id"], el["ingredient"]["id"]] for el in arr]
+    return new_lst

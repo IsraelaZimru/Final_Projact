@@ -9,7 +9,8 @@ from utils.helper_functions import return_organize_list, return_organize_ings_li
 UPLOAD_FOLDER = 'public/images'
 
 
-connect(host="mongodb+srv://IsraelaZimru:7qGPRky0r5lbdUir@cluster0.zr2d0.mongodb.net/RecipesFullstack")
+# connect(host="mongodb+srv://IsraelaZimru:7qGPRky0r5lbdUir@cluster0.zr2d0.mongodb.net/RecipesFullstack") #old connection
+connect(host="mongodb+srv://IsraelaZimru:W54mqTlPB7pfmiet@fullstackprojects.epp4t.mongodb.net/FullstackProjects")
 
 
 class Users(Document):
@@ -30,25 +31,28 @@ class Users(Document):
         print("id-", self.id)
         return json.dumps(user_dict, default=str)
 
-    meta = {  # help with searching faster in mongodb
-        "indexes": ["email"],
-        "ordering": ["-date_created"]
-    }
+    # meta = {  # help with searching faster in mongodb
+    #     "indexes": ["email"],
+    #     "ordering": ["-date_created"]
+    # }
+
+
 
 
 class Recipes(Document):
     # from Modules.Users import Users
     name = StringField(required=True, unique=True)
     user_id = ReferenceField(Users, reverse_delete_rule=CASCADE)
-    image = StringField(required=True)
+    image = StringField()
     description = StringField(required=True)
-    views = IntField(required=True)
-    date = StringField(required=True, default=datetime.utcnow()) #x.strftime("%d-%m-%Y") export the date from this
-    level = StringField(required=True)
+    views = IntField(required=True, default=0)
+    date = StringField(required=True, default=str(datetime.utcnow())) #x.strftime("%d-%m-%Y") export the date from this
+    # level = StringField(required=True)
+    level = StringField(choices=['easy', 'medium', 'hard'])
     Servings = IntField(required=True)
     prepTimeMins = IntField(required=True)
     CookingTime = IntField(required=True)
-    isPrivate = IntField(required=True)
+    isPrivate = IntField(required=True, default=0)
     instructions = ListField(StringField(max_length=90))
     allCategories = ListField(StringField(max_length=90))
     alldiets = ListField(StringField(max_length=90))
@@ -152,8 +156,6 @@ class Categories(Document):
 
 
 
-
-
 # --------------------------------------------------------------
 # class Favorites(Document):
 #     user_id = ReferenceField(Users, reverse_delete_rule=CASCADE)
@@ -163,7 +165,7 @@ class Categories(Document):
 #     print(user.first_name)
 
 # syntex to add new data
-# ross = Users(email='wawa@wawa.com', first_name='wawa', last_name='wawa',password="123456",is_admin=0).save()
+# rona = Users(email='papa@papa.com', first_name='papa', last_name='papa', password="123456",is_admin=0).save()
 # ross = Users.objects(email='slzimro@example.com').get.save()
 
 
