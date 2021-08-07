@@ -1,4 +1,4 @@
-import { Card, Container, Row, Col } from "react-bootstrap";
+import { Card, Container, Row, Col, Modal, Spinner } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -12,6 +12,8 @@ const MyFavorites = ({ connected, hasPageAaccess }) => {
     let history = useHistory();
     const { id } = useParams();
     const [recipes, setRecipes] = useState([])
+    const [loading, setLoading] = useState(true)
+
 
 
     useEffect(() => {
@@ -25,6 +27,7 @@ const MyFavorites = ({ connected, hasPageAaccess }) => {
     useEffect(() => {
         (async () => {
             const myRecipes = await getMyFavorites(id)
+            setLoading(false)
             console.log(myRecipes);
             if (myRecipes.error) {
                 alert("A connection problem ... Please refresh the site.")
@@ -48,6 +51,25 @@ const MyFavorites = ({ connected, hasPageAaccess }) => {
 
     return <Container>
         <h1 className="display-2 mb-5 text-center h1styleUser2"> Favorite Recipes:</h1>
+
+        <Modal show={loading} className="text-center">
+            <Modal.Header >
+            </Modal.Header>
+            <Modal.Title classname="text-center display-h1">Loading Recipe...</Modal.Title>
+            <Modal.Body className="text-center">
+                <Spinner
+                    as="span"
+                    animation="border"
+                    size="sm"
+                    variant="warning"
+                    role="status"
+                    aria-hidden="true"
+                />
+            </Modal.Body>
+            <Modal.Footer>
+            </Modal.Footer>
+        </Modal>
+
         <Row className="justify-content-center">
             {recipes.map((item, i) => <Card
                 key={i}
