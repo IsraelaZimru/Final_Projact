@@ -3,7 +3,7 @@ import axios from "axios";
 import { updateRecipe } from '../../../DAL/api'
 import { useEffect, useState } from "react";
 import { Link, useHistory, useParams, Prompt } from "react-router-dom";
-import { Container, Row, Col, Button, Form, Card, InputGroup, ListGroup, Alert, FormControl } from "react-bootstrap";
+import { Container, Row, Col, Button, Form, Card, InputGroup, ListGroup, Alert, FormControl, Spinner } from "react-bootstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 
@@ -13,6 +13,7 @@ function Step3() {
     const { id } = useParams()
     const history = useHistory()
     const [file, setFile] = useState(null);
+    const [loading, setLoading] = useState(false)
     const [errMsg, setErrMsg] = useState("");
     const [show, setShow] = useState(false);
     const [validated, setValidated] = useState(false);
@@ -45,6 +46,7 @@ function Step3() {
         window.scrollTo(0, 0);
 
         if (!isOK) {
+            setLoading(true)
             console.log("sending http request");
             const data = {
                 recipe: JSON.parse(localStorage.getItem("step1")),
@@ -61,6 +63,7 @@ function Step3() {
             console.log("image", newImage, "file", file);
 
             const respone = await updateRecipe(id, data, newImage)
+            setLoading(false)
             if (respone) {
                 console.log(respone, "respone")
                 history.push(`/Step4/${id}`)
@@ -249,7 +252,14 @@ function Step3() {
             </Col>
             <Col sx={12} md={6} className="my-2">
                 <Button variant="warning" size="lg" onClick={finshRecipe} block>
-                    Upload your Recipe!
+                    {loading && <Spinner
+                        as="span"
+                        animation="border"
+                        size="sm"
+                        role="status"
+                        aria-hidden="true"
+                    />}
+                    {loading ? <span>Loading...</span> : <span>Update your Recipe!</span>}
                 </Button>
             </Col>
         </Row>

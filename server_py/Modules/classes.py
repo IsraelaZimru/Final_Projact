@@ -4,10 +4,10 @@ import json
 import os
 from flask_httpauth import HTTPBasicAuth
 from werkzeug.security import generate_password_hash, check_password_hash
-from utils.helper_functions import return_organize_list, return_organize_ings_list, return_only_ings
+from utils.helper_functions import return_organize_list, return_organize_ings_list, return_only_ings, \
+    organizedIngredients, ingredients_for_client
 
 UPLOAD_FOLDER = 'public/images'
-
 
 # connect(host="mongodb+srv://IsraelaZimru:7qGPRky0r5lbdUir@cluster0.zr2d0.mongodb.net/RecipesFullstack") #old connection
 connect(host="mongodb+srv://IsraelaZimru:W54mqTlPB7pfmiet@fullstackprojects.epp4t.mongodb.net/FullstackProjects")
@@ -35,8 +35,6 @@ class Users(Document):
     #     "indexes": ["email"],
     #     "ordering": ["-date_created"]
     # }
-
-
 
 
 class Recipes(Document):
@@ -76,10 +74,9 @@ class Recipes(Document):
             "allCategories": self.allCategories,
             "alldiets": self.alldiets,
             "allIngredients": self.allIngredients
-            }
+        }
         return json.dumps(recipe_dict, default=str)
         # return recipe_dict
-
 
     def data(self):
         cats = return_organize_list(self.allCategories, Categories.objects)
@@ -102,7 +99,7 @@ class Recipes(Document):
             "allCategories": cats,
             "alldiets": diets,
             "allIngredients": ings
-            }
+        }
         return recipe_dict
 
     def all_data(self):
@@ -128,9 +125,26 @@ class Recipes(Document):
             "categories": cats,
             "diets": diets,
             "ingredients": ings
-            }
+        }
         # print("self.date", self.date, type(self.date))
         return recipe_dict
+
+    def raw_data_for_update(self):
+        step1 = {
+            "id": str(self.id),
+            "userId": str(self.user_id.id),
+            "recipeName": self.name,
+            "description": self.description,
+            "level": self.level,
+            "Servings": self.Servings,
+            "prepTimeMins": self.prepTimeMins,
+            "CookingTime": self.CookingTime,
+            "categories": self.allCategories,
+            "diets": self.alldiets
+        }
+        step2 = ingredients_for_client(self.allIngredients);
+        step3 = self.instructions
+        return json.dumps([step1, step2, step3])
 
 
 class Measuring_Units(Document):
@@ -147,16 +161,6 @@ class Diets(Document):
 
 class Categories(Document):
     name = StringField(required=True, unique=True)
-
-
-
-
-
-
-
-
-
-
 
 # --------------------------------------------------------------
 # class Favorites(Document):

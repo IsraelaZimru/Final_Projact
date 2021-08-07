@@ -23,7 +23,7 @@ export async function MostRecipes() {
 
 export async function getMyRecipes(id) {
     //const response = axios.get(`/recipes/myRecipes/${id}`);
-    const response = await axios(`/getMyRecipes/${id}`, { withCredentials: false });
+    const response = await axios(`recipes/MyRecipes/${id}`, { withCredentials: false });
     response.data.forEach(recipe => recipe.pic = `http://localhost:${port}/${recipe.image}`);
     return response.data;
 }

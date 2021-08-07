@@ -37,3 +37,14 @@ def return_only_ings(obj, db):
 def organize_ings_for_db(arr):
     new_lst = [[el["quantity"], el["unit"]["id"], el["ingredient"]["id"]] for el in arr]
     return new_lst
+
+
+def ingredients_for_client(ingredients):
+    new_lst = [{"quantity": el[0], "unit": el[1], "ingredient": el[2]} for el in ingredients]
+    return new_lst
+
+
+def organizedIngredients(ingredients):
+    new_lst = [[el["quantity"], el["unit"], el["ingredient"]] for el in ingredients]
+    print("ings fix-", new_lst)
+    return new_lst

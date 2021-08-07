@@ -5,7 +5,7 @@ from werkzeug.utils import secure_filename
 import requests
 from flask import Blueprint, request
 from Modules.classes import Diets, Categories, Ingredients, Measuring_Units, Recipes
-from utils.helper_functions import organize_ings_for_db
+from utils.helper_functions import organize_ings_for_db, organizedIngredients
 
 recipe = Blueprint('recipe', __name__)
 
@@ -33,26 +33,55 @@ def get_single_recipe():
     return json.dumps([recipe], default=str)
 
 
-@recipe.route('/addNewRecipe', methods=['POST'])
-def add_recipe():
-    info = request.get_json()
-    _recipe = info["recipe"]
-    _ings = info["ingredients"]
-    _insts = info["instructions"]
-    print("lllll", _ings)
-    new_recipe = Recipes(
-        name=_recipe["recipeName"],
-        user_id=_recipe["userId"],
-        description=_recipe["description"],
-        level=_recipe["level"],
-        Servings=_recipe["Servings"],
-        prepTimeMins=_recipe["prepTimeMins"],
-        CookingTime=_recipe["CookingTime"],
-        allCategories=_recipe["categories"],
-        alldiets=_recipe["diets"],
-        allIngredients=organize_ings_for_db(_ings),
-        instructions=_insts).save()
-    return json.dumps(new_recipe.id, default=str)
+@recipe.route('/recipeInfo/<_id>', methods=["GET", "PUT"])
+def recipe_raw_data(_id):
+    if request.method == 'GET':
+        recipe_info = Recipes.objects(id=_id).first()
+        result = recipe_info.raw_data_for_update()
+        return result
+    elif request.method == 'PUT':
+        print("enter put req")
+        info = request.get_json()
+        _recipe = info["recipe"]
+        _ings = info["ingredients"]
+        _insts = info["instructions"]
+        recipe_to_update = Recipes.objects(id=_id).first()
+        recipe_to_update.update(
+            name=_recipe["recipeName"],
+            description=_recipe["description"],
+            level=_recipe["level"],
+            Servings=_recipe["Servings"],
+            prepTimeMins=_recipe["prepTimeMins"],
+            CookingTime=_recipe["CookingTime"],
+            allCategories=_recipe["categories"],
+            alldiets=_recipe["diets"],
+            allIngredients=organizedIngredients(_ings),
+            instructions=_insts)
+        return json.dumps(recipe_to_update.id, default=str)
+
+
+@recipe.route('/addNewRecipe/<_id>', methods=['POST'])
+def add_recipe(_id=0):
+        info = request.get_json()
+        _recipe = info["recipe"]
+        _ings = info["ingredients"]
+        _insts = info["instructions"]
+        print("lllll", _ings)
+        new_recipe = Recipes(
+            name=_recipe["recipeName"],
+            user_id=_recipe["userId"],
+            description=_recipe["description"],
+            level=_recipe["level"],
+            Servings=_recipe["Servings"],
+            prepTimeMins=_recipe["prepTimeMins"],
+            CookingTime=_recipe["CookingTime"],
+            allCategories=_recipe["categories"],
+            alldiets=_recipe["diets"],
+            allIngredients=organize_ings_for_db(_ings),
+            instructions=_insts).save()
+        return json.dumps(new_recipe.id, default=str)
+
+
     # return {"error": "err"}, 400
 
 

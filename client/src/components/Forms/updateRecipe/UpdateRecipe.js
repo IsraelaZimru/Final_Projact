@@ -37,7 +37,8 @@ const UpdateRecipe = ({ connected, hasPageAaccess }) => {
                     }
                     if (key === "diets") {
                         data[0].forEach(el => {
-                            if (inputsPage1Local[key].includes(+el.id)) {
+                            const id = +el.id || el.id
+                            if (inputsPage1Local[key].includes(id)) {
                                 el.selected = true;
                             } else {
                                 el.selected = false;
@@ -46,7 +47,8 @@ const UpdateRecipe = ({ connected, hasPageAaccess }) => {
                     }
                     if (key === "categories") {
                         data[1].forEach(el => {
-                            if (inputsPage1Local[key].includes(+el.id)) {
+                            const id = +el.id || el.id
+                            if (inputsPage1Local[key].includes(id)) {
                                 el.selected = true;
                             } else {
                                 el.selected = false;
@@ -150,7 +152,7 @@ const UpdateRecipe = ({ connected, hasPageAaccess }) => {
     const updateBox = (e, listName) => {
         let data = {
             checked: e.target.checked,
-            currId: +e.target.id,
+            currId: +e.target.id || e.target.id,
             currName: e.target.name,
             allChecked: []
         }

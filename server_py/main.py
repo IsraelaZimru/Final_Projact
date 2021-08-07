@@ -13,6 +13,8 @@ from Modules.classes import Users, Diets, Categories, Ingredients, Recipes, Meas
 from datetime import datetime
 # from datetime import time
 from werkzeug.utils import secure_filename
+
+from routes.favorites.route import favorites
 from routes.information.route import information
 from routes.recipes.route import recipe
 from routes.users.route import users
@@ -35,6 +37,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.register_blueprint(information)
 app.register_blueprint(recipe)
 app.register_blueprint(users)
+app.register_blueprint(favorites)
 
 
 def upload_image(file):

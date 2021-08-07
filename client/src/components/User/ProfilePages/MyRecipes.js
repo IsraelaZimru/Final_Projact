@@ -1,4 +1,4 @@
-import { Card, Container, Row, Col, Modal, Button } from "react-bootstrap";
+import { Card, Container, Row, Col, Modal, Button, Spinner } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -10,6 +10,7 @@ import { useParams } from "react-router-dom";
 const MyRecipes = ({ connected, hasPageAaccess }) => {
     let history = useHistory();
     const { id } = useParams()
+    const [loading, setLoading] = useState(true)
     const [show, setShow] = useState(false);
     const [recipes, setRecipes] = useState([])
 
@@ -23,6 +24,7 @@ const MyRecipes = ({ connected, hasPageAaccess }) => {
     useEffect(() => {
         (async () => {
             const myRecipes = await getMyRecipes(id)
+            setLoading(false)
             console.log(myRecipes);
             if (myRecipes.error) {
                 alert("A connection problem ... Please refresh the site.")
@@ -53,6 +55,26 @@ const MyRecipes = ({ connected, hasPageAaccess }) => {
 
     return <Container >
         <h1 className="display-2 mb-5 text-center h1styleUser2"> I Made It:</h1>
+
+        <Modal show={loading} className="text-center">
+            <Modal.Header >
+            </Modal.Header>
+            <Modal.Title classname="text-center display-h1">Loading Recipe...</Modal.Title>
+            <Modal.Body className="text-center">
+                <Spinner
+                    as="span"
+                    animation="border"
+                    size="sm"
+                    variant="warning"
+                    role="status"
+                    aria-hidden="true"
+                />
+            </Modal.Body>
+            <Modal.Footer>
+            </Modal.Footer>
+        </Modal>
+
+
         <Row className="justify-content-center mb-4">
             {recipes.map((item, i) => <Card
                 key={i}
