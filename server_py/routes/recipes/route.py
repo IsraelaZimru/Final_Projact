@@ -29,8 +29,10 @@ def get_all_recipes():
 def get_single_recipe():
     info = request.get_json()  # making it as dictionary
     _id = info["id"]
-    recipe = Recipes.objects(id=_id).get().all_data()
-    return json.dumps([recipe], default=str)
+    recipe = Recipes.objects(id=_id).get()
+    data = recipe.all_data()
+    print("new views-", recipe.views)
+    return json.dumps([data], default=str)
 
 
 @recipe.route('/recipeInfo/<_id>', methods=["GET", "PUT"])
@@ -60,8 +62,8 @@ def recipe_raw_data(_id):
         return json.dumps(recipe_to_update.id, default=str)
 
 
-@recipe.route('/addNewRecipe/<_id>', methods=['POST'])
-def add_recipe(_id=0):
+@recipe.route('/addNewRecipe', methods=['POST'])
+def add_recipe():
         info = request.get_json()
         _recipe = info["recipe"]
         _ings = info["ingredients"]
