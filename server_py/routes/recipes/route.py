@@ -19,7 +19,7 @@ def hello_user(id):
 @recipe.route('/recipes')
 def get_all_recipes():
     recipes = []
-    for recipe in Recipes.objects:
+    for recipe in Recipes.objects.order_by('-date'):
         recipes.append(recipe.data())
     return json.dumps(recipes, default=str)
     # return recipes

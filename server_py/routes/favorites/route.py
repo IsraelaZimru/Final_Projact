@@ -1,22 +1,25 @@
-#/recipes/MyFavorites/
-
 import json
 import os
 from datetime import time
 from werkzeug.utils import secure_filename
 import requests
 from flask import Blueprint, request
-from Modules.classes import Diets, Categories, Ingredients, Measuring_Units, Recipes
+from Modules.classes import Diets, Categories, Ingredients, Measuring_Units, Recipes, Users
 from utils.helper_functions import organize_ings_for_db
 
 favorites = Blueprint('favorites', __name__)
 
 
-# @favorites.route('/recipes/MyRecipes/<_id>')
-# def my_recipes(_id):
-#     # res = requests.get(f"http://localhost:3100/recipes/myRecipes/{id}")
-#     print("enter fun", _id)
-#     recipes = Recipes.objects(user_id=_id)
-#     print("recipes", recipes)
-#     filter_data = [{"id": str(recipe.id), "image": recipe.image, "name": recipe.name} for recipe in recipes]
-#     return json.dumps(filter_data)
+@favorites.route("/recipes/MyFavorites/ids/<_user_id>")
+def favorites_recipes_ids(_user_id):
+    recipes_id = [{"recipeID": recipe} for recipe in Users.objects(id=_user_id).first().my_favorites]
+    # print(recipes_id)
+    return json.dumps(recipes_id, default=str)
+
+
+@favorites.route('/recipes/MyFavorites/<_user_id>')
+def my_favorites_recipes(_user_id):
+    user = Users.objects(id=_user_id).get()
+    recipes = [Recipes.objects(id=recipe_id).first().data() for recipe_id in user.my_favorites]
+    print(recipes, user.first_name, user.my_favorites)
+    return json.dumps(recipes, default=str)

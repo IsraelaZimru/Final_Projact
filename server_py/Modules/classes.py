@@ -45,7 +45,6 @@ class Recipes(Document):
     description = StringField(required=True)
     views = IntField(required=True, default=0)
     date = StringField(required=True, default=str(datetime.utcnow()))
-    # level = StringField(required=True)
     level = StringField(choices=['easy', 'medium', 'hard'])
     Servings = IntField(required=True)
     prepTimeMins = IntField(required=True)
@@ -90,11 +89,7 @@ class Recipes(Document):
             "image": self.image,
             "description": self.description,
             "views": self.views,
-            # "date": self.date,
-            # "level": self.level,
-            # "Servings": self.Servings,
-            # "prepTimeMins": self.prepTimeMins,
-            # "CookingTime": self.CookingTime,
+            "CookingTime": self.CookingTime,
             "isPrivate": self.isPrivate,
             "allCategories": cats,
             "alldiets": diets,
