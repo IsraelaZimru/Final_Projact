@@ -144,7 +144,7 @@ class Recipes(Document):
             "categories": self.allCategories,
             "diets": self.alldiets
         }
-        step2 = ingredients_for_client(self.allIngredients);
+        step2 = ingredients_for_client(self.allIngredients, Measuring_Units.objects, Ingredients.objects);
         step3 = self.instructions
         return json.dumps([step1, step2, step3])
 

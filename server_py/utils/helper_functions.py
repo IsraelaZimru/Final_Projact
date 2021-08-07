@@ -39,8 +39,22 @@ def organize_ings_for_db(arr):
     return new_lst
 
 
-def ingredients_for_client(ingredients):
-    new_lst = [{"quantity": el[0], "unit": el[1], "ingredient": el[2]} for el in ingredients]
+def ingredients_for_client(ingredients, unit_db, ings_db):
+    def get_name(db,item_id):
+        item_name = db(id=item_id).only("name").first()
+        return item_name.name
+
+    new_lst = [{"quantity": el[0],
+                "unit": {
+                    "id": el[1],
+                    "name": get_name(unit_db, el[1])
+                },
+                "ingredient": {
+                    "id": el[2],
+                    "name": get_name(ings_db, el[2])
+                }
+                } for el in ingredients]
+    print("new_lst", new_lst)
     return new_lst
 
 

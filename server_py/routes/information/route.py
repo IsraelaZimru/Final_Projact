@@ -21,8 +21,14 @@ def get_diets_cats():
 
 @information.route('/information/MostRecipes')
 def get_most_recipes():
-    res = requests.get("http://localhost:3100/information/MostRecipes")
-    return json.dumps(res.json())
+    # res = requests.get("http://localhost:3100/information/MostRecipes")
+    quickest = [{"id": str(recipe.id), "name": recipe.name, "image": recipe.image, "CookingTime": recipe.CookingTime}
+                for recipe in Recipes.objects.order_by('+CookingTime')[:5]]
+    popular = [{"id": str(recipe.id), "name": recipe.name, "image": recipe.image, "views": recipe.views} for recipe in Recipes.objects.order_by('-views')[:1]]
+    recent = [{"id": str(recipe.id), "name": recipe.name, "image": recipe.image, "date": recipe.date} for recipe in Recipes.objects.order_by('-date')[:1]]
+    # print("quickest", [quickest])
+    return json.dumps([quickest,recent, popular], default=str)
+    # return json.dumps(res.json())
 
 
 @information.route('/ingredientsName')
@@ -54,3 +60,9 @@ def is_recipe_name_available(_name):
         return json.dumps(False), 200
     print(False)
     return json.dumps(True), 200
+
+
+@information.route('/recipeNames')
+def only_recipe_names():
+    names = [{"id": str(recipe.id), "name": recipe.name} for recipe in Recipes.objects]
+    return json.dumps(names), 200

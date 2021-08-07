@@ -57,7 +57,7 @@ def recipe_raw_data(_id):
             CookingTime=_recipe["CookingTime"],
             allCategories=_recipe["categories"],
             alldiets=_recipe["diets"],
-            allIngredients=organizedIngredients(_ings),
+            allIngredients=organize_ings_for_db(_ings),
             instructions=_insts)
         return json.dumps(recipe_to_update.id, default=str)
 
@@ -95,4 +95,3 @@ def add_recipe():
 
 
 
-# @recipe.route('/recipes/upload/<id>')
