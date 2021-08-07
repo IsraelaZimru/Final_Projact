@@ -39,7 +39,9 @@ const MyFavorites = ({ connected, hasPageAaccess }) => {
 
 
     const remove = async (recipeId) => {
+        setLoading(true)
         const newRecipes = await RemoveAndReturnFavoritesRecipes(id, recipeId);
+        setLoading(false)
         setRecipes(prev => newRecipes)
     }
 
@@ -55,7 +57,7 @@ const MyFavorites = ({ connected, hasPageAaccess }) => {
         <Modal show={loading} className="text-center">
             <Modal.Header >
             </Modal.Header>
-            <Modal.Title classname="text-center display-h1">Loading Recipe...</Modal.Title>
+            <Modal.Title classname="text-center display-h1">Loading Recipes...</Modal.Title>
             <Modal.Body className="text-center">
                 <Spinner
                     as="span"
@@ -84,7 +86,7 @@ const MyFavorites = ({ connected, hasPageAaccess }) => {
                     style={{ cursor: "pointer" }}
                 >
                     <Card.Img className="Foodsimg" variant="top" src={item.pic} height="160px" weidth="240px" />
-                    <Card.Header>{item.name}</Card.Header>
+                    <Card.Header className="text-center">{item.name}</Card.Header>
 
                     {/* {item.allCategories && item.allCategories.map((type, i) => <span key={i}>| {type} </span>)} */}
                     {/* <p className="text-center my-2">

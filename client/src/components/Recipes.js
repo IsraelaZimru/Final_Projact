@@ -1,4 +1,4 @@
-import { Card, Container, Row, Col, Pagination, ListGroup, Navbar, Nav, NavDropdown, Jumbotron, Button, Dropdown, FormControl, Spinner } from "react-bootstrap";
+import { Card, Container, Row, Col, Tooltip, ListGroup, Navbar, Nav, NavDropdown, Jumbotron, Button, Dropdown, FormControl, Spinner, OverlayTrigger } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThumbsUp, faEdit, faHeart, faEye, faTimesCircle, faBookmark, faSearch } from "@fortawesome/free-solid-svg-icons";
@@ -142,12 +142,15 @@ export default function Recipes({ isConnected, UserId }) {
 
     const updateMyFavorites = async (recipeId) => {
         try {
+            // setLoading(true)
             if (likes.includes(recipeId)) {
                 const newRecipesId = await RemoveFromMyFavorites(UserId, recipeId);
+                // setLoading(false)
                 console.log("new ids-remove:", newRecipesId);
                 setLikes(prev => newRecipesId)
             } else {
                 const newRecipesId = await addToMyFavorites(UserId, recipeId);
+                // setLoading(false)
                 console.log("new ids-add:", newRecipesId);
                 setLikes(prev => newRecipesId)
             }
@@ -286,10 +289,20 @@ export default function Recipes({ isConnected, UserId }) {
                 <Card.Header >
                     <Row>
                         <Col className="px-1" md={{ span: 4 }} sx={{ span: 4 }}>
-                            <div>{isConnected && <FontAwesomeIcon icon={faBookmark}
-                                style={{ cursor: "pointer" }}
-                                onClick={() => updateMyFavorites(item.id)}
-                                className={likes.includes(item.id) ? "text-warning mr-2 ml-2" : "text-white mr-2 ml-2"} />
+                            <div>{isConnected && <OverlayTrigger
+                                overlay={
+                                    <Tooltip id="tooltip-left">
+                                        click to add to your favorites.
+                                    </Tooltip>
+                                }
+                            >
+                                {/* <Button variant="secondary">Tooltip on {placement}</Button> */}
+                                <FontAwesomeIcon icon={faBookmark}
+                                    style={{ cursor: "pointer" }}
+                                    onClick={() => updateMyFavorites(item.id)}
+                                    className={likes.includes(item.id) ? "text-warning mr-2 ml-2" : "text-white mr-2 ml-2"} />
+                            </OverlayTrigger>
+
                             }
                                 {/* <FontAwesomeIcon icon={faEdit}
                                     style={{ cursor: "pointer" }}
