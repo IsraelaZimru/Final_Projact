@@ -1,4 +1,4 @@
-import { Button, Card, Form, InputGroup, Alert, Container, Row } from "react-bootstrap";
+import { Button, Card, Form, InputGroup, Alert, Container, Row, Spinner } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import logo from '../../../imgs/logo6.png'
@@ -14,6 +14,7 @@ function SignUp({ hasPageAaccess, connected }) {
 
     const [validated, setValidated] = useState(false);
     const [show, setShow] = useState(false);
+    const [loading, setLoading] = useState(false)
     const [details, setDetails] = useState({
         email: { isRequired: true, pattern: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, msg: [], value: "", isInVaild: false },
         firstName: { isRequired: true, pattern: /\w{2,}/, msg: [], value: "", isInVaild: false },
@@ -51,10 +52,10 @@ function SignUp({ hasPageAaccess, connected }) {
             lastName: details.lastName.value,
             password: details.password.value
         }
-
+        setLoading(true)
         const result = await addNewUser(allRelevantData);
         console.log("result", result);
-
+        setLoading(false)
         if (!result) {
             window.scrollTo(0, 0);
             setValidated(false);
@@ -89,7 +90,7 @@ function SignUp({ hasPageAaccess, connected }) {
         <Row className="justify-content-center">
             <Card className="m-5 w-50 p-0" style={{ borderRadius: "10%" }}>
                 <Form noValidate validated={validated} onSubmit={handleSubmit} id="bkgdStyleForm">
-                    <Alert show={show} variant="warning" onClose={() => setShow(false)}>
+                    <Alert show={show} variant="danger" onClose={() => setShow(false)}>
                         <strong> User email already exist. Please try with another email.</strong>
                     </Alert>
                     <div className="text-center">
@@ -187,7 +188,16 @@ function SignUp({ hasPageAaccess, connected }) {
 
                     </div>
                     <div className="text-center my-3 py-3">
-                        <Button variant="outline-dark" type="submit" style={{ width: "40%" }}>Submit</Button>
+                        <Button variant="outline-dark" type="submit" style={{ width: "40%" }}>
+                            {loading && <Spinner
+                                as="span"
+                                animation="border"
+                                size="sm"
+                                role="status"
+                                aria-hidden="true"
+                            />}
+                            {loading ? <span>Loading...</span> : <span>Submit</span>}
+                        </Button>
                     </div>
                 </Form>
             </Card>

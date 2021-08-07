@@ -20,7 +20,7 @@ class Users(Document):
     password = StringField(required=True)
     email = StringField(required=True, unique=True)
     my_favorites = ListField()
-    is_admin = IntField(required=True)
+    is_admin = IntField(required=True, default=0)
 
     def json(self):
         user_dict = {
