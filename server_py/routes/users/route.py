@@ -85,6 +85,6 @@ def update_details(_id):
 
 @users.route('/recipes/MyRecipes/<_id>')
 def my_recipes(_id):
-    recipes = Recipes.objects(user_id=_id)
+    recipes = Recipes.objects(user_id=_id, isPrivate=0)
     filter_data = [{"id": str(recipe.id), "image": recipe.image, "name": recipe.name} for recipe in recipes]
     return json.dumps(filter_data)

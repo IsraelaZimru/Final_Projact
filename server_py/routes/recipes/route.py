@@ -10,19 +10,19 @@ from utils.helper_functions import organize_ings_for_db, organizedIngredients
 recipe = Blueprint('recipe', __name__)
 
 
-@recipe.route('/getMyRecipes/<id>')
-def hello_user(id):
-    res = requests.get(f"http://localhost:3100/recipes/myRecipes/{id}")
-    return json.dumps(res.json())
-
-
 @recipe.route('/recipes')
 def get_all_recipes():
     recipes = []
-    for recipe in Recipes.objects.order_by('-date'):
+    for recipe in Recipes.objects(isPrivate=0).order_by('-date'):
         recipes.append(recipe.data())
     return json.dumps(recipes, default=str)
-    # return recipes
+
+
+@recipe.route('/recipes/reset', methods=['PUT'])
+def reset_recipes():
+    for recipe in Recipes.objects(isPrivate=1):
+        recipe.update(isPrivate=0)
+    return json.dumps("All recipes are visible in the site", default=str)
 
 
 @recipe.route('/recipeInfo', methods=['POST'])
@@ -84,7 +84,12 @@ def add_recipe():
         return json.dumps(new_recipe.id, default=str)
 
 
-    # return {"error": "err"}, 400
+@recipe.route('/recipeInfo/unSeenRecipe/<_id>', methods=['PUT'])
+def hide_recipe(_id):
+    if Recipes.objects(id=_id):
+        Recipes.objects(id=_id).update(isPrivate=1)
+        return json.dumps(_id), 200
+    return json.dumps({"error": "Recipe not found"}), 400
 
 
 # def upload_image(file):

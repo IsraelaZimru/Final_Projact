@@ -23,9 +23,9 @@ def get_diets_cats():
 def get_most_recipes():
     # res = requests.get("http://localhost:3100/information/MostRecipes")
     quickest = [{"id": str(recipe.id), "name": recipe.name, "image": recipe.image, "CookingTime": recipe.CookingTime}
-                for recipe in Recipes.objects.order_by('+CookingTime')[:5]]
-    popular = [{"id": str(recipe.id), "name": recipe.name, "image": recipe.image, "views": recipe.views} for recipe in Recipes.objects.order_by('-views')[:1]]
-    recent = [{"id": str(recipe.id), "name": recipe.name, "image": recipe.image, "date": recipe.date} for recipe in Recipes.objects.order_by('-date')[:1]]
+                for recipe in Recipes.objects(isPrivate=0).order_by('+CookingTime')[:5]]
+    popular = [{"id": str(recipe.id), "name": recipe.name, "image": recipe.image, "views": recipe.views} for recipe in Recipes.objects(isPrivate=0).order_by('-views')[:1]]
+    recent = [{"id": str(recipe.id), "name": recipe.name, "image": recipe.image, "date": recipe.date} for recipe in Recipes.objects(isPrivate=0).order_by('-date')[:1]]
     # print("quickest", [quickest])
     return json.dumps([quickest,recent, popular], default=str)
     # return json.dumps(res.json())
@@ -64,5 +64,5 @@ def is_recipe_name_available(_name):
 
 @information.route('/recipeNames')
 def only_recipe_names():
-    names = [{"id": str(recipe.id), "name": recipe.name} for recipe in Recipes.objects]
+    names = [{"id": str(recipe.id), "name": recipe.name} for recipe in Recipes.objects(isPrivate=0)]
     return json.dumps(names), 200
