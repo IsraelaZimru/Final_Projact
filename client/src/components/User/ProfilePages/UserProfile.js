@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
-import { Container, Row, Alert, Col, Form, Button, InputGroup } from 'react-bootstrap';
+import { Container, Row, Alert, Col, Form, Button, InputGroup, Spinner } from 'react-bootstrap';
 import { updateUserInfo } from "../../../DAL/api";
 
-const UserProfile = ({ connected, hasPageAaccess, getDetaildsFromDb, userLoginHandler }) => {
+const UserProfile = ({ connected, hasPageAaccess, getDetaildsFromDb, userUpdateHandler }) => {
     let history = useHistory();
     const [validated, setValidated] = useState(false);
     const [show, setShow] = useState(false);
+    const [loading, setLoading] = useState(false)
     const [details, setDetails] = useState({
         email: { isRequired: true, pattern: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, msg: [], value: "", isInVaild: false },
         firstName: { isRequired: true, pattern: /\w{2,}/, msg: [], value: "", isInVaild: false },
@@ -22,7 +23,7 @@ const UserProfile = ({ connected, hasPageAaccess, getDetaildsFromDb, userLoginHa
     useEffect(() => {
         window.scrollTo(0, 0);
         const user = userData()
-        console.log("details", details)
+        // console.log("user", user)
     }, [])
 
     const changeValues = (obj) => {
@@ -38,8 +39,8 @@ const UserProfile = ({ connected, hasPageAaccess, getDetaildsFromDb, userLoginHa
         try {
             const getDetaildsFromloaclhost = JSON.parse(localStorage.getItem("user")).id;
             const user = await getDetaildsFromDb({ id: getDetaildsFromloaclhost })
-            await changeValues(...user)
             console.log("user", user);
+            await changeValues(...user)
         } catch (err) {
             console.log(err)
         }
@@ -47,7 +48,7 @@ const UserProfile = ({ connected, hasPageAaccess, getDetaildsFromDb, userLoginHa
 
 
     const handleSubmit = async (event) => {
-        console.log("enetr sumbit");
+        // console.log("enetr sumbit");
         const checkErrors = [];
         for (const key in details) {
             if (Object.hasOwnProperty.call(details, key)) {
@@ -75,7 +76,10 @@ const UserProfile = ({ connected, hasPageAaccess, getDetaildsFromDb, userLoginHa
             lastName: details.lastName.value,
             password: details.password.value
         }
+        setLoading(true)
         const checkUpdateDb = await updateUserInfo(allRelevantData)
+        setLoading(false)
+        console.log("checkUpdateDb", checkUpdateDb);
         if (checkUpdateDb.error) {
             setValidated(false);
             setShow(true)
@@ -83,8 +87,10 @@ const UserProfile = ({ connected, hasPageAaccess, getDetaildsFromDb, userLoginHa
         } else {
             setValidated(true);
             alert("Updated successfully")
-            const info = { email: details.email.value, password: details.password.value }
-            userLoginHandler(prev => info)
+            // const info = { email: details.email.value, password: details.password.value }
+            // console.log("מה הגיע מעדכון פרטים:", checkUpdateDb, "מידע חדש מהקומפוננטה", allRelevantData)
+            userUpdateHandler(checkUpdateDb)
+            history.push("/")
         }
     };
 
@@ -192,8 +198,16 @@ const UserProfile = ({ connected, hasPageAaccess, getDetaildsFromDb, userLoginHa
                 </Col> */}
             </Row>
 
-            <Button variant="outline-dark" type="submit" className="mr-2"> update </Button>
-            {/* <Button variant="outline-dark" type="submit"> Home Page </Button> */}
+            <Button variant="outline-dark" type="submit" className="mr-2">
+                {loading && <Spinner
+                    as="span"
+                    animation="border"
+                    size="sm"
+                    role="status"
+                    aria-hidden="true"
+                />}
+                {loading ? <span>Loading...</span> : <span>update</span>}
+            </Button>
 
         </Form>
     </Container >

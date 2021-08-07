@@ -35,14 +35,17 @@ function App() {
   })
   const [user, setUser] = useState({
     name: "",
-    id: NaN
+    id: NaN,
+    email: ""
   })
 
 
-
-  const userLoginHandler = (info) => {
-    setCheckUser(info)
+  const userUpdateHandler = (info) => {
+    localStorage.setItem("user", JSON.stringify(info))
+    setUser(info)
   }
+
+
   useEffect(() => {
     const checkConnected = JSON.parse(localStorage.getItem("user"))
     if (checkConnected) {
@@ -50,6 +53,11 @@ function App() {
       setUser(prev => checkConnected)
     }
   }, [])
+
+
+  useState(() => {
+  }, [user])
+
 
   useEffect(() => {
     fetchingUser();
@@ -63,6 +71,7 @@ function App() {
       // const importUser = await checkingMatch(isData);
       // await updatingLoginStatus(importUser)
       const res = await checkingMatch(isData);
+      console.log("בדיקה:", checkUser.email, checkUser.password, isData, res);
       return res;
     } catch (err) {
       console.log(err)
@@ -71,7 +80,7 @@ function App() {
 
   const checkingMatch = isData => {
     if (!isData) {
-      console.log('no match');
+      // console.log('no match');
       return false;
     }
     setConnected(true);
@@ -139,7 +148,7 @@ function App() {
         </Route>
         <Route exact path="/User_Profile/:id">
           <UserSecondNavber connected={connected} />
-          <UserProfile connected={connected} hasPageAaccess={hasPageAaccess} getDetaildsFromDb={getDetaildsFromDb} userLoginHandler={userLoginHandler} />
+          <UserProfile connected={connected} hasPageAaccess={hasPageAaccess} getDetaildsFromDb={getDetaildsFromDb} userUpdateHandler={userUpdateHandler} />
         </Route>
         <Route exact path="/My_Recipes/:id">
           <UserSecondNavber connected={connected} />

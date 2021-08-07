@@ -60,6 +60,7 @@ const MyRecipes = ({ connected, hasPageAaccess }) => {
             <Modal.Header >
             </Modal.Header>
             <Modal.Title classname="text-center display-h1">Loading Recipes...</Modal.Title>
+            <p>please wait</p>
             <Modal.Body className="text-center">
                 <Spinner
                     as="span"

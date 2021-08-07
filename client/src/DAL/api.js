@@ -105,21 +105,6 @@ export async function setUnSeenRecipe(recipeId) {
 }
 
 
-
-// export async function checkLoginAccess({ email, password }) {
-//     // const result = await axios.post('/users/login', { email, password }, { withCredentials: false });
-//     // return result.data;
-
-//     try {
-//         const result = await axios.post('/users/login', { email, password }, { withCredentials: false });
-//         return result.data;
-//     } catch (err) {
-//         console.log(err);
-//     }
-// }
-
-
-
 export async function checkLoginAccess({ email, password }) {
     try {
         const result = await axios.post('/users/login', { email, password });

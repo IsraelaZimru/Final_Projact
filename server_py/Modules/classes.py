@@ -26,15 +26,26 @@ class Users(Document):
         user_dict = {
             "name": self.first_name,
             "id": self.id,
-            "email": self.email
+            "email": self.email,
         }
-        print("id-", self.id)
+        # print("id-", self.id)
         return json.dumps(user_dict, default=str)
 
-    # meta = {  # help with searching faster in mongodb
-    #     "indexes": ["email"],
-    #     "ordering": ["-date_created"]
-    # }
+    def json_for_update(self):
+        user_dict = {
+            "firstName": self.first_name,
+            "lastName": self.last_name,
+            "id": self.id,
+            "email": self.email,
+        }
+        # print("id-", self.id)
+        return json.dumps([user_dict], default=str)
+
+
+    meta = {  # help with searching faster in mongodb
+        "indexes": ["email"],
+        "ordering": ["-date_created"]
+    }
 
 
 class Recipes(Document):

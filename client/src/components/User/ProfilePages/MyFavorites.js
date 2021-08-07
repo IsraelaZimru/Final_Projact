@@ -54,10 +54,11 @@ const MyFavorites = ({ connected, hasPageAaccess }) => {
     return <Container>
         <h1 className="display-2 mb-5 text-center h1styleUser2"> Favorite Recipes:</h1>
 
-        <Modal show={loading} className="text-center">
+        <Modal show={loading} className="text-center p-3">
             <Modal.Header >
             </Modal.Header>
-            <Modal.Title classname="text-center display-h1">Loading Recipes...</Modal.Title>
+            <Modal.Title classname="text-center display-2">Loading Recipes...</Modal.Title>
+            <p>please wait</p>
             <Modal.Body className="text-center">
                 <Spinner
                     as="span"

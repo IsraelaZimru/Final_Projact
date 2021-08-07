@@ -88,7 +88,7 @@ function Login({ showLogin, onClose, setConnected, setUser }) {
             errorMsg.push(`Not Valid.`)
             isMsgShowing = true
         }
-        console.log(name, "value", value, "isMsgShowing", isMsgShowing, "errorMsg", errorMsg);
+        // console.log(name, "value", value, "isMsgShowing", isMsgShowing, "errorMsg", errorMsg);
         setDetails(prevDetails => ({ ...prevDetails, [name]: { ...prevDetails[name], value, isInVaild: isMsgShowing, msg: errorMsg } }))
         return errorMsg[0] //importent for sumbit form!!!
     }

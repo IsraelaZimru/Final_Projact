@@ -93,7 +93,11 @@ const updateUser = async (id, firstName, lastName, password, email) => {
 
         const [user, fields] = await db.query(myquery, [id, firstName, lastName, password, email]);
         const userId = await user.find(element => element.constructor === Array)
-        return userId;
+        return {
+            "id": userId[0].id,
+            "email": email,
+            "name": firstName
+        };
     } catch (err) {
         throw new Error(err)
     }

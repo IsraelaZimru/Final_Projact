@@ -49,6 +49,40 @@ def add_user():
         return json.dumps({"error": "Signup failed"}), 400
 
 
+@users.route("/users/getUserInfo", methods=['POST'])
+def update_user_details():
+    try:
+        register_data = dict(request.get_json())
+        user = Users.objects(id=register_data["id"]).first()
+        if user:
+            return user.json_for_update(), 200
+        return json.dumps({"error": "User not found"}), 400
+    except Exception as e:
+        print(e)
+        return json.dumps({"error": "Problem connecting to server"}), 400
+
+
+@users.route('/users/<_id>', methods=["PUT"])
+def update_details(_id):
+    try:
+        user_data = dict(request.get_json())
+        user = Users.objects(id=_id).first()
+        if user:
+            user.update(
+            first_name=user_data["firstName"],
+            email=user_data["email"],
+            last_name=user_data["lastName"])
+            # return json.dumps([{"id": str(user.id)}]), 200
+            user.reload()
+            return user.json(), 200
+        return json.dumps({"error": "Email address already in use"}), 400
+    except Exception as e:
+        print(e)
+        return json.dumps({"error": "Problem connecting to server"}), 400
+
+
+
+
 @users.route('/recipes/MyRecipes/<_id>')
 def my_recipes(_id):
     recipes = Recipes.objects(user_id=_id)
