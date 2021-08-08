@@ -273,7 +273,7 @@ export default function Recipes({ isConnected, UserId }) {
 
         {loading && <Row className="justify-content-center mx-auto" id="spinnerStlye">
             <Col>
-                <h1>please wait a few minutes...</h1>
+                <h1>please wait a few seconds...</h1>
                 <Spinner animation="border" variant="warning" />
             </Col>
         </Row>}

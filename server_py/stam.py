@@ -1,4 +1,22 @@
-#
+# from flask_restplus import abort
+import requests
+import json
+import os
+from flask_httpauth import HTTPBasicAuth
+from werkzeug.security import generate_password_hash, check_password_hash
+from mongoengine import *
+from Modules.classes import Users, Diets, Categories, Ingredients, Recipes, Measuring_Units
+from datetime import datetime
+# from datetime import time
+from werkzeug.utils import secure_filename
+
+
+## auth and hash password
+# auth = HTTPBasicAuth()
+
+
+
+
 # # @auth.verify_password
 # # def verify_password(username, password):
 # #     if username in users and \

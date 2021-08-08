@@ -1,3 +1,14 @@
+import time
+import os
+from werkzeug.utils import secure_filename
+
+UPLOAD_FOLDER = 'public/images'
+
+
+def upload_image(file):
+    filename = str(round(time.time()*1000)) + secure_filename(file.filename)
+    file.save(os.path.join(UPLOAD_FOLDER, filename))
+    return filename
 
 
 def return_organize_list(obj, db):
@@ -62,3 +73,4 @@ def organizedIngredients(ingredients):
     new_lst = [[el["quantity"], el["unit"], el["ingredient"]] for el in ingredients]
     print("ings fix-", new_lst)
     return new_lst
+

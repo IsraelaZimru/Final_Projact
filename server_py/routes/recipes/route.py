@@ -4,10 +4,14 @@ from datetime import time
 from werkzeug.utils import secure_filename
 import requests
 from flask import Blueprint, request
+
+from DAL.recipe_api import new_recipe
 from Modules.classes import Diets, Categories, Ingredients, Measuring_Units, Recipes
-from utils.helper_functions import organize_ings_for_db, organizedIngredients
+from utils.helper_functions import organize_ings_for_db, organizedIngredients, upload_image
 
 recipe = Blueprint('recipe', __name__)
+
+
 
 
 @recipe.route('/recipes')
@@ -65,23 +69,8 @@ def recipe_raw_data(_id):
 @recipe.route('/addNewRecipe', methods=['POST'])
 def add_recipe():
         info = request.get_json()
-        _recipe = info["recipe"]
-        _ings = info["ingredients"]
-        _insts = info["instructions"]
-        print("lllll", _ings)
-        new_recipe = Recipes(
-            name=_recipe["recipeName"],
-            user_id=_recipe["userId"],
-            description=_recipe["description"],
-            level=_recipe["level"],
-            Servings=_recipe["Servings"],
-            prepTimeMins=_recipe["prepTimeMins"],
-            CookingTime=_recipe["CookingTime"],
-            allCategories=_recipe["categories"],
-            alldiets=_recipe["diets"],
-            allIngredients=organize_ings_for_db(_ings),
-            instructions=_insts).save()
-        return json.dumps(new_recipe.id, default=str)
+        response = new_recipe(info)
+        return json.dumps(response, default=str)
 
 
 @recipe.route('/recipeInfo/unSeenRecipe/<_id>', methods=['PUT'])
@@ -92,11 +81,14 @@ def hide_recipe(_id):
     return json.dumps({"error": "Recipe not found"}), 400
 
 
-# def upload_image(file):
-#     filename = str(round(time.time()*1000)) + secure_filename(file.filename)
-#     file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-#     return filename
-
+@recipe.route('/recipes/upload/<_id>', methods=["POST"])
+def load_recipe_image(_id):
+    get_image = request.files["image"]
+    if get_image:
+        get_recipe = Recipes.objects(id=_id).get()
+        get_recipe.update(image='images/' + upload_image(get_image))
+        return json.dumps(id, default=str)
+    return json.dumps({'status': "not ok"})
 
 
 
