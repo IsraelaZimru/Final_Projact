@@ -18,6 +18,7 @@ const UserProfile = ({ connected, hasPageAaccess, getDetaildsFromDb, userUpdateH
 
     useEffect(() => {
         hasPageAaccess(connected, history)
+        window.scrollTo(0, 0);
     }, [connected])
 
     useEffect(() => {

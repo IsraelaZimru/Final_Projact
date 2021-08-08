@@ -26,6 +26,7 @@ const MyFavorites = ({ connected, hasPageAaccess }) => {
 
     useEffect(() => {
         (async () => {
+            window.scrollTo(0, 0);
             const myRecipes = await getMyFavorites(id)
             setLoading(false)
             console.log(myRecipes);

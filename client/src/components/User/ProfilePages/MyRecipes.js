@@ -23,6 +23,7 @@ const MyRecipes = ({ connected, hasPageAaccess }) => {
 
     useEffect(() => {
         (async () => {
+            window.scrollTo(0, 0);
             const myRecipes = await getMyRecipes(id)
             setLoading(false)
             console.log(myRecipes);

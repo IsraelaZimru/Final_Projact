@@ -24,6 +24,7 @@ export default function Recipes({ isConnected, UserId }) {
 
     useEffect(() => {
         (async () => {
+            window.scrollTo(0, 0);
             if (isConnected) {
                 const favorites = await getMyFavoritesId(UserId);
                 console.log("favorites", favorites);
@@ -35,6 +36,7 @@ export default function Recipes({ isConnected, UserId }) {
 
     useEffect(() => {
         const fetchRecipes = async () => {
+            window.scrollTo(0, 0);
             try {
                 // setLoading(true)
                 const recipes = await getRecipe()
