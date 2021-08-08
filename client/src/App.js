@@ -168,9 +168,9 @@ function App() {
     </Router >
 
     <div style={{ height: "35px" }} >
-      <div className="footer text-white text-center mb-0">
+      {/* <div className="footer text-white text-center mb-0">
         <p> © Israela Zimru <a href="#top" className="text-white pl-2"> | top </a> </p>
-      </div>
+      </div> */}
     </div>
   </Container>
 }

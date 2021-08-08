@@ -114,7 +114,7 @@ const MyFavorites = ({ connected, hasPageAaccess }) => {
             </Card>)}
         </Row>
         <Row className="justify-content-center my-2">
-            {!recipes.length && <Col md={{ span: 6 }} id="msgDefaultFAV" className="my-4 text-center h1font">
+            {!recipes.length && !loading && <Col md={{ span: 6 }} id="msgDefaultFAV" className="my-4 text-center h1font">
                 <p className="pt-5">
                     This recipes collection is empty :(
                     <br></br>

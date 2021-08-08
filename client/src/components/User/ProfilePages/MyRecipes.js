@@ -141,7 +141,7 @@ const MyRecipes = ({ connected, hasPageAaccess }) => {
         </Row>
         <Row className="justify-content-center">
             <Col></Col>
-            {!recipes.length && <Col md={{ span: 6 }} id="msgDefault" className="text-center h1font my-5">
+            {!recipes.length && !loading && <Col md={{ span: 6 }} id="msgDefault" className="text-center h1font my-5">
                 Feel free to add a new recipe to the site !
                 <br></br>
                 <FontAwesomeIcon icon={faSmileWink} style={{}} />

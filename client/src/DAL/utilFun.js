@@ -1,8 +1,11 @@
 export function hasPageAaccess(connected, history) {
-    if (!connected) {
-        console.log(connected, "connected");
+    // console.log("connected status", connected);
+    if (!localStorage.getItem("user")) {
+        // if (!connected) {
+        // console.log("not connected - return home page", connected);
         history.push("/")
     }
+    // console.log("connected, staying in this page", connected);
 }
 
 
