@@ -272,7 +272,10 @@ export default function Recipes({ isConnected, UserId }) {
         </ListGroup>
 
         {loading && <Row className="justify-content-center mx-auto" id="spinnerStlye">
-            <Spinner animation="border" variant="warning" />
+            <Col>
+                <h1>please wait a few minutes...</h1>
+                <Spinner animation="border" variant="warning" />
+            </Col>
         </Row>}
 
         <Row className="justify-content-center mb-3">

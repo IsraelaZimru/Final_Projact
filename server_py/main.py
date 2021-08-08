@@ -31,7 +31,10 @@ app.config['CORS_HEADERS'] = 'content-type'
 
 
 UPLOAD_FOLDER = 'public/images'
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+# app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+# auth and hash password
+auth = HTTPBasicAuth()
 
 
 app.register_blueprint(information)
@@ -42,7 +45,7 @@ app.register_blueprint(favorites)
 
 def upload_image(file):
     filename = str(round(time.time()*1000)) + secure_filename(file.filename)
-    file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+    file.save(os.path.join(UPLOAD_FOLDER, filename))
     return filename
 
 
@@ -54,34 +57,6 @@ def load_recipe_image(_id):
         get_recipe.update(image='images/' + upload_image(get_image))
         return json.dumps(id, default=str)
     return jsonify({'status': "not ok"})
-
-
-# auth and hash password
-auth = HTTPBasicAuth()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
