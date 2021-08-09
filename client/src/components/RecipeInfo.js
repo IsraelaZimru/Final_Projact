@@ -146,12 +146,12 @@ const RecipeInfo = ({ hasPageAaccess, onselect }) => {
                 <h1 className="mt-4">Ingredients:</h1>
                 <p>
                     <a style={{ marginRight: "5px" }} target="_blank" rel="noreferrer" href={`https://api.whatsapp.com/send?text=http://localhost:3000/recipe_details/${selectRecipe.id}`} data-action="share/whatsapp/share">
-                        <img alt="facebook" src={whatapp} style={{ maxHeight: "16px", width: "34px" }} />
+                        <img alt="whatapp" src={whatapp} style={{ maxHeight: "16px", width: "34px" }} />
 
                     </a>
-                    <a target="_blank" rel="noreferrer" href={`https://www.facebook.com/sharer/sharer.php?u=http://localhost:3000/recipe_details/${selectRecipe.id}`} class="fb-xfbml-parse-ignore">
+                    {/* <a target="_blank" rel="noreferrer" href={`https://www.facebook.com/sharer/sharer.php?u=http://localhost:3000/recipe_details/${selectRecipe.id}`} class="fb-xfbml-parse-ignore">
                         <img alt="facebook" src={facebook} style={{ maxHeight: "16px", width: "34px" }} />
-                    </a>
+                    </a> */}
                     <FontAwesomeIcon icon={faPrint} className="mx-2 mb-0 pb-0" onClick={printRecipe} style={{ cursor: "pointer" }} />
 
                 </p>

@@ -9,7 +9,10 @@ function SignUp({ hasPageAaccess, connected }) {
     let history = useHistory();
     useEffect(() => {
         window.scrollTo(0, 0);
-        hasPageAaccess(!connected, history)
+        // hasPageAaccess(connected, history)
+        if (localStorage.getItem("user")) {
+            history.push("/")
+        }
     }, [connected])
 
     const [validated, setValidated] = useState(false);
