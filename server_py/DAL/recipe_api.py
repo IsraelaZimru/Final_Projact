@@ -1,4 +1,4 @@
-from Modules.classes import Recipes
+from Database.classes import Recipes
 from utils.helper_functions import organize_ings_for_db
 
 
@@ -20,4 +20,23 @@ def new_recipe(info):
         allIngredients=organize_ings_for_db(_ings),
         instructions=_insts).save()
     return new_recipe_info.id
+
+
+def update_recipe(info,_id):
+    _recipe = info["recipe"]
+    _ings = info["ingredients"]
+    _insts = info["instructions"]
+    recipe_to_update = Recipes.objects(id=_id).first()
+    recipe_to_update.update(
+        name=_recipe["recipeName"],
+        description=_recipe["description"],
+        level=_recipe["level"],
+        Servings=_recipe["Servings"],
+        prepTimeMins=_recipe["prepTimeMins"],
+        CookingTime=_recipe["CookingTime"],
+        allCategories=_recipe["categories"],
+        alldiets=_recipe["diets"],
+        allIngredients=organize_ings_for_db(_ings),
+        instructions=_insts)
+    return recipe_to_update.id
 

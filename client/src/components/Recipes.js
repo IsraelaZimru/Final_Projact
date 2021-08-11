@@ -86,7 +86,7 @@ export default function Recipes({ isConnected, UserId }) {
         setSelectedIng(prev => newArr);
         console.log("selectedIng", newArr);
 
-        setLoading(true)
+        // setLoading(true)
         let temp = await getRecipe()
         console.log("temp1", temp);
 
@@ -103,7 +103,7 @@ export default function Recipes({ isConnected, UserId }) {
 
         console.log("temp2", temp);
         setApiRecipes(prev => temp)
-        setLoading(false)
+        // setLoading(false)
 
     };
 

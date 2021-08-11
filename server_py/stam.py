@@ -5,7 +5,7 @@ import os
 from flask_httpauth import HTTPBasicAuth
 from werkzeug.security import generate_password_hash, check_password_hash
 from mongoengine import *
-from Modules.classes import Users, Diets, Categories, Ingredients, Recipes, Measuring_Units
+from Database.classes import Users, Diets, Categories, Ingredients, Recipes, Measuring_Units
 from datetime import datetime
 # from datetime import time
 from werkzeug.utils import secure_filename

@@ -9,16 +9,14 @@ from utils.helper_functions import return_organize_list, return_organize_ings_li
 
 UPLOAD_FOLDER = 'public/images'
 
-# connect(host="mongodb+srv://IsraelaZimru:7qGPRky0r5lbdUir@cluster0.zr2d0.mongodb.net/RecipesFullstack") #old connection
 connect(host="mongodb+srv://IsraelaZimru:W54mqTlPB7pfmiet@fullstackprojects.epp4t.mongodb.net/FullstackProjects")
 
 
 class Users(Document):
-    # from Modules.Recipes import Recipes
-    first_name = StringField(required=True)
-    last_name = StringField(required=True)
-    password = StringField(required=True)
-    email = StringField(required=True, unique=True)
+    first_name = StringField(required=True, min_length=3)
+    last_name = StringField(required=True, min_length=3)
+    password = StringField(required=True, min_length=6)
+    email = EmailField(required=True, unique=True)
     my_favorites = ListField()
     is_admin = IntField(required=True, default=0)
 
@@ -29,7 +27,8 @@ class Users(Document):
             "email": self.email,
         }
         # print("id-", self.id)
-        return json.dumps(user_dict, default=str)
+        # return json.dumps(user_dict, default=str)
+        return user_dict
 
     def json_for_update(self):
         user_dict = {
@@ -49,14 +48,13 @@ class Users(Document):
 
 
 class Recipes(Document):
-    # from Modules.Users import Users
     name = StringField(required=True, unique=True)
     user_id = ReferenceField(Users, reverse_delete_rule=CASCADE)
     image = StringField()
-    description = StringField(required=True)
+    description = StringField(required=True, min_length=4)
     views = IntField(required=True, default=0)
     date = StringField(required=True, default=str(datetime.utcnow()))
-    level = StringField(choices=['easy', 'medium', 'hard'])
+    level = StringField(choices=['easy', 'medium', 'hard'], required=True)
     Servings = IntField(required=True)
     prepTimeMins = IntField(required=True)
     CookingTime = IntField(required=True)
@@ -86,7 +84,6 @@ class Recipes(Document):
             "allIngredients": self.allIngredients
         }
         return json.dumps(recipe_dict, default=str)
-        # return recipe_dict
 
     def data(self):
         cats = return_organize_list(self.allCategories, Categories.objects)

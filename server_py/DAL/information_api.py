@@ -1,6 +1,6 @@
 import json
 
-from Modules.classes import Diets, Categories, Recipes, Ingredients, Measuring_Units
+from Database.classes import Diets, Categories, Recipes, Ingredients, Measuring_Units
 
 
 def organize_diets_cats():

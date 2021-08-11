@@ -1,7 +1,7 @@
 import json
 from flask import Blueprint
 from DAL.information_api import organize_diets_cats, most_recipes, units_and_ings, is_available
-from Modules.classes import Ingredients, Recipes
+from Database.classes import Ingredients, Recipes
 
 information = Blueprint('information', __name__)
 

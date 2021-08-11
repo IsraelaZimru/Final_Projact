@@ -1,11 +1,6 @@
 import json
-import os
-from datetime import time
-from werkzeug.utils import secure_filename
-import requests
 from flask import Blueprint, request
-from Modules.classes import Diets, Categories, Ingredients, Measuring_Units, Recipes, Users
-from utils.helper_functions import organize_ings_for_db
+from Database.classes import Recipes, Users
 
 favorites = Blueprint('favorites', __name__)
 
@@ -13,7 +8,6 @@ favorites = Blueprint('favorites', __name__)
 @favorites.route("/recipes/MyFavorites/ids/<_user_id>")
 def favorites_recipes_ids(_user_id):
     recipes_id = [{"recipeID": recipe} for recipe in Users.objects(id=_user_id).first().my_favorites]
-    # print(recipes_id)
     return json.dumps(recipes_id, default=str)
 
 
