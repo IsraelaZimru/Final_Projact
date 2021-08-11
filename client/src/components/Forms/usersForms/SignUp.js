@@ -25,8 +25,8 @@ function SignUp({ hasPageAaccess, connected }) {
         email: { isRequired: true, pattern: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, msg: [], value: "", isInVaild: false },
         firstName: { isRequired: true, pattern: /\w{2,}/, msg: [], value: "", isInVaild: false },
         lastName: { isRequired: true, pattern: /\w{2,}/, msg: [], value: "", isInVaild: false },
-        password: { isRequired: true, pattern: /[\s\S]{2,}/, msg: [], value: "", isInVaild: false },
-        passwordVerification: { isRequired: true, pattern: /[\s\S]{2,}/, msg: [], value: "", isInVaild: false },
+        password: { isRequired: true, pattern: /[\s\S]{6,}/, msg: [], value: "", isInVaild: false },
+        passwordVerification: { isRequired: true, pattern: /[\s\S]{6,}/, msg: [], value: "", isInVaild: false },
     })
 
     const handleSubmit = async (event) => {

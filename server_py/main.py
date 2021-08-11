@@ -8,8 +8,7 @@ from routes.users.route import users
 
 def create_app():
     app = Flask(__name__, static_url_path="", static_folder="public")
-    CORS(app, supports_credentials=True)#, resources={
-    #     r"/api/*": {"origins": "http://localhost:3000"}})
+    CORS(app, supports_credentials=True)
     app.config['CORS_HEADERS'] = 'content-type'
     app.register_blueprint(information)
     app.register_blueprint(recipe)

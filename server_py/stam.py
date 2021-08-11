@@ -1,3 +1,26 @@
+# --------------------------------------------------------------
+# class Favorites(Document):
+#     user_id = ReferenceField(Users, reverse_delete_rule=CASCADE)
+#     recipes_id = ReferenceField(Recipes, reverse_delete_rule=CASCADE)
+
+# for user in Users.objects:
+#     print(user.first_name)
+
+# syntex to add new data
+# rona = Users(email='lala@lala.com', first_name='lala', last_name='lala', password=generate_password_hash("123456"),is_admin=1).save()
+# ross = Users.objects(email='slzimro@example.com').get.save()
+
+# rona = Users.objects(email='lala@lala.com').first()
+# rona.update(password=generate_password_hash("123456"))
+# print("rona.password", rona.password)
+
+# for user in Users.objects:
+#     user.update(set__password=generate_password_hash("123456"))
+#     print(user.first_name, user.password)
+
+
+
+
 # from flask_restplus import abort
 import requests
 import json

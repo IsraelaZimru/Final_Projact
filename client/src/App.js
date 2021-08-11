@@ -13,7 +13,7 @@ import MyRecipes from './components/User/ProfilePages/MyRecipes';
 import UserProfile from './components/User/ProfilePages/UserProfile';
 import { useState, useEffect } from 'react';
 import NewRecipe from './components/Forms/AddRecipe/newRecipe';
-import { checkLoginAccess, selectedItem, getDetaildsFromDb } from './DAL/api'
+import { checkLoginAccess, selectedItem, getDetaildsFromDb, logoutDeleteCookie } from './DAL/api'
 import RecipeInfo from '../src/components/RecipeInfo'
 import UserSecondNavber from "./components/User/UserSecondNavber";
 import ErrorMsg from './components/User/ProfilePages/ErrorMsg';
@@ -94,6 +94,7 @@ function App() {
   const logOut = () => {
     window.scrollTo(0, 0);
     localStorage.clear();
+    logoutDeleteCookie()
     setConnected(false)
   }
 

@@ -1,7 +1,7 @@
 import json
 
 from Database.classes import Recipes
-from utils.helper_functions import organize_ings_for_db
+from utils.helper_functions import organize_ings_for_db, upload_image
 
 
 def all_recipes():
@@ -19,6 +19,14 @@ def hide(_id):
         Recipes.objects(id=_id).update(isPrivate=1)
         return json.dumps(_id), 200
     return json.dumps({"error": "Recipe not found"}), 400
+
+
+def add_image_to_recipe(_id, get_image):
+    if get_image:
+        get_recipe = Recipes.objects(id=_id).get()
+        get_recipe.update(image='images/' + upload_image(get_image))
+        return id
+    return {'status': "No image attached"}
 
 
 def new_recipe(info):

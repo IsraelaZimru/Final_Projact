@@ -35,8 +35,8 @@ def units_and_ings():
 
 
 def is_available(_name):
-    if Recipes.objects(name=_name):
-        name_exist = Recipes.objects(name=_name).get()
+    if Recipes.objects(name__iexact=_name):
+        name_exist = Recipes.objects(name__iexact=_name).get()
         print("name:", name_exist.name, True)
         return json.dumps(False), 200
     print(False)

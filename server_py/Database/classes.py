@@ -1,11 +1,7 @@
 from datetime import datetime
 from mongoengine import *
 import json
-import os
-from flask_httpauth import HTTPBasicAuth
-from werkzeug.security import generate_password_hash, check_password_hash
-from utils.helper_functions import return_organize_list, return_organize_ings_list, return_only_ings, \
-    organizedIngredients, ingredients_for_client
+from utils.helper_functions import return_organize_list, return_organize_ings_list, return_only_ings, ingredients_for_client
 
 UPLOAD_FOLDER = 'public/images'
 
@@ -26,8 +22,6 @@ class Users(Document):
             "id": self.id,
             "email": self.email,
         }
-        # print("id-", self.id)
-        # return json.dumps(user_dict, default=str)
         return user_dict
 
     def json_for_update(self):
@@ -37,11 +31,10 @@ class Users(Document):
             "id": self.id,
             "email": self.email,
         }
-        # print("id-", self.id)
         return json.dumps([user_dict], default=str)
 
 
-    meta = {  # help with searching faster in mongodb
+    meta = {
         "indexes": ["email"],
         "ordering": ["-date_created"]
     }
@@ -67,7 +60,6 @@ class Recipes(Document):
     def json(self):
         recipe_dict = {
             "name": self.name,
-            # "user_id": str(self.user_id),
             "user_id": self.user_id,
             "image": self.image,
             "description": self.description,
@@ -131,7 +123,6 @@ class Recipes(Document):
             "diets": diets,
             "ingredients": ings
         }
-        # print("self.date", self.date, type(self.date))
         return recipe_dict
 
     def raw_data_for_update(self):
@@ -166,23 +157,3 @@ class Diets(Document):
 
 class Categories(Document):
     name = StringField(required=True, unique=True)
-
-# --------------------------------------------------------------
-# class Favorites(Document):
-#     user_id = ReferenceField(Users, reverse_delete_rule=CASCADE)
-#     recipes_id = ReferenceField(Recipes, reverse_delete_rule=CASCADE)
-
-# for user in Users.objects:
-#     print(user.first_name)
-
-# syntex to add new data
-# rona = Users(email='lala@lala.com', first_name='lala', last_name='lala', password=generate_password_hash("123456"),is_admin=1).save()
-# ross = Users.objects(email='slzimro@example.com').get.save()
-
-# rona = Users.objects(email='lala@lala.com').first()
-# rona.update(password=generate_password_hash("123456"))
-# print("rona.password", rona.password)
-
-# for user in Users.objects:
-#     user.update(set__password=generate_password_hash("123456"))
-#     print(user.first_name, user.password)

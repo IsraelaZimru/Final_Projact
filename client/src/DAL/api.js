@@ -104,6 +104,13 @@ export async function setUnSeenRecipe(recipeId) {
     return response.data;
 }
 
+export async function logoutDeleteCookie() {
+    const response = await axios(`/users/logout`);
+    return response.data;
+}
+
+
+
 
 export async function checkLoginAccess({ email, password }) {
     try {
@@ -147,13 +154,9 @@ export async function selectedItem(id) {
 
 export async function getDetaildsFromDb(id) {
     try {
-        const data = await fetch(`http://localhost:${port}/users/getUserInfo`, {
-            method: 'POST',
-            headers: { 'Content-Type': "application/json" },
-            body: JSON.stringify(id)
-        })
-        const userinfo = await data.json()
-        // console.log("userinfo", userinfo);
+        const response = await axios.post('/users/getUserInfo', id, { withCredentials: true })
+        const userinfo = await response.data
+        console.log("userinfo", userinfo);
         return userinfo;
     } catch (err) {
         console.log(err);
