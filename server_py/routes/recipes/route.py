@@ -1,6 +1,6 @@
 import json
 from flask import Blueprint, request
-from DAL.recipe_api import new_recipe, update_recipe
+from DAL.recipe_api import new_recipe, update_recipe, all_recipes, recipe_details, hide
 from Database.classes import Recipes
 from utils.helper_functions import upload_image
 
@@ -9,23 +9,14 @@ recipe = Blueprint('recipe', __name__)
 
 @recipe.route('/recipes')
 def get_all_recipes():
-    recipes = [recipe.data() for recipe in Recipes.objects(isPrivate=0).order_by('-date')]
-    return json.dumps(recipes, default=str)
-
-
-@recipe.route('/recipes/reset', methods=['PUT'])
-def reset_recipes():
-    for recipe in Recipes.objects(isPrivate=1):
-        recipe.update(isPrivate=0)
-    return json.dumps("All recipes are visible in the site", default=str)
-
+    response = all_recipes()
+    return json.dumps(response, default=str)
 
 @recipe.route('/recipeInfo', methods=['POST'])
 def get_single_recipe():
     info = request.get_json()
-    _id = info["id"]
-    recipe = Recipes.objects(id=_id).get().all_data()
-    return json.dumps([recipe], default=str)
+    response = recipe_details(info)
+    return json.dumps(response, default=str)
 
 
 @recipe.route('/recipeInfo/<_id>', methods=["GET", "PUT"])
@@ -48,11 +39,12 @@ def add_recipe():
 
 @recipe.route('/recipeInfo/unSeenRecipe/<_id>', methods=['PUT'])
 def hide_recipe(_id):
-    if Recipes.objects(id=_id):
-        Recipes.objects(id=_id).update(isPrivate=1)
-        return json.dumps(_id), 200
-    return json.dumps({"error": "Recipe not found"}), 400
-
+    # if Recipes.objects(id=_id):
+    #     Recipes.objects(id=_id).update(isPrivate=1)
+    #     return json.dumps(_id), 200
+    # return json.dumps({"error": "Recipe not found"}), 400
+    response = hide(_id)
+    return response
 
 @recipe.route('/recipes/upload/<_id>', methods=["POST"])
 def load_recipe_image(_id):
@@ -64,4 +56,9 @@ def load_recipe_image(_id):
     return json.dumps({'status': "No image attached"})
 
 
+@recipe.route('/recipes/reset', methods=['PUT'])
+def reset_recipes():
+    for recipe in Recipes.objects(isPrivate=1):
+        recipe.update(isPrivate=0)
+    return json.dumps("All recipes are visible in the site", default=str)
 

@@ -12,7 +12,9 @@ const MyRecipes = ({ connected, hasPageAaccess }) => {
     const { id } = useParams()
     const [loading, setLoading] = useState(true)
     const [show, setShow] = useState(false);
+    const [deleteRecipe, setDeleteRecipe] = useState({ "name": "", "id": "" });
     const [recipes, setRecipes] = useState([])
+
 
     useEffect(() => {
         hasPageAaccess(connected, history);
@@ -46,7 +48,10 @@ const MyRecipes = ({ connected, hasPageAaccess }) => {
 
 
 
-    const handleShow = () => setShow(true);
+    const handleShow = (name, id) => {
+        setDeleteRecipe(prev => ({ "name": name, "id": id }))
+        setShow(true)
+    };
     const handleClose = () => setShow(false);
 
     const handleDelete = async (recipeId) => {
@@ -114,31 +119,35 @@ const MyRecipes = ({ connected, hasPageAaccess }) => {
                         </Col>
                         <Col className="text-center" >
 
-                            <FontAwesomeIcon onClick={handleShow} icon={faTrashAlt} style={{ cursor: "pointer" }} />
-
-                            <Modal show={show} onHide={handleClose}>
-                                <Modal.Header closeButton>
-                                    <Modal.Title>Warning !</Modal.Title>
-                                </Modal.Header>
-                                <Modal.Body>
-                                    <strong>
-                                        This will permanently delete the recipe, are you sure?
-                                    </strong>
-                                </Modal.Body>
-                                <Modal.Footer>
-                                    <Button variant="secondary" onClick={handleClose}>
-                                        return back
-                                    </Button>
-                                    <Button variant="danger" onClick={() => handleDelete(item.id)}>
-                                        Delete
-                                    </Button>
-                                </Modal.Footer>
-                            </Modal>
+                            <FontAwesomeIcon onClick={() => handleShow(item.name, item.id)} icon={faTrashAlt} style={{ cursor: "pointer" }} />
 
                         </Col>
                     </Row>
                 </Card.Footer>
             </Card>)}
+
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Warning !</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <strong>
+                        This will permanently delete the recipe:
+                        <spam className="text-danger"> {deleteRecipe.name}</spam>, are you sure?
+                    </strong>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        return back
+                    </Button>
+                    <Button variant="danger" onClick={() => {
+                        console.log("to delete", deleteRecipe.name);
+                        handleDelete(deleteRecipe.id)
+                    }}>
+                        Delete
+                    </Button>
+                </Modal.Footer>
+            </Modal>
         </Row>
         <Row className="justify-content-center">
             <Col></Col>

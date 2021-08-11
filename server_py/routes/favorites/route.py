@@ -1,5 +1,7 @@
 import json
 from flask import Blueprint, request
+from flask_cors import cross_origin
+
 from Database.classes import Recipes, Users
 
 favorites = Blueprint('favorites', __name__)
@@ -19,7 +21,7 @@ def my_favorites_recipes(_user_id):
 
 
 @favorites.route('/recipes/MyFavorites/<user_id>/<recipe_id>', methods=["DELETE"])
-def new_favorites_recipes(user_id, recipe_id):
+def new_favorites_recipes_list(user_id, recipe_id):
     Users.objects(id=user_id).update(pull__my_favorites=recipe_id)
     recipes = [Recipes.objects(id=recipe_id).first().data()
                for recipe_id in Users.objects(id=user_id).first().my_favorites]
