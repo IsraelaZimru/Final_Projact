@@ -81,7 +81,7 @@ const UserProfile = ({ connected, hasPageAaccess, getDetaildsFromDb, userUpdateH
         const checkUpdateDb = await updateUserInfo(allRelevantData)
         setLoading(false)
         console.log("checkUpdateDb", checkUpdateDb);
-        if (checkUpdateDb.error) {
+        if (!checkUpdateDb) {
             setValidated(false);
             setShow(true)
             setTimeout(() => setShow(false), 3000)

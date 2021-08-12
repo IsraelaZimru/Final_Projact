@@ -65,3 +65,4 @@ def detele_user_cookie():
     res.set_cookie("user", "", expires=0)
     print("delete cookie")
     return res
+

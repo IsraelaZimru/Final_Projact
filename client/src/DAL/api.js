@@ -147,13 +147,8 @@ export async function selectedItem(id) {
 
 export async function getDetaildsFromDb(id) {
     try {
-        const data = await fetch(`http://localhost:${port}/users/getUserInfo`, {
-            method: 'POST',
-            headers: { 'Content-Type': "application/json" },
-            body: JSON.stringify(id)
-        })
-        const userinfo = await data.json()
-        // console.log("userinfo", userinfo);
+        const response = await axios.post("/users/getUserInfo", id, { withCredentials: true })
+        const userinfo = await response.data
         return userinfo;
     } catch (err) {
         console.log(err);
@@ -162,14 +157,9 @@ export async function getDetaildsFromDb(id) {
 
 export async function updateUserInfo({ id, ...rest }) {
     try {
-        const response = await fetch(`http://localhost:${port}/users/${id}`, {
-            method: 'PUT',
-            headers: { 'Content-Type': "application/json" },
-            body: JSON.stringify(rest)
-        })
-        const details = await response.json();
+        const response = await axios.put(`http://localhost:${port}/users/${id}`, rest, { withCredentials: true })
+        const details = await response.data;
         return details;
-
     } catch (err) {
         console.log(err);
     }

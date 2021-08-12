@@ -1,16 +1,24 @@
 import json
 from flask import Blueprint, request
-from DAL.recipe_api import new_recipe, update_recipe, all_recipes, recipe_details, hide
+from DAL.recipe_api import new_recipe, update_recipe, all_recipes, recipe_details, hide, add_image_to_recipe
 from Database.classes import Recipes
+from utils.decorators import validate_cookie
 from utils.helper_functions import upload_image
 
 recipe = Blueprint('recipe', __name__)
+
+
+@recipe.route('/recipeInfo/unSeenRecipe/<_id>', methods=['PUT'])
+def hide_recipe(_id):
+    response = hide(_id)
+    return response
 
 
 @recipe.route('/recipes')
 def get_all_recipes():
     response = all_recipes()
     return json.dumps(response, default=str)
+
 
 @recipe.route('/recipeInfo', methods=['POST'])
 def get_single_recipe():
@@ -31,29 +39,18 @@ def recipe_raw_data(_id):
 
 
 @recipe.route('/addNewRecipe', methods=['POST'])
+@validate_cookie
 def add_recipe():
         info = request.get_json()
         response = new_recipe(info)
         return json.dumps(response, default=str)
 
 
-@recipe.route('/recipeInfo/unSeenRecipe/<_id>', methods=['PUT'])
-def hide_recipe(_id):
-    # if Recipes.objects(id=_id):
-    #     Recipes.objects(id=_id).update(isPrivate=1)
-    #     return json.dumps(_id), 200
-    # return json.dumps({"error": "Recipe not found"}), 400
-    response = hide(_id)
-    return response
-
 @recipe.route('/recipes/upload/<_id>', methods=["POST"])
 def load_recipe_image(_id):
     get_image = request.files["image"]
-    if get_image:
-        get_recipe = Recipes.objects(id=_id).get()
-        get_recipe.update(image='images/' + upload_image(get_image))
-        return json.dumps(id, default=str)
-    return json.dumps({'status': "No image attached"})
+    response = add_image_to_recipe(_id, get_image)
+    return json.dumps(response, default=str)
 
 
 @recipe.route('/recipes/reset', methods=['PUT'])

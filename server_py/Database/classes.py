@@ -26,8 +26,6 @@ class Users(Document):
             "id": self.id,
             "email": self.email,
         }
-        # print("id-", self.id)
-        # return json.dumps(user_dict, default=str)
         return user_dict
 
     def json_for_update(self):
@@ -37,7 +35,6 @@ class Users(Document):
             "id": self.id,
             "email": self.email,
         }
-        # print("id-", self.id)
         return json.dumps([user_dict], default=str)
 
 
@@ -67,7 +64,6 @@ class Recipes(Document):
     def json(self):
         recipe_dict = {
             "name": self.name,
-            # "user_id": str(self.user_id),
             "user_id": self.user_id,
             "image": self.image,
             "description": self.description,
