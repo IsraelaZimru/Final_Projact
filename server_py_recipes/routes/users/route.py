@@ -4,10 +4,10 @@ from DAL.users_api import add_new_user, update_user, data_for_update_user, get_m
     detele_user_cookie
 from utils.decorators import validate_cookie
 
-usersRecipes = Blueprint('usersRecipes', __name__)
+pyusers = Blueprint('pyusers', __name__)
 
 
-@usersRecipes.route('/users/login', methods=['POST'])
+@pyusers.route('/users/login', methods=['POST'])
 def login():
     try:
         info = request.get_json()
@@ -18,7 +18,7 @@ def login():
         return {"error": "user not found"}, 400
 
 
-@usersRecipes.route('/addUser', methods=['POST'])
+@pyusers.route('/addUser', methods=['POST'])
 def add_user():
     try:
         register_data = dict(request.get_json())
@@ -29,7 +29,7 @@ def add_user():
         return json.dumps({"error": "Signup failed"}), 400
 
 
-@usersRecipes.route("/users/getUserInfo", methods=['POST'])
+@pyusers.route("/users/getUserInfo", methods=['POST'])
 @validate_cookie
 def update_user_details():
     try:
@@ -41,7 +41,7 @@ def update_user_details():
         return json.dumps({"error": "Problem connecting to server"}), 400
 
 
-@usersRecipes.route('/users/<_id>', methods=["PUT"])
+@pyusers.route('/users/<_id>', methods=["PUT"])
 @validate_cookie
 def update_details(_id):
     try:
@@ -53,13 +53,13 @@ def update_details(_id):
         return json.dumps({"error": "Problem connecting to server"}), 400
 
 
-@usersRecipes.route('/recipes/MyRecipes/<_id>')
+@pyusers.route('/recipes/MyRecipes/<_id>')
 def my_recipes(_id):
     response = get_my_recipes(_id)
     return json.dumps(response), 200
 
 
-@usersRecipes.route('/users/logout')
+@pyusers.route('/users/logout')
 def logout():
     response = detele_user_cookie()
     return response

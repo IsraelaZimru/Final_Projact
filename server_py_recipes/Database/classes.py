@@ -7,7 +7,6 @@ UPLOAD_FOLDER = 'public/images'
 
 connect(host="mongodb+srv://IsraelaZimru:Hv5nPga9l3O7jbQ8@fullstackprojects.epp4t.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
 
-
 class Users(Document):
     first_name = StringField(required=True, min_length=3)
     last_name = StringField(required=True, min_length=3)
