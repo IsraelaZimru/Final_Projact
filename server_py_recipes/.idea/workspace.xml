@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="9248f00c-5537-4a43-8dab-6b64daa9f570" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/server_py_recipes.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/DAL/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/DAL/favorites_api.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/DAL/users_api.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Database/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Database/classes.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/routes/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/routes/myfavorites/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/routes/myfavorites/route.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/routes/roro/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/routes/roro/roro.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/routes/users/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/routes/users/route.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server_py/Database/classes.py" beforeDir="false" afterPath="$PROJECT_DIR$/../server_py/Database/classes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server_py/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/../server_py/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server_py/routes/users/route.py" beforeDir="false" afterPath="$PROJECT_DIR$/../server_py/routes/users/route.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="1wbOjAEYSjEkTCk1QDlQtxYogSW" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+  </component>
+  <component name="RunManager">
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+      <module name="server_py_recipes" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="9248f00c-5537-4a43-8dab-6b64daa9f570" name="Default Changelist" comment="" />
+      <created>1628723954045</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1628723954045</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

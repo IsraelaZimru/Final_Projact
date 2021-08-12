@@ -9,7 +9,7 @@ from utils.helper_functions import return_organize_list, return_organize_ings_li
 
 UPLOAD_FOLDER = 'public/images'
 
-connect(host="mongodb+srv://IsraelaZimru:W54mqTlPB7pfmiet@fullstackprojects.epp4t.mongodb.net/FullstackProjects")
+connect(host="mongodb+srv://IsraelaZimru:DSJ36tEZNgTY01PH@fullstackprojects.epp4t.mongodb.net/FullstackProjects")
 
 
 class Users(Document):
@@ -166,23 +166,3 @@ class Diets(Document):
 
 class Categories(Document):
     name = StringField(required=True, unique=True)
-
-# --------------------------------------------------------------
-# class Favorites(Document):
-#     user_id = ReferenceField(Users, reverse_delete_rule=CASCADE)
-#     recipes_id = ReferenceField(Recipes, reverse_delete_rule=CASCADE)
-
-# for user in Users.objects:
-#     print(user.first_name)
-
-# syntex to add new data
-# rona = Users(email='lala@lala.com', first_name='lala', last_name='lala', password=generate_password_hash("123456"),is_admin=1).save()
-# ross = Users.objects(email='slzimro@example.com').get.save()
-
-# rona = Users.objects(email='lala@lala.com').first()
-# rona.update(password=generate_password_hash("123456"))
-# print("rona.password", rona.password)
-
-# for user in Users.objects:
-#     user.update(set__password=generate_password_hash("123456"))
-#     print(user.first_name, user.password)
