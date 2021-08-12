@@ -1,10 +1,7 @@
 import json
-import requests
-from flask import Blueprint, request, jsonify, make_response
+from flask import Blueprint, request
 from DAL.users_api import login_user, data_for_update_user, update_user, add_new_user, get_my_recipes, \
     detele_user_cookie
-from Database.classes import Diets, Categories, Users, Ingredients, Measuring_Units, Recipes
-from werkzeug.security import generate_password_hash, check_password_hash
 from utils.decorators import validate_cookie
 
 users = Blueprint('users', __name__)
@@ -33,7 +30,7 @@ def add_user():
 
 
 @users.route("/users/getUserInfo", methods=['POST'])
-# @validate_cookie
+@validate_cookie
 def update_user_details():
     try:
         register_data = dict(request.get_json())
@@ -57,6 +54,7 @@ def update_details(_id):
 
 
 @users.route('/recipes/MyRecipes/<_id>')
+@validate_cookie
 def my_recipes(_id):
     response = get_my_recipes(_id)
     return json.dumps(response), 200

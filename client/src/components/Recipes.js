@@ -86,9 +86,10 @@ export default function Recipes({ isConnected, UserId }) {
         setSelectedIng(prev => newArr);
         console.log("selectedIng", newArr);
 
-        // setLoading(true)
+        setLoading(true)
         let temp = await getRecipe()
         console.log("temp1", temp);
+        setLoading(false)
 
         if (newArr.length < 1) {
             // console.log("selectedIng is empty", newArr);
@@ -126,12 +127,14 @@ export default function Recipes({ isConnected, UserId }) {
         if (selectedIng.includes(type)) {
             return;
         }
+        setLoading(true)
         setSelectedIng(prev => [...prev, type]);
         const temp = apiRecipes.filter(recipe => {
             // console.log(type.class, "type.class");
             return recipe[type.class].includes(type.name)
         })
         setApiRecipes(prev => [...temp])
+        setLoading(false)
         console.log("temp-add", temp);
         paginate(1)
 
@@ -282,7 +285,7 @@ export default function Recipes({ isConnected, UserId }) {
 
         <Row className="justify-content-center mb-3">
             {/* {!!apiRecipes.length && apiRecipes.map((item, i) => <Card */}
-            {!!currentRecipes.length && currentRecipes.map((item, i) => <Card
+            {!!currentRecipes.length && !loading && currentRecipes.map((item, i) => <Card
                 id="myFav"
                 key={i}
                 sm={6}

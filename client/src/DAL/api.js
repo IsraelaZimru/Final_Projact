@@ -181,15 +181,11 @@ export async function setNewRecipe(data, image) {
 }
 
 
-// export async function loadImgePY(id, image) {
-//     try {
-//         const response = await axios.post(`/recipes/upload/${id}`, image);
-//         console.log(response.data);
-//         return response.data;
-//     } catch (err) {
-//         console.log(err)
-//     }
-// }
+export async function logoutDeleteCookie() {
+    const response = await axios('/users/logout')
+    return response
+}
+
 
 export async function updateRecipe(id, data, image) {
     try {

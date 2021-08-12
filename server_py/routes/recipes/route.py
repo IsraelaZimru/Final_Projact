@@ -3,7 +3,6 @@ from flask import Blueprint, request
 from DAL.recipe_api import new_recipe, update_recipe, all_recipes, recipe_details, hide, add_image_to_recipe
 from Database.classes import Recipes
 from utils.decorators import validate_cookie
-from utils.helper_functions import upload_image
 
 recipe = Blueprint('recipe', __name__)
 
