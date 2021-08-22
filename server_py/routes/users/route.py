@@ -30,7 +30,7 @@ def add_user():
 
 
 @users.route("/users/getUserInfo", methods=['POST'])
-@validate_cookie
+# @validate_cookie
 def update_user_details():
     try:
         register_data = dict(request.get_json())
@@ -42,7 +42,7 @@ def update_user_details():
 
 
 @users.route('/users/<_id>', methods=["PUT"])
-@validate_cookie
+# @validate_cookie
 def update_details(_id):
     try:
         user_data = dict(request.get_json())
@@ -54,7 +54,7 @@ def update_details(_id):
 
 
 @users.route('/recipes/MyRecipes/<_id>')
-@validate_cookie
+# @validate_cookie
 def my_recipes(_id):
     response = get_my_recipes(_id)
     return json.dumps(response), 200
