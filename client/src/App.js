@@ -105,7 +105,7 @@ function App() {
     setShowLogin(temp)
   }
 
-  return <Container fluid className="px-0" >
+  return <Container fluid className="pt-0 pb-3" >
     <span id="top"></span>
     <Router>
       <NavbarHome connected={connected} user={user} logOut={logOut} showLogin={showLogin} displayLogin={displayLogin} />
@@ -168,11 +168,11 @@ function App() {
 
     </Router >
 
-    <div style={{ height: "35px" }} >
-      {/* <div className="footer text-white text-center mb-0">
+    {/* <div style={{ height: "35px" }} > */}
+    {/* <div className="footer text-white text-center mb-0">
         <p> © Israela Zimru <a href="#top" className="text-white pl-2"> | top </a> </p>
       </div> */}
-    </div>
+    {/* </div> */}
   </Container>
 }
 export default App;
