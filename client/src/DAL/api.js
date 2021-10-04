@@ -1,8 +1,8 @@
 import axios from 'axios';
 import fetch from 'node-fetch';
 
-const port = 3100;
-// const port = 5000;
+// const port = 3100;
+const port = 5000;
 
 axios.defaults.withCredentials = true; //I changed it to false!!! meaning that cookies not required!!
 axios.defaults.baseURL = `http://localhost:${port}`;

@@ -9,8 +9,8 @@ from utils.helper_functions import return_organize_list, return_organize_ings_li
 
 UPLOAD_FOLDER = 'public/images'
 
-connect(host="mongodb+srv://IsraelaZimru:DSJ36tEZNgTY01PH@fullstackprojects.epp4t.mongodb.net/FullstackProjects")
-
+# connect(host="mongodb+srv://IsraelaZimru:2DFOudU8lkOZ4uC9@fullstackprojects.epp4t.mongodb.net/FullstackProjects")
+connect(host="mongodb+srv://IsraelaZimru:2DFOudU8lkOZ4uC9@fullstackprojects.epp4t.mongodb.net/FullstackProjects?ssl=true&ssl_cert_reqs=CERT_NONE")
 
 class Users(Document):
     first_name = StringField(required=True, min_length=3)

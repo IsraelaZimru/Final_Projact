@@ -8,7 +8,7 @@ favorites = Blueprint('favorites', __name__)
 
 
 @favorites.route("/recipes/MyFavorites/ids/<_user_id>")
-@validate_cookie
+# @validate_cookie
 def favorites_recipes_ids(_user_id):
     response = get_favorites_id_lst(_user_id)
     return json.dumps(response, default=str)
