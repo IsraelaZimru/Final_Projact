@@ -71,7 +71,7 @@ function App() {
       // const importUser = await checkingMatch(isData);
       // await updatingLoginStatus(importUser)
       const res = await checkingMatch(isData);
-      console.log("בדיקה:", checkUser.email, checkUser.password, isData, res);
+      // console.log("בדיקה:", checkUser.email, checkUser.password, isData, res);
       return res;
     } catch (err) {
       console.log(err)

@@ -42,8 +42,7 @@ router.post('/login', async function (req, res) {
 JSON.stringify
 const x = 33;
 
-//לוודא שהפרמטרים תקינים - לוודא שיש בכלל יוזר עם ת.ז הזו, אחרת לשלוח הודעת שגיאה 
-router.put('/:id', async function (req, res) { //I have to add validation!!!
+router.put('/:id', async function (req, res) {
   try {
     const { id } = req.params;
     const { firstName, lastName, password, email } = req.body;
@@ -57,4 +56,3 @@ router.put('/:id', async function (req, res) { //I have to add validation!!!
 
 
 module.exports = router;
-``
