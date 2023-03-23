@@ -22,7 +22,6 @@ const information = require('./routes/information');
 
 
 app.use(cors({
-    origin: ["http://localhost:3000", "https://ten-minutes-recipes.netlify.app"],
     credentials: true
 }))
 
