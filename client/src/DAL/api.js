@@ -3,12 +3,11 @@ import fetch from 'node-fetch';
 
 const port = 3100;
 // const port = 5000;
-// https://ten-minutes-recipes.onrender.com
 axios.defaults.withCredentials = true; //I changed it to false!!! meaning that cookies not required!!
-// axios.defaults.baseURL = `http://localhost:${port}`;
-// axios.defaults.headers['Access-Control-Allow-Origin'] = `http://localhost:3100`;
-axios.defaults.baseURL = `https://ten-minutes-recipes.onrender.com`;
-axios.defaults.headers['Access-Control-Allow-Origin'] = `https://ten-minutes-recipes.onrender.com`;
+axios.defaults.baseURL = `http://localhost:${port}`;
+axios.defaults.headers['Access-Control-Allow-Origin'] = `http://localhost:3100`;
+// axios.defaults.baseURL = `https://ten-minutes-recipes.onrender.com`;
+// axios.defaults.headers['Access-Control-Allow-Origin'] = `https://ten-minutes-recipes.onrender.com`;
 // const fetcher = require('./fetcher');
 
 
@@ -17,16 +16,16 @@ axios.defaults.headers['Access-Control-Allow-Origin'] = `https://ten-minutes-rec
 export async function MostRecipes() {
     const response = await axios(`/information/MostRecipes`);
     // const response = await axios(`/MostRecipes`, { withCredentials: false });
-    response.data[0].forEach(recipe => recipe.pic = `http://localhost:${port}/${recipe.image}`);
-    response.data[1].forEach(recipe => recipe.pic = `http://localhost:${port}/${recipe.image}`);
-    response.data[2].forEach(recipe => recipe.pic = `http://localhost:${port}/${recipe.image}`);
+    response.data[0].forEach(recipe => recipe.pic = `${axios.defaults.baseURL}/${recipe.image}`);
+    response.data[1].forEach(recipe => recipe.pic = `${axios.defaults.baseURL}/${recipe.image}`);
+    response.data[2].forEach(recipe => recipe.pic = `${axios.defaults.baseURL}/${recipe.image}`);
     return response.data;
 }
 
 export async function getMyRecipes(id) {
     //const response = axios.get(`/recipes/myRecipes/${id}`);
     const response = await axios(`recipes/MyRecipes/${id}`, { withCredentials: false });
-    response.data.forEach(recipe => recipe.pic = `http://localhost:${port}/${recipe.image}`);
+    response.data.forEach(recipe => recipe.pic = `${axios.defaults.baseURL}/${recipe.image}`);
     return response.data;
 }
 
@@ -36,7 +35,7 @@ export async function getMyRecipes(id) {
 export async function getRecipe() {
     const response = await axios(`/recipes`);
     const recipes = response.data;
-    recipes.forEach(recipe => recipe.pic = `http://localhost:${port}/${recipe.image}`);
+    recipes.forEach(recipe => recipe.pic = `${axios.defaults.baseURL}/${recipe.image}`);
     return recipes;
 }
 
@@ -67,19 +66,19 @@ export async function unitsAndIngs(name) {
 }
 
 export async function getUpdateDetails(id) {
-    const response = await axios.get(`http://localhost:${port}/recipeInfo/${id}`);
+    const response = await axios.get(`${axios.defaults.baseURL}/recipeInfo/${id}`);
     return response.data;
 }
 
 export async function getMyFavorites(id) {
     const response = await axios.get(`/recipes/MyFavorites/${id}`);
-    response.data.forEach(recipe => recipe.pic = `http://localhost:${port}/${recipe.image}`);
+    response.data.forEach(recipe => recipe.pic = `${axios.defaults.baseURL}/${recipe.image}`);
     return response.data;
 }
 
 export async function RemoveAndReturnFavoritesRecipes(userId, recipeId) {
     const response = await axios.delete(`/recipes/MyFavorites/${userId}/${recipeId}`);
-    response.data.forEach(recipe => recipe.pic = `http://localhost:${port}/${recipe.image}`);
+    response.data.forEach(recipe => recipe.pic = `${axios.defaults.baseURL}/${recipe.image}`);
     return response.data;
 }
 
@@ -131,7 +130,7 @@ export async function addNewUser(details) {
 
 export async function selectedItem(id) {
     try {
-        const result = await fetch(`http://localhost:${port}/recipeInfo`, {
+        const result = await fetch(`${axios.defaults.baseURL}/recipeInfo`, {
             method: 'POST',
             headers: { 'Content-Type': "application/json" },
             body: JSON.stringify({ "id": id })
@@ -139,7 +138,7 @@ export async function selectedItem(id) {
         const data = await result.json();
         console.log("result", data);
         const recipe = data[0];
-        recipe.image = recipe.image ? `http://localhost:${port}/${recipe.image}` : "";
+        recipe.image = recipe.image ? `${axios.defaults.baseURL}/${recipe.image}` : "";
         console.log("recipe", recipe);
         return recipe;
     } catch (err) {
@@ -159,7 +158,7 @@ export async function getDetaildsFromDb(id) {
 
 export async function updateUserInfo({ id, ...rest }) {
     try {
-        const response = await axios.put(`http://localhost:${port}/users/${id}`, rest, { withCredentials: true })
+        const response = await axios.put(`${axios.defaults.baseURL}/users/${id}`, rest, { withCredentials: true })
         const details = await response.data;
         return details;
     } catch (err) {
@@ -191,7 +190,7 @@ export async function logoutDeleteCookie() {
 
 export async function updateRecipe(id, data, image) {
     try {
-        const response = await axios.put(`http://localhost:${port}/recipeInfo/${id}`, data);
+        const response = await axios.put(`${axios.defaults.baseURL}/recipeInfo/${id}`, data);
 
         if (!response.data) {
             throw new Error("can't add new recipe or image")
