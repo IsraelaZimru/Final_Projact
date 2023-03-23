@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Button, Container, Form, Row, Col, Collapse, ListGroup, InputGroup, Card, Carousel } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
-import logo2 from 'C:/Users/ישראלה/Google Drive/Experis/final project/fullstack_Project/client/src/imgs/bkgd2.jpg'
+import logo2 from '../imgs/bkgd2.jpg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHistory } from "@fortawesome/free-solid-svg-icons";
 import { getRecipeNames, getingredientsNames, MostRecipes } from '../DAL/api'

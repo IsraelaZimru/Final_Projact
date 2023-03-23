@@ -3,10 +3,12 @@ import fetch from 'node-fetch';
 
 const port = 3100;
 // const port = 5000;
-
+// https://ten-minutes-recipes.onrender.com
 axios.defaults.withCredentials = true; //I changed it to false!!! meaning that cookies not required!!
-axios.defaults.baseURL = `http://localhost:${port}`;
-axios.defaults.headers['Access-Control-Allow-Origin'] = `http://localhost:3100`;
+// axios.defaults.baseURL = `http://localhost:${port}`;
+// axios.defaults.headers['Access-Control-Allow-Origin'] = `http://localhost:3100`;
+axios.defaults.baseURL = `https://ten-minutes-recipes.onrender.com`;
+axios.defaults.headers['Access-Control-Allow-Origin'] = `https://ten-minutes-recipes.onrender.com`;
 // const fetcher = require('./fetcher');
 
 

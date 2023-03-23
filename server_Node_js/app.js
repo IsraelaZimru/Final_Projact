@@ -22,7 +22,7 @@ const information = require('./routes/information');
 
 
 app.use(cors({
-    origin: "http://localhost:3000",
+    origin: ["http://localhost:3000", "https://ten-minutes-recipes.netlify.app"],
     credentials: true
 }))
 
@@ -34,6 +34,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyPraser.urlencoded())
 
+app.get('/', (req, res) => {
+    res.send('Hello worlddddd')
+})
 
 app.use('/recipeInfo', recipeInfo);
 app.use('/users', usersRouter);
