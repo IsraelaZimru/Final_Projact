@@ -37,14 +37,9 @@ def get_single_recipe():
 def add_recipe():
     info = request.get_json()
     _recipe = info["recipe"]
-    # _ings = info["ings"]
-    # _insts = info["insts"]
-    # print("lllll", _recipe, _ings, _insts)
-    # return json.dumps([_recipe, _ings, _insts], default=str)
-    # return {"error": "err"}, 400
     _ings = info["ingredients"]
     _insts = info["instructions"]
-    print("lllll", _ings)
+    # print("lllll", _ings)
     new_recipe = Recipes(
         name=_recipe["recipeName"],
         user_id=_recipe["userId"],
